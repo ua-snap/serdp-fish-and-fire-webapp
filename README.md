@@ -3,7 +3,7 @@
 ## Setup
 
 ```
-nvm use v18.13.0
+nvm use lts/hydrogen
 npm install
 nvm run dev
 ```
