@@ -5,17 +5,20 @@
     "build": "nuxi build"
   },
   "devDependencies": {
-    "nuxt": "^3.0.0"
+    "prettier": "^2.8.3"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
     "bulma": "^0.9.4",
     "leaflet": "^1.9.3",
     "naive-ui": "^2.34.3",
-    "pinia": "^2.0.28",
-    "prettier": "^2.8.3",
+    "nuxt": "^3.1.0",
+    "pinia": "^2.0.29",
     "proj4": "^2.8.1",
     "proj4leaflet": "^1.0.2",
     "sass": "^1.57.1"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
