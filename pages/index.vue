@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAreas } from '~~/stores/areas'
+import { useAreas } from '~/stores/areas'
 const areas = useAreas()
 areas.fetchAreaOptions()
 </script>
