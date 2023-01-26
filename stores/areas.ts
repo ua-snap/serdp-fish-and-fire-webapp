@@ -30,19 +30,40 @@ export const useAreas = defineStore('areas', {
   actions: {
     async fetchAreaOptions() {
       try {
-        let fetches = []
-        let areas = []
+        let groups = {}
+
+        let groupLookup = {
+          DOD: 'Department of Defense (DOD) Lands',
+          ADFG: 'ADF&G Game Management Units',
+          FIRE: 'AFS Fire Management Units',
+          HUC: 'Hydrologic Unit Code (HUC)',
+          PARK: 'Park and Conservation Units',
+        }
+
         const runtimeConfig = useRuntimeConfig()
         let geoserverUrl = runtimeConfig.public.geoserverUrl
         let response = await $fetch(geoserverUrl)
         if (response != undefined) {
           response.features.forEach(area => {
-            areas.push({
+            let category = area.properties['Category']
+            if (!groups.hasOwnProperty(category)) {
+              groups[category] = {
+                type: 'group',
+                label: groupLookup[category],
+                key: category,
+                children: [],
+              }
+            }
+            groups[category]['children'].push({
               label: area.properties['AOI_Name_'],
               value: area.properties['AOI_Name_'], // Change this to real ID
             })
           })
         }
+        let areas = []
+        Object.keys(groups).forEach(key => {
+          areas.push(groups[key])
+        })
         this.$patch(state => {
           state.areas = areas
         })
