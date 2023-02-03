@@ -1,26 +1,48 @@
 <template>
   <div class="container">
-    <div class="columns">
-      <div class="column">
-        <client-only>
-          <NSelect
-            v-model:value="value"
-            filterable
-            :options="areas.areaOptions"
-            placeholder="Select an area of interest"
-            class="mb-5"
-          />
-        </client-only>
-        <p class="mb-5">Click the map to find areas of interest.</p>
-        <div class="list">
-          <li v-for="areaName in areas.matchedAreaNames" class="list-item">
-            {{ areaName }}
-          </li>
+    <div v-show="!areas.selectedArea">
+      <div class="columns">
+        <div class="column">
+          <client-only>
+            <NSelect
+              v-model:value="selected"
+              v-if="!areas.selectedArea"
+              filterable
+              :options="areas.areaOptions"
+              placeholder="Select an area of interest"
+              class="mb-5"
+            />
+          </client-only>
+          <p class="mb-5">Click the map to find areas of interest.</p>
+          <div class="list">
+            <li v-for="areaName in areas.matchedAreaNames" class="list-item">
+              <a @click="select(areaName)">{{ areaName }}</a>
+            </li>
+          </div>
+        </div>
+        <div class="column">
+          <div id="map" style="width: 100%; height: 500px"></div>
         </div>
       </div>
-      <div class="column">
-        <div id="map" style="width: 100%; height: 500px"></div>
-      </div>
+    </div>
+    <div v-show="areas.selectedArea">
+      <NH1>{{ areas.selectedArea }}</NH1>
+      <NButton @click="select(null)">Go Back</NButton>
+      <NTable :bordered="false" :single-line="false" class="my-5">
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(value, key) in areas.selectedAreaData">
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+          </tr>
+        </tbody>
+      </NTable>
+      <NButton @click="select(null)">Go Back</NButton>
     </div>
   </div>
 </template>
@@ -35,10 +57,30 @@ areas.fetchAreaOptions()
 export default {
   data() {
     return {
-      value: undefined,
+      selected: undefined,
       map: undefined,
       mapFeatures: [],
     }
+  },
+  updated() {
+    this.map.invalidateSize()
+  },
+  methods: {
+    select(name) {
+      this.selected = name
+      const areas = useAreas()
+      areas.$patch({
+        selected: this.selected,
+      })
+    },
+  },
+  watch: {
+    selected: function (value) {
+      const areas = useAreas()
+      areas.$patch({
+        selected: value,
+      })
+    },
   },
   mounted() {
     var proj = new L.Proj.CRS(

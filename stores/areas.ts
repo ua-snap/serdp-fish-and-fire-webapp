@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
+import areaData from '~/assets/data'
 
 export const useAreas = defineStore('areas', {
   state: () => ({
     areas: undefined,
     intersectingAreas: undefined,
+    selected: undefined,
   }),
 
   getters: {
@@ -25,6 +27,19 @@ export const useAreas = defineStore('areas', {
         })
       }
       return geoms
+    },
+    selectedArea: state => {
+      return state.selected
+    },
+    selectedAreaData: state => {
+      let matchedData = undefined
+      areaData.forEach(obj => {
+        if (obj['AOI_Name_'] == state.selected) {
+          matchedData = obj
+          delete matchedData['AOI_Name_']
+        }
+      })
+      return matchedData
     },
   },
   actions: {
