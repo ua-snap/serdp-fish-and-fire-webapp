@@ -33,37 +33,58 @@ export const useAreas = defineStore('areas', {
       return state.selected
     },
     reportGeom: state => {
-      console.log(state.resultGeom)
       return state.resultGeom
     },
-    // resultGeom: state => {
-    //   // console.log(areaData)
-    //   // areaData.forEach(obj => {
-    //   //   if (obj['AOI_Name_'] == state.selected) {
-    //   //     return obj.geometry
-    //   //   }
-    //   // })
-    //   const runtimeConfig = useRuntimeConfig()
-    //   let geoserverUrl =
-    //     runtimeConfig.public.geoserverUrl +
-    //     "&cql_filter=AOI_Name_='" +
-    //     state.selected +
-    //     "'"
-    //   return $fetch(geoserverUrl)
-    //   // request.then(response => {
-    //   //   console.log(response.features[0]['geometry'])
-    //   //   return response.features[0]['geometry']
-    //   // })
-    // },
-    selectedAreaData: state => {
+    chartData: state => {
+      let matchedData = undefined
+      let chartData = {}
+      if (state.selected) {
+        areaData.forEach(obj => {
+          if (obj['AOI_Name_'] == state.selected) {
+            matchedData = structuredClone(obj)
+            delete matchedData['AOI_Name_']
+          }
+        })
+        Object.keys(matchedData).forEach(key => {
+          if (key.includes('ccsm_') || key.includes('gfdl_')) {
+            let [model, fmo, index] = key.split('_')
+            if (!chartData.hasOwnProperty(fmo)) {
+              chartData[fmo] = {
+                ccsm: [null],
+                gfdl: [null],
+              }
+            }
+            chartData[fmo][model].splice(index, 0, matchedData[key])
+          }
+        })
+        chartData['historical'] = {
+          low: matchedData['low_scenario'],
+          high: matchedData['high_scenario'],
+        }
+      }
+      return chartData
+    },
+    tableData: state => {
       let matchedData = undefined
       areaData.forEach(obj => {
         if (obj['AOI_Name_'] == state.selected) {
-          matchedData = obj
+          matchedData = structuredClone(obj)
           delete matchedData['AOI_Name_']
         }
       })
-      return matchedData
+      let tableData = {}
+      if (matchedData) {
+        Object.keys(matchedData).forEach(key => {
+          if (
+            !key.includes('ccsm_') &&
+            !key.includes('gfdl_') &&
+            !key.includes('_scenario')
+          ) {
+            tableData[key] = matchedData[key]
+          }
+        })
+      }
+      return tableData
     },
   },
   actions: {
@@ -133,7 +154,6 @@ export const useAreas = defineStore('areas', {
     },
     async fetchResultGeom() {
       try {
-        // console.log('Hello')
         const runtimeConfig = useRuntimeConfig()
         let geoserverUrl =
           runtimeConfig.public.geoserverUrl +
@@ -142,10 +162,8 @@ export const useAreas = defineStore('areas', {
           "'"
         let response = await $fetch(geoserverUrl)
         if (response != undefined) {
-          // console.log(response)
           this.$patch(state => {
             state.resultGeom = response.features[0].geometry
-            console.log(state.resultGeom)
           })
         }
       } catch (error) {
