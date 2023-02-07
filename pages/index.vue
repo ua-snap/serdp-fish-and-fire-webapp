@@ -25,6 +25,12 @@
         </div>
       </div>
     </div>
+    <div
+      id="result-map"
+      v-show="areas.selectedArea"
+      style="width: 50%; height: 500px"
+      class="mb-5"
+    ></div>
     <div v-show="areas.selectedArea">
       <NH1>{{ areas.selectedArea }}</NH1>
       <NButton @click="select(null)">Go Back</NButton>
@@ -60,10 +66,13 @@ export default {
       selected: undefined,
       map: undefined,
       mapFeatures: [],
+      resultMap: undefined,
+      resultMapFeature: undefined,
     }
   },
   updated() {
     this.map.invalidateSize()
+    this.resultMap.invalidateSize()
   },
   methods: {
     select(name) {
@@ -80,6 +89,45 @@ export default {
       areas.$patch({
         selected: value,
       })
+      var proj = new L.Proj.CRS(
+        'EPSG:3338',
+        '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
+        {
+          resolutions: [4096, 2048, 1024, 512, 256, 128, 64],
+        }
+      )
+      if (this.resultMap == undefined) {
+        this.resultMap = L.map('result-map', {
+          zoom: 3,
+          minZoom: 1,
+          maxZoom: 6,
+          center: [64.8, -146.4],
+          scrollWheelZoom: false,
+          crs: proj,
+          layers: new L.tileLayer.wms(
+            'https://gs.mapventure.org/geoserver/wms',
+            {
+              transparent: true,
+              srs: 'EPSG:3338',
+              format: 'image/png',
+              version: '1.3.0',
+              layers: [
+                'atlas_mapproxy:alaska_osm_retina',
+                'shadow_mask:iem_with_ak_aleutians_symmetric_difference',
+              ],
+            }
+          ),
+        })
+      }
+      areas.fetchResultGeom().then(() => {
+        if (this.resultMapFeature != undefined) {
+          this.resultMapFeature.clearLayers()
+        }
+        this.resultMapFeature = L.geoJSON(areas.reportGeom).addTo(
+          this.resultMap
+        )
+        this.resultMap.fitBounds(this.resultMapFeature.getBounds())
+      })
     },
   },
   mounted() {
@@ -91,24 +139,26 @@ export default {
       }
     )
 
-    this.map = L.map('map', {
-      zoom: 3,
-      minZoom: 1,
-      maxZoom: 6,
-      center: [64.8, -146.4],
-      scrollWheelZoom: false,
-      crs: proj,
-      layers: new L.tileLayer.wms('https://gs.mapventure.org/geoserver/wms', {
-        transparent: true,
-        srs: 'EPSG:3338',
-        format: 'image/png',
-        version: '1.3.0',
-        layers: [
-          'atlas_mapproxy:alaska_osm_retina',
-          'shadow_mask:iem_with_ak_aleutians_symmetric_difference',
-        ],
-      }),
-    })
+    if (this.map == undefined) {
+      this.map = L.map('map', {
+        zoom: 3,
+        minZoom: 1,
+        maxZoom: 6,
+        center: [64.8, -146.4],
+        scrollWheelZoom: false,
+        crs: proj,
+        layers: new L.tileLayer.wms('https://gs.mapventure.org/geoserver/wms', {
+          transparent: true,
+          srs: 'EPSG:3338',
+          format: 'image/png',
+          version: '1.3.0',
+          layers: [
+            'atlas_mapproxy:alaska_osm_retina',
+            'shadow_mask:iem_with_ak_aleutians_symmetric_difference',
+          ],
+        }),
+      })
+    }
 
     const areas = useAreas()
     this.map.on('click', e => {

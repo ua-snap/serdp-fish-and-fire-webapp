@@ -6,6 +6,7 @@ export const useAreas = defineStore('areas', {
     areas: undefined,
     intersectingAreas: undefined,
     selected: undefined,
+    resultGeom: undefined,
   }),
 
   getters: {
@@ -31,6 +32,29 @@ export const useAreas = defineStore('areas', {
     selectedArea: state => {
       return state.selected
     },
+    reportGeom: state => {
+      console.log(state.resultGeom)
+      return state.resultGeom
+    },
+    // resultGeom: state => {
+    //   // console.log(areaData)
+    //   // areaData.forEach(obj => {
+    //   //   if (obj['AOI_Name_'] == state.selected) {
+    //   //     return obj.geometry
+    //   //   }
+    //   // })
+    //   const runtimeConfig = useRuntimeConfig()
+    //   let geoserverUrl =
+    //     runtimeConfig.public.geoserverUrl +
+    //     "&cql_filter=AOI_Name_='" +
+    //     state.selected +
+    //     "'"
+    //   return $fetch(geoserverUrl)
+    //   // request.then(response => {
+    //   //   console.log(response.features[0]['geometry'])
+    //   //   return response.features[0]['geometry']
+    //   // })
+    // },
     selectedAreaData: state => {
       let matchedData = undefined
       areaData.forEach(obj => {
@@ -101,6 +125,27 @@ export const useAreas = defineStore('areas', {
         if (response != undefined) {
           this.$patch(state => {
             state.intersectingAreas = response.features
+          })
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async fetchResultGeom() {
+      try {
+        // console.log('Hello')
+        const runtimeConfig = useRuntimeConfig()
+        let geoserverUrl =
+          runtimeConfig.public.geoserverUrl +
+          "&cql_filter=AOI_Name_='" +
+          this.selected +
+          "'"
+        let response = await $fetch(geoserverUrl)
+        if (response != undefined) {
+          // console.log(response)
+          this.$patch(state => {
+            state.resultGeom = response.features[0].geometry
+            console.log(state.resultGeom)
           })
         }
       } catch (error) {
