@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import areaData from '~/assets/data'
 
-export const useAreas = defineStore('areas', {
+export const useStore = defineStore('store', {
   state: () => ({
     areas: undefined,
     intersectingAreas: undefined,
@@ -116,7 +116,7 @@ export const useAreas = defineStore('areas', {
             }
             groups[category]['children'].push({
               label: area.properties['AOI_Name_'],
-              value: area.properties['AOI_Name_'], // Change this to real ID
+              value: area.properties['AOI_Name_'],
             })
           })
         }
