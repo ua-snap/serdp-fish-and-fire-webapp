@@ -59,6 +59,7 @@ export const useStore = defineStore('store', {
         })
         chartData['historical'] = {
           low: matchedData['low_scenario'],
+          neutral: matchedData['neutral'],
           high: matchedData['high_scenario'],
         }
       }
@@ -78,7 +79,8 @@ export const useStore = defineStore('store', {
           if (
             !key.includes('ccsm_') &&
             !key.includes('gfdl_') &&
-            !key.includes('_scenario')
+            !key.includes('_scenario') &&
+            !key.includes('neutral')
           ) {
             tableData[key] = matchedData[key]
           }

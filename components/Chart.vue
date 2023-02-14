@@ -54,16 +54,24 @@ export default {
   methods: {
     renderPlot() {
       const store = useStore()
-      let historicalHighOffset =
-        store.chartData['historical']['high'] -
+      let lowOffset =
+        store.chartData['historical']['neutral'] -
         store.chartData['historical']['low']
+      let highOffset =
+        store.chartData['historical']['high'] -
+        store.chartData['historical']['neutral']
       let traces = [
         {
-          type: 'bar',
+          type: 'scatter',
           name: 'CRU TS 4.0',
-          x: '0',
-          base: [store.chartData['historical']['low']],
-          y: [historicalHighOffset],
+          x: [1],
+          y: [store.chartData['historical']['neutral']],
+          error_y: {
+            type: 'data',
+            array: [highOffset],
+            arrayminus: [lowOffset],
+            visible: true,
+          },
         },
       ]
       let modelSymbols = {
@@ -75,7 +83,7 @@ export default {
           type: 'scatter',
           mode: 'markers',
           name: modelLabels[model],
-          x: ['0', '1', '2'],
+          x: [1, 2, 3],
           y: store.chartData[this.fmoSelection][model],
           marker: {
             symbol: modelSymbols[model],
@@ -105,11 +113,10 @@ export default {
                 fmoLabels[this.fmoSelection],
             },
             xaxis: {
-              tickvals: [0, 1, 2],
-              ticktext: ['2002-2018', '2038-2047', '2068-2077'],
+              tickvals: [0, 1, 2, 3],
+              ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
               dtick: 1,
             },
-            bargap: 0.9,
           },
           {
             responsive: true,
