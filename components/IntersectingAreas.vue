@@ -10,18 +10,10 @@
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
 const store = useStore()
-</script>
 
-<script lang="ts">
-export default {
-  methods: {
-    select(name) {
-      this.selected = name
-      const store = useStore()
-      store.$patch({
-        selected: this.selected,
-      })
-    },
-  },
+const select = name => {
+  store.$patch({
+    selected: name,
+  })
 }
 </script>
