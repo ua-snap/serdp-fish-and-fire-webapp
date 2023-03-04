@@ -13,10 +13,10 @@
 import { useStore } from '~/stores/store'
 const store = useStore()
 
-const map = ref(undefined)
+var map = undefined // Leaflet map object
+var maxBounds = undefined
 const mapFeatures = ref([])
 const resultMapFeature = ref(undefined)
-
 const selectedArea = computed(() => store.selectedArea)
 
 const updateMap = () => {
@@ -33,16 +33,19 @@ const updateMap = () => {
   if (!selectedArea.value) {
     mapFeatures.value = []
     store.matchedGeoms.forEach(polygon => {
-      mapFeatures.value.push(L.geoJSON(polygon).addTo(map.value))
+      mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
     })
-    map.value.setView([64.8, -146.4], 3)
   }
   if (selectedArea.value) {
     store.fetchResultGeom().then(() => {
-      resultMapFeature.value = L.geoJSON(store.reportGeom).addTo(map.value)
-      map.value.fitBounds(resultMapFeature.value.getBounds())
+      resultMapFeature.value = L.geoJSON(store.reportGeom).addTo(map)
+      map.fitBounds(resultMapFeature.value.getBounds())
     })
   }
+}
+
+const fitAllPolygons = () => {
+  map.fitBounds(maxBounds)
 }
 
 watch(selectedArea, async () => {
@@ -50,50 +53,46 @@ watch(selectedArea, async () => {
 })
 
 onMounted(() => {
-  const proj = new L.Proj.CRS(
-    'EPSG:3338',
-    '+proj=aea +lat_1=55 +lat_2=65 +lat_0=50 +lon_0=-154 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs',
+  maxBounds = L.latLngBounds([
+    [63.5, -149.5],
+    [66, -143.5],
+  ])
+  var baseLayer = new L.tileLayer.wms(
+    'https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer',
     {
-      resolutions: [4096, 2048, 1024, 512, 256, 128, 64],
+      layers: '0',
+      format: 'image/png',
+      transparent: true,
+      attribution: 'USGS',
+      baseLayer: true,
     }
   )
-
-  if (map.value == undefined) {
-    map.value = L.map('map', {
-      zoom: 3,
-      minZoom: 1,
-      maxZoom: 6,
+  if (map == undefined) {
+    map = L.map('map', {
+      minZoom: 4,
+      maxZoom: 9,
       zoomSnap: 0.1,
-      center: [64.8, -146.4],
+      maxBounds: maxBounds,
       scrollWheelZoom: false,
-      crs: proj,
-      layers: new L.tileLayer.wms('https://gs.mapventure.org/geoserver/wms', {
-        transparent: true,
-        srs: 'EPSG:3338',
-        format: 'image/png',
-        version: '1.3.0',
-        layers: [
-          'atlas_mapproxy:alaska_osm_retina',
-          'shadow_mask:iem_with_ak_aleutians_symmetric_difference',
-        ],
-      }),
+      layers: [baseLayer],
     })
   }
-
-  map.value.on('click', e => {
+  fitAllPolygons()
+  map.on('click', e => {
     var popLocation = e.latlng
     store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
       mapFeatures.value.forEach(feature => {
         feature.clearLayers()
       })
       store.matchedGeoms.forEach(polygon => {
-        mapFeatures.value.push(L.geoJSON(polygon).addTo(map.value))
+        mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
       })
     })
   })
 })
 
-onMounted(() => {
-  map.value.invalidateSize()
+onUpdated(() => {
+  map.invalidateSize()
+  fitAllPolygons()
 })
 </script>
