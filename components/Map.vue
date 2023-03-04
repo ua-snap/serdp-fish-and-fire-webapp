@@ -12,105 +12,87 @@
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
 const store = useStore()
-</script>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      map: undefined,
-      mapFeatures: [],
-      resultMapFeature: undefined,
-      maxBounds: undefined,
+var map = undefined // Leaflet map object
+var maxBounds = undefined
+const mapFeatures = ref([])
+const resultMapFeature = ref(undefined)
+const selectedArea = computed(() => store.selectedArea)
+
+const updateMap = () => {
+  // Clear layer(s)
+  if (!selectedArea.value && !resultMapFeature.value != undefined) {
+    resultMapFeature.value.clearLayers()
+    resultMapFeature.value = undefined
+  }
+  mapFeatures.value.forEach(feature => {
+    feature.clearLayers()
+  })
+
+  // Add layer(s)
+  if (!selectedArea.value) {
+    mapFeatures.value = []
+    store.matchedGeoms.forEach(polygon => {
+      mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
+    })
+  }
+  if (selectedArea.value) {
+    store.fetchResultGeom().then(() => {
+      resultMapFeature.value = L.geoJSON(store.reportGeom).addTo(map)
+      map.fitBounds(resultMapFeature.value.getBounds())
+    })
+  }
+}
+
+const fitAllPolygons = () => {
+  map.fitBounds(maxBounds)
+}
+
+watch(selectedArea, async () => {
+  updateMap()
+})
+
+onMounted(() => {
+  maxBounds = L.latLngBounds([
+    [63.5, -149.5],
+    [66, -143.5],
+  ])
+  var baseLayer = new L.tileLayer.wms(
+    'https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer',
+    {
+      layers: '0',
+      format: 'image/png',
+      transparent: true,
+      attribution: 'USGS',
+      baseLayer: true,
     }
-  },
-  computed: {
-    selectedArea() {
-      const store = useStore()
-      return store.selectedArea
-    },
-  },
-  updated() {
-    this.map.invalidateSize()
-    this.fitAllPolygons()
-  },
-  watch: {
-    selectedArea: {
-      handler: function () {
-        this.updateMap()
-      },
-    },
-  },
-  methods: {
-    updateMap() {
-      const store = useStore()
-
-      // Clear layer(s)
-      if (!this.selectedArea && !this.resultMapFeature != undefined) {
-        this.resultMapFeature.clearLayers()
-        this.resultMapFeature = undefined
-      }
-      this.mapFeatures.forEach(feature => {
+  )
+  if (map == undefined) {
+    map = L.map('map', {
+      minZoom: 4,
+      maxZoom: 9,
+      zoomSnap: 0.1,
+      maxBounds: maxBounds,
+      scrollWheelZoom: false,
+      layers: [baseLayer],
+    })
+  }
+  fitAllPolygons()
+  map.on('click', e => {
+    var popLocation = e.latlng
+    store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
+      mapFeatures.value.forEach(feature => {
         feature.clearLayers()
       })
-
-      // Add layer(s)
-      if (!this.selectedArea) {
-        this.mapFeatures = []
-        store.matchedGeoms.forEach(polygon => {
-          this.mapFeatures.push(L.geoJSON(polygon).addTo(this.map))
-        })
-        this.fitAllPolygons()
-      }
-      if (this.selectedArea) {
-        store.fetchResultGeom().then(() => {
-          this.resultMapFeature = L.geoJSON(store.reportGeom).addTo(this.map)
-          this.map.fitBounds(this.resultMapFeature.getBounds())
-        })
-      }
-    },
-    fitAllPolygons() {
-      this.map.fitBounds(this.maxBounds)
-    },
-  },
-  mounted() {
-    this.maxBounds = L.latLngBounds([
-      [63.5, -149.5],
-      [66, -143.5],
-    ])
-    var baseLayer = new L.tileLayer.wms(
-      'https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer',
-      {
-        layers: '0',
-        format: 'image/png',
-        transparent: true,
-        attribution: 'USGS',
-        baseLayer: true,
-      }
-    )
-    if (this.map == undefined) {
-      this.map = L.map('map', {
-        minZoom: 4,
-        maxZoom: 9,
-        zoomSnap: 0.1,
-        maxBounds: this.maxBounds,
-        scrollWheelZoom: false,
-        layers: [baseLayer],
-      })
-    }
-    this.fitAllPolygons()
-    const store = useStore()
-    this.map.on('click', e => {
-      var popLocation = e.latlng
-      store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
-        this.mapFeatures.forEach(feature => {
-          feature.clearLayers()
-        })
-        store.matchedGeoms.forEach(polygon => {
-          this.mapFeatures.push(L.geoJSON(polygon).addTo(this.map))
-        })
+      store.matchedGeoms.forEach(polygon => {
+        mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
       })
     })
-  },
-}
+  })
+})
+
+onUpdated(() => {
+  map.invalidateSize()
+  fitAllPolygons()
+})
 </script>

@@ -14,43 +14,27 @@
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
 const store = useStore()
-</script>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      selectedValue: undefined,
-    }
-  },
-  computed: {
-    selectedArea() {
-      const store = useStore()
-      return store.selectedArea
-    },
-  },
-  methods: {
-    select(name) {
-      this.selectedValue = name
-      const store = useStore()
-      store.$patch({
-        selected: this.selected,
-      })
-    },
-  },
-  watch: {
-    selectedValue: function (value) {
-      const store = useStore()
-      store.$patch({
-        selected: value,
-      })
-      if (this.selectedArea) {
-        store.fetchResultGeom()
-      }
-    },
-    selectedArea: function (value) {
-      this.selectedValue = value
-    },
-  },
+let selectedValue = ref(undefined)
+
+const selectedArea = computed(() => store.selectedArea)
+
+const select = name => {
+  store.$patch({
+    selected: name,
+  })
 }
+
+watch(selectedValue, async value => {
+  store.$patch({
+    selected: value,
+  })
+  if (selectedArea.value) {
+    store.fetchResultGeom()
+  }
+})
+
+watch(selectedArea, async value => {
+  selectedValue.value = value
+})
 </script>
