@@ -117,6 +117,35 @@ export const useStore = defineStore('store', () => {
     return resultGeom.value
   })
 
+  // The chartData function adds more structure to the data imported from
+  // data.json. data.json contains a flat list of key/value pairs for each AOI.
+  // This function bundles the data into a structure for each AOI to make it
+  // easier to use the data with Plotly. The data will be used to draw a
+  // historical point (neutral) with high/low error bars, and two projected
+  // data points for each FMO scenario and model. Projected data arrays for
+  // each FMO scenario and model start with a null value to create an x-axis
+  // offset from the historical data.
+  //
+  // The structure for each AOI will look like this:
+  // {
+  //   historical: {
+  //     low: ...,
+  //     neutral: ...,
+  //     high: ...,
+  //   },
+  //   nofmo: {
+  //     gfdl: [null, ...],
+  //     ccsm: [null, ...],
+  //   },
+  //   fmo: {
+  //     gfdl: [null, ...],
+  //     ccsm: [null, ...],
+  //   },
+  //   altfmo: {
+  //     gfdl: [null, ...],
+  //     ccsm: [null, ...],
+  //   },
+  // }
   const chartData = computed(() => {
     let matchedData = undefined
     let chartData = {}
@@ -148,6 +177,10 @@ export const useStore = defineStore('store', () => {
     return chartData
   })
 
+  // Think of the tableData function as the opposite of the chartData function.
+  // It copies all of the remaining AOI key/value pairs from data.json that are
+  // not involved in populating the chart, into a new object to be passed to
+  // the results table.
   const tableData = computed(() => {
     let matchedData = undefined
     areaData.forEach(obj => {
