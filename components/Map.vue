@@ -34,6 +34,7 @@ const updateMap = () => {
     mapFeatures.value = []
     store.matchedGeoms.forEach(polygon => {
       mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
+      fitAllPolygons()
     })
   }
   if (selectedArea.value) {
@@ -79,20 +80,21 @@ onMounted(() => {
   }
   fitAllPolygons()
   map.on('click', e => {
-    var popLocation = e.latlng
-    store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
-      mapFeatures.value.forEach(feature => {
-        feature.clearLayers()
+    if (!selectedArea.value) {
+      var popLocation = e.latlng
+      store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
+        mapFeatures.value.forEach(feature => {
+          feature.clearLayers()
+        })
+        store.matchedGeoms.forEach(polygon => {
+          mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
+        })
       })
-      store.matchedGeoms.forEach(polygon => {
-        mapFeatures.value.push(L.geoJSON(polygon).addTo(map))
-      })
-    })
+    }
   })
 })
 
 onUpdated(() => {
   map.invalidateSize()
-  fitAllPolygons()
 })
 </script>
