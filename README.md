@@ -5,5 +5,5 @@
 ```
 nvm use lts/hydrogen
 npm install
-nvm run dev
+npm run dev
 ```
