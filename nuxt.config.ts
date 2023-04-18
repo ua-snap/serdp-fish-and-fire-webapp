@@ -1,4 +1,16 @@
+import { resolve } from 'path'
+
 export default defineNuxtConfig({
+  ssr: false,
+  target: 'static',
+  alias: {
+    'date-fns': resolve(__dirname, './node_modules/date-fns'),
+  },
+  nitro: {
+    prerender: {
+      routes: ['/'],
+    },
+  },
   head: {
     meta: [
       { charset: 'utf-8' },
@@ -19,9 +31,7 @@ export default defineNuxtConfig({
     },
     optimizeDeps: {
       include:
-        process.env.NODE_ENV === 'development'
-          ? ['naive-ui', 'vueuc', 'date-fns-tz/esm/formatInTimeZone']
-          : [],
+        process.env.NODE_ENV === 'development' ? ['naive-ui', 'vueuc'] : [],
     },
   },
   buildModules: [],
