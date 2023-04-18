@@ -1,7 +1,19 @@
 import { defineStore } from 'pinia'
-import areaData from '~/assets/data'
+import fishGrowthDict from '~/assets/fish_growth'
+import fireImpactDict from '~/assets/riparian_fire_impact'
+import hydrographDict from '~/assets/hydrograph_data.json'
+import hydroStatsDict from '~/assets/hydrology_stats'
+import streamTempDict from '~/assets/stream_temp_stats'
 
 export const useStore = defineStore('store', () => {
+  const data = {
+    fishGrowth: fishGrowthDict,
+    fireImpact: fireImpactDict,
+    hydrograph: hydrographDict,
+    hydroStats: hydroStatsDict,
+    streamTemp: streamTempDict,
+  }
+
   const areas = ref([])
   const intersectingAreas = ref(undefined)
   const selected = ref(undefined)
@@ -117,59 +129,50 @@ export const useStore = defineStore('store', () => {
     return resultGeom.value
   })
 
-  const chartData = computed(() => {
-    let matchedData = undefined
+  const hasArea = computed(() => {
+    return function (datasetKey) {
+      return data[datasetKey].hasOwnProperty(selected.value)
+    }
+  })
+
+  const fishGrowthData = computed(() => {
     let chartData = {}
     if (selected.value) {
-      areaData.forEach(obj => {
-        if (obj['AOI_Name_'] == selected.value) {
-          matchedData = structuredClone(obj)
-          delete matchedData['AOI_Name_']
-        }
-      })
-      Object.keys(matchedData).forEach(key => {
-        if (key.includes('ccsm_') || key.includes('gfdl_')) {
-          let [model, fmo, index] = key.split('_')
-          if (!chartData.hasOwnProperty(fmo)) {
-            chartData[fmo] = {
-              ccsm: [null],
-              gfdl: [null],
-            }
-          }
-          chartData[fmo][model].splice(index, 0, matchedData[key])
-        }
-      })
-      chartData['historical'] = {
-        low: matchedData['low_scenario'],
-        neutral: matchedData['neutral'],
-        high: matchedData['high_scenario'],
-      }
+      chartData = data['fishGrowth'][selected.value]
     }
     return chartData
   })
 
-  const tableData = computed(() => {
-    let matchedData = undefined
-    areaData.forEach(obj => {
-      if (obj['AOI_Name_'] == selected.value) {
-        matchedData = structuredClone(obj)
-        delete matchedData['AOI_Name_']
-      }
-    })
-    let tableData = {}
-    if (matchedData) {
-      Object.keys(matchedData).forEach(key => {
-        if (
-          !key.includes('ccsm_') &&
-          !key.includes('gfdl_') &&
-          !key.includes('_scenario') &&
-          !key.includes('neutral')
-        ) {
-          tableData[key] = matchedData[key]
-        }
-      })
+  const fireImpactData = computed(() => {
+    let chartData = {}
+    if (selected.value) {
+      chartData = data['fireImpact'][selected.value]
     }
-    return tableData
+    return chartData
+  })
+
+  const hydrographData = computed(() => {
+    let chartData = {}
+    if (selected.value) {
+      chartData = data['hydrograph'][selected.value]
+    }
+    return chartData
+  })
+
+  const hydroStatsData = computed(() => {
+    let chartData = {}
+    if (selected.value) {
+      chartData = data['hydroStats'][selected.value]
+    }
+    return chartData
+  })
+
+  const streamTempData = computed(() => {
+    let chartData = {}
+    if (selected.value) {
+      chartData = data['streamTemp'][selected.value]
+    }
+    return chartData
   })
 
   return {
@@ -182,7 +185,11 @@ export const useStore = defineStore('store', () => {
     selected,
     selectedArea,
     reportGeom,
-    chartData,
-    tableData,
+    hasArea,
+    fishGrowthData,
+    fireImpactData,
+    hydrographData,
+    hydroStatsData,
+    streamTempData,
   }
 })
