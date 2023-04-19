@@ -98,8 +98,11 @@ for filename in column_settings.keys():
         group_headers = column_settings[filename]["group"]
         omit_headers = column_settings[filename]["omit"]
 
+# Reorder headers to match order specifed in the CSV file's "group" array
+# set near the top of this script. This gives us more control over the JSON
+# tree hiearchy so we can format the data in a way that's easier for our Plotly
+# code to navigate.
 for header in group_headers:
-    # Reorder headers.
     old_index = headers.index(header)
     new_index = group_headers.index(header)
     headers.insert(new_index, headers.pop(old_index))
@@ -116,19 +119,24 @@ for row in df.values.tolist():
     # that stores the values.
     value_dict = data_dict
     for index in range(0, last_group_index):
+        # Ignore group-by values that were blank in source CSV and got
+        # converted to -9999 earlier in the script. Some StreamOrder values are
+        # blank in the source CSVs, for example.
         if row[index] == -9999:
             include_row = False
             break
         value_dict = value_dict[row[index]]
 
+    # Add leaves (values) to this branch of the nested dict.
     if include_row:
-        # Add leaves (values) to this branch of the nested dict.
         for index in range(last_group_index, len(row)):
             if headers[index] not in omit_headers:
                 if headers[index] not in dict(value_dict):
                     value_dict[headers[index]] = []
                 value_dict[headers[index]].append(row[index])
 
+# At this point all dictionary leaves are lists, not scalars.
+# For each dict leaf, convert the list of values to its mean.
 recursive_mean(data_dict)
 
 with open(args.output_file, "w") as jsonfile:
