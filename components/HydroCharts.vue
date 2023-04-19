@@ -111,10 +111,13 @@ const renderPlot = () => {
     ccsm: '#3333ff',
     gfdl: '#ff3333',
   }
+
+  // Add separate hydrology stat and hydrograph charts for each stream order.
   streamOrders.value.forEach(streamOrder => {
     let statsTraces = []
     let hydrographTraces = []
 
+    // Store a historical trace for each hydrology stat stream order chart.
     statsTraces.push({
       type: 'scatter',
       mode: 'markers',
@@ -138,6 +141,8 @@ const renderPlot = () => {
           store.hydrographData[streamOrder]['era'][0][doy]['streamflow']
         )
       })
+
+      // Store a historical trace for each hydrograph stream order chart.
       hydrographTraces.push({
         mode: 'lines',
         name: 'ERA',
@@ -162,6 +167,8 @@ const renderPlot = () => {
           ]
         )
       }
+
+      // Store projected traces for each hydro stat stream order chart.
       statsTraces.push({
         type: 'scatter',
         mode: 'markers',
@@ -186,6 +193,8 @@ const renderPlot = () => {
             ]['streamflow']
           )
         })
+
+        // Store projected traces for each hydrology stream order chart.
         hydrographTraces.push({
           mode: 'lines',
           name: modelLabels[model],
@@ -202,6 +211,8 @@ const renderPlot = () => {
 
     if (store.selected) {
       const { $Plotly } = useNuxtApp()
+
+      // Create and populate each hydro stat stream order chart with traces.
       $Plotly.newPlot(
         'hydro-stats-chart-' + streamOrder,
         statsTraces,
@@ -249,6 +260,8 @@ const renderPlot = () => {
           ],
         }
       )
+
+      // Create and populate each hydrology stream order chart with traces.
       $Plotly.newPlot(
         'hydrograph-chart-' + streamOrder,
         hydrographTraces,

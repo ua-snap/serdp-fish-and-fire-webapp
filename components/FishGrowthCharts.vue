@@ -82,8 +82,12 @@ const renderPlot = () => {
     ccsm: '#3333ff',
     gfdl: '#ff3333',
   }
+
+  // Add a separate chart for each available stream order.
   streamOrders.value.forEach(streamOrder => {
     let traces = []
+
+    // Store historical trace.
     traces.push({
       type: 'scatter',
       mode: 'markers',
@@ -99,6 +103,8 @@ const renderPlot = () => {
     let models = Object.keys(
       store.fishGrowthData[fmoSelection.value][streamOrder]
     )
+
+    // Store projected traces.
     models.forEach(model => {
       let periods = Object.keys(
         store.fishGrowthData[fmoSelection.value][streamOrder][model]
@@ -127,6 +133,8 @@ const renderPlot = () => {
 
     if (store.selected) {
       const { $Plotly } = useNuxtApp()
+
+      // Create and populate each stream order chart with traces.
       $Plotly.newPlot(
         'fish-growth-chart-' + streamOrder,
         traces,

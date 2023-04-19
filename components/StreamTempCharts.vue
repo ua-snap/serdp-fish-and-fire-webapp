@@ -97,8 +97,12 @@ const renderPlot = () => {
     ccsm: '#3333ff',
     gfdl: '#ff3333',
   }
+
+  // Add a separate chart for each available stream order.
   streamOrders.value.forEach(streamOrder => {
     let traces = []
+
+    // Store historical trace.
     traces.push({
       type: 'scatter',
       mode: 'markers',
@@ -114,6 +118,8 @@ const renderPlot = () => {
       },
     })
     let models = Object.keys(store.streamTempData[streamOrder])
+
+    // Store projected traces.
     models.forEach(model => {
       let periods = Object.keys(store.streamTempData[streamOrder][model])
       let traceValues = [null]
@@ -140,6 +146,8 @@ const renderPlot = () => {
 
     if (store.selected) {
       const { $Plotly } = useNuxtApp()
+
+      // Create and populate chart with traces.
       $Plotly.newPlot(
         'stream-temp-chart-' + streamOrder,
         traces,

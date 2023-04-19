@@ -6,6 +6,7 @@ import hydroStatsDict from '~/assets/hydrology_stats'
 import streamTempDict from '~/assets/stream_temp_stats'
 
 export const useStore = defineStore('store', () => {
+  // Store imported JSONs into common data object for easier lookup later.
   const data = {
     fishGrowth: fishGrowthDict,
     fireImpact: fireImpactDict,

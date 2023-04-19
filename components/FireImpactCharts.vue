@@ -111,6 +111,8 @@ const renderPlot = () => {
       High: '#ff3333',
     },
   }
+
+  // Store historical traces.
   for (let i = 0; i < keyPrefixes.length; i++) {
     let prefix = keyPrefixes[i]
     let meanKey = prefix + '_Score_AOI_Mean'
@@ -139,6 +141,8 @@ const renderPlot = () => {
   let models = Object.keys(
     store.fireImpactData[fmoSelection.value][speciesSelection.value]
   )
+
+  // Store projected traces.
   for (let i = 0; i < models.length; i++) {
     let model = models[i]
     for (let j = 0; j < keyPrefixes.length; j++) {
@@ -154,8 +158,13 @@ const renderPlot = () => {
         traceValues.push(fmoData[model][period][meanKey])
         traceErrorBars.push(fmoData[model][period][sdKey])
       }
+
+      // Add lots of space between eras.
       let periodOffset = (j - 1) * 0.15
+
+      // Add a little bit of space between models.
       let modelOffset = (i - 0.5) * 0.04
+
       let trace = {
         type: 'scatter',
         mode: 'markers',
@@ -168,6 +177,9 @@ const renderPlot = () => {
           color: colors[model][prefix],
         },
       }
+
+      // Add error bars only if standard deviation values are available for
+      // projected traces.
       if (traceErrorBars.slice(1).every(Number)) {
         trace['error_y'] = {
           type: 'data',
@@ -181,6 +193,8 @@ const renderPlot = () => {
 
   if (store.selected) {
     const { $Plotly } = useNuxtApp()
+
+    // Create and populate chart with traces.
     $Plotly.newPlot(
       'chart',
       traces,
