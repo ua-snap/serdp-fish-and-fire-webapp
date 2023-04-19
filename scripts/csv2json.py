@@ -48,7 +48,9 @@ column_settings = {
     },
     "Stream_Temp_Stats_by_AOI.csv": {
         "group": ["AOI", "StreamOrder", "Model", "Period"],
-        "omit": [],
+        "omit": [
+            "RCA",
+        ],
     },
 }
 
