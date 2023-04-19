@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import { NSelect } from 'naive-ui'
 const store = useStore()
 
 let metricSelection = ref('mean_ann')

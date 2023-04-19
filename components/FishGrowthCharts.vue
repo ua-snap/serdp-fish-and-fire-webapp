@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import { NRadioGroup, NRadio, NSpace } from 'naive-ui'
 const store = useStore()
 
 let fmoSelection = ref('nofmo')

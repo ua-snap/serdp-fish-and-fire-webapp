@@ -41,8 +41,8 @@
 </style>
 
 <script setup lang="ts">
-import { sequenceExpression } from '@babel/types'
 import { useStore } from '~/stores/store'
+import { NSelect, NRadioGroup, NRadio, NSpace } from 'naive-ui'
 const store = useStore()
 
 let metricSelection = ref('mean_annual_flow')
