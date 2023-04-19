@@ -42,6 +42,10 @@ const updateMap = () => {
       map.fitBounds(resultMapFeature.value.getBounds())
     })
   }
+
+  if (selectedArea.value == undefined) {
+    fitAllPolygons()
+  }
 }
 
 const fitAllPolygons = () => {
