@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <div v-show="store.selectedArea">
-        <NH1>{{ store.selectedArea }}</NH1>
+        <h1 class="title mb-5">{{ store.selectedArea }}</h1>
       </div>
       <div class="columns mb-5">
         <div class="column is-half">
@@ -13,12 +13,30 @@
             <AreaDropdown />
             <IntersectingAreas />
           </div>
-          <Chart v-if="store.selectedArea" />
         </div>
       </div>
     </div>
     <div v-show="store.selectedArea">
-      <ResultsTable />
+      <hr />
+      <FishGrowthCharts
+        v-if="store.selectedArea && store.hasArea('fishGrowth')"
+      />
+      <hr />
+      <FireImpactCharts
+        v-if="store.selectedArea && store.hasArea('fireImpact')"
+      />
+      <hr />
+      <HydroCharts
+        v-if="
+          store.selectedArea &&
+          store.hasArea('hydroStats') &&
+          store.hasArea('hydrograph')
+        "
+      />
+      <hr />
+      <StreamTempCharts
+        v-if="store.selectedArea && store.hasArea('streamTemp')"
+      />
       <BackButton />
     </div>
   </div>

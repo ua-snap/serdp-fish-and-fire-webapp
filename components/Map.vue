@@ -42,6 +42,10 @@ const updateMap = () => {
       map.fitBounds(resultMapFeature.value.getBounds())
     })
   }
+
+  if (selectedArea.value == undefined) {
+    fitAllPolygons()
+  }
 }
 
 const fitAllPolygons = () => {
@@ -70,7 +74,6 @@ onMounted(() => {
   if (map == undefined) {
     map = L.map('map', {
       minZoom: 4,
-      maxZoom: 9,
       zoomSnap: 0.1,
       maxBounds: maxBounds,
       scrollWheelZoom: false,
