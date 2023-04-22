@@ -10,7 +10,6 @@
         class="metric-selector"
       />
     </div>
-    <div class="column is-half"></div>
   </div>
   <div class="is-clearfix">
     <div
@@ -26,7 +25,12 @@
   width: 300px;
 }
 .stream-temp-chart {
-  width: 50%;
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
 }
 </style>
 

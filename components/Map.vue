@@ -45,6 +45,7 @@ const updateMap = () => {
 
   if (selectedArea.value == undefined) {
     fitAllPolygons()
+    map.invalidateSize()
   }
 }
 
@@ -95,7 +96,6 @@ onMounted(() => {
 })
 
 onUpdated(() => {
-  map.invalidateSize()
   fitAllPolygons()
 })
 </script>
