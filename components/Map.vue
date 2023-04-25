@@ -39,7 +39,7 @@ const updateMap = () => {
   if (selectedArea.value) {
     store.fetchResultGeom().then(() => {
       resultMapFeature.value = L.geoJSON(store.reportGeom).addTo(map)
-      map.fitBounds(resultMapFeature.value.getBounds())
+      map.fitBounds(resultMapFeature.value.getBounds(), {padding: [50, 50]})
     })
   }
 
