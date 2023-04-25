@@ -39,12 +39,12 @@
 </template>
 
 <style lang="scss" scoped>
-  @media (min-width: 1024px) {
-    .section {
-      padding-left: 0;
-      padding-right: 0;
-    }
+@media (min-width: 1024px) {
+  .section {
+    padding-left: 0;
+    padding-right: 0;
   }
+}
 </style>
 
 <script setup lang="ts">

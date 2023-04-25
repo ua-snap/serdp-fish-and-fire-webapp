@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<style lange="scss" scoped>
+<style lang="scss" scoped>
 .metric-selector {
   width: 300px;
 }

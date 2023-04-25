@@ -24,10 +24,7 @@
   </div>
 </template>
 
-<style lange="scss" scoped>
-.metric-selector {
-  width: 300px;
-}
+<style lang="scss" scoped>
 .fish-growth-chart {
   @media (max-width: 1023px) {
     width: 100%;
