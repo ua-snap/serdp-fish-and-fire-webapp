@@ -182,6 +182,9 @@ const renderPlot = () => {
             'autoScale2d',
             'resetScale2d',
           ],
+          toImageButtonOptions: {
+            filename: 'fish_growth',
+          },
         }
       )
     }
