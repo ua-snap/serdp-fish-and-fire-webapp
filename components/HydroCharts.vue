@@ -276,7 +276,9 @@ const renderPlot = () => {
             text:
               'Hydrograph<br />' +
               store.selected +
-              '<br />Stream Order: ' +
+              '<br />Period: ' +
+              periodLabels[periodSelection.value] +
+              ', Stream Order: ' +
               streamOrder,
           },
           xaxis: {
