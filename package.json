@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
+    "@turf/area": "^6.5.0",
     "bulma": "^0.9.4",
     "leaflet": "^1.9.3",
     "naive-ui": "^2.34.3",
