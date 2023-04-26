@@ -6,6 +6,7 @@
         <a @click="select(areaName)">{{ areaName }}</a>
       </li>
     </ul>
+    <NButton @click="reset()" class="mt-3" v-if="store.matchedAreaNames.length > 0">Reset</NButton>
   </div>
 </template>
 
@@ -16,6 +17,12 @@ const store = useStore()
 const select = name => {
   store.$patch({
     selected: name,
+  })
+}
+
+const reset = () => {
+  store.$patch({
+    reset: true,
   })
 }
 </script>

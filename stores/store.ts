@@ -19,6 +19,7 @@ export const useStore = defineStore('store', () => {
   const intersectingAreas = ref(undefined)
   const selected = ref(undefined)
   const resultGeom = ref(undefined)
+  const reset = ref(false)
 
   const fetchAreaOptions = async () => {
     try {
@@ -112,11 +113,11 @@ export const useStore = defineStore('store', () => {
     return names
   })
 
-  const matchedGeoms = computed(() => {
+  const matchedAreas = computed(() => {
     let geoms = []
     if (intersectingAreas.value != undefined) {
       intersectingAreas.value.forEach(area => {
-        geoms.push(area.geometry)
+        geoms.push(area)
       })
     }
     return geoms
@@ -181,8 +182,9 @@ export const useStore = defineStore('store', () => {
     fetchIntersectingAreas,
     fetchResultGeom,
     areaOptions,
+    intersectingAreas,
     matchedAreaNames,
-    matchedGeoms,
+    matchedAreas,
     selected,
     selectedArea,
     reportGeom,
@@ -192,5 +194,6 @@ export const useStore = defineStore('store', () => {
     hydrographData,
     hydroStatsData,
     streamTempData,
+    reset,
   }
 })
