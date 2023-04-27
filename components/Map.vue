@@ -2,7 +2,7 @@
   <div id="map" />
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 #map {
   width: 100%;
   height: 500px;
@@ -45,6 +45,7 @@ const updateMap = () => {
 
   if (selectedArea.value == undefined) {
     fitAllPolygons()
+    map.invalidateSize()
   }
 }
 
@@ -95,7 +96,6 @@ onMounted(() => {
 })
 
 onUpdated(() => {
-  map.invalidateSize()
   fitAllPolygons()
 })
 </script>

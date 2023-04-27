@@ -14,7 +14,6 @@
         </NSpace>
       </NRadioGroup>
     </div>
-    <div class="column is-half"></div>
   </div>
   <div class="is-clearfix">
     <div
@@ -25,12 +24,14 @@
   </div>
 </template>
 
-<style lange="scss" scoped>
-.metric-selector {
-  width: 300px;
-}
+<style lang="scss" scoped>
 .fish-growth-chart {
-  width: 50%;
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
+  @media (min-width: 1024px) {
+    width: 50%;
+  }
 }
 </style>
 

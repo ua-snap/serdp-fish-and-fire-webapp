@@ -1,7 +1,7 @@
 <template>
   <h1 class="title">Hydrology</h1>
-  <div class="columns">
-    <div class="column is-half">
+  <div class="columns is-desktop">
+    <div class="column is-half-desktop">
       <p class="is-size-5 mb-2">Hydrology Statistics</p>
       <NSelect
         v-model:value="metricSelection"
@@ -10,7 +10,7 @@
         class="metric-selector"
       />
     </div>
-    <div class="column is-half">
+    <div class="column is-half-desktop">
       <NRadioGroup v-model:value="periodSelection" name="period-selector">
         <p class="is-size-5 mb-2">Hydrograph Period</p>
         <NSpace>
@@ -24,11 +24,11 @@
       </NRadioGroup>
     </div>
   </div>
-  <div class="columns" v-for="streamOrder in streamOrders">
-    <div class="column is-half">
+  <div class="columns is-desktop" v-for="streamOrder in streamOrders">
+    <div class="column is-half-desktop">
       <div v-bind:id="'hydro-stats-chart-' + streamOrder"></div>
     </div>
-    <div class="column is-half">
+    <div class="column is-half-desktop">
       <div v-bind:id="'hydrograph-chart-' + streamOrder"></div>
     </div>
   </div>
