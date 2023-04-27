@@ -258,6 +258,11 @@ const renderPlot = () => {
             'autoScale2d',
             'resetScale2d',
           ],
+          toImageButtonOptions: {
+            filename: metricLabels[metricSelection.value]
+              .toLowerCase()
+              .replace(/ /g, '_'),
+          },
         }
       )
 
@@ -309,6 +314,9 @@ const renderPlot = () => {
             'autoScale2d',
             'resetScale2d',
           ],
+          toImageButtonOptions: {
+            filename: 'hydrograph',
+          },
         }
       )
     }
