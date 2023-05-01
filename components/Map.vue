@@ -102,13 +102,15 @@ onMounted(() => {
 
 const addMapHandlers = () => {
   map.on('click', e => {
-    layerGroup.addTo(map)
-    store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
-      if (store.matchedAreas.length > 0) {
-        map.off('click')
-        addMatchedAreas()
-      }
-    })
+    if (!selectedArea.value) {
+      layerGroup.addTo(map)
+      store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
+        if (store.matchedAreas.length > 0) {
+          map.off('click')
+          addMatchedAreas()
+        }
+      })
+    }
   })
 }
 
