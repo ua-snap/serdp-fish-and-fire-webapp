@@ -1,4 +1,4 @@
-import area from '@turf/area';
+import area from '@turf/area'
 
 export default defineNuxtPlugin(nuxtApp => {
   return {
