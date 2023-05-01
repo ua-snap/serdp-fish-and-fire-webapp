@@ -43,7 +43,7 @@ const updateMap = () => {
   if (selectedArea.value) {
     store.fetchResultGeom().then(() => {
       resultMapFeature.value = L.geoJSON(store.reportGeom).addTo(map)
-      map.fitBounds(resultMapFeature.value.getBounds(), {padding: [50, 50]})
+      map.fitBounds(resultMapFeature.value.getBounds(), { padding: [50, 50] })
     })
   }
 
@@ -117,14 +117,18 @@ const addMatchedAreas = () => {
   let areasWithSizes = store.matchedAreas.map(area => {
     return {
       area: area,
-      size: $turfArea(area.geometry)
+      size: $turfArea(area.geometry),
     }
   })
 
   // Sort areas by polygon size (largest to smallest).
-  let sortedAreas = areasWithSizes.sort((a, b) => {
-    return b.size - a.size;
-  }).map(areaWithSize => { return areaWithSize.area })
+  let sortedAreas = areasWithSizes
+    .sort((a, b) => {
+      return b.size - a.size
+    })
+    .map(areaWithSize => {
+      return areaWithSize.area
+    })
 
   // Add polygons to map starting with largest polygon, effectively placing
   // larger polygons at a lower z-index. This ensures that large polygons
@@ -135,7 +139,7 @@ const addMatchedAreas = () => {
   })
 }
 
-const addArea = (area) => {
+const addArea = area => {
   let defaultStyle = {
     color: '#09a3ea',
     fillOpacity: 0.2,
@@ -147,7 +151,7 @@ const addArea = (area) => {
   }
   area.geometry.properties = {
     id: area.properties['AOI_Name_'],
-    name: area.properties['AOI_Name_']
+    name: area.properties['AOI_Name_'],
   }
   layerGroup.addLayer(
     L.geoJSON(area.geometry, {
