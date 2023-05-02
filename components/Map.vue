@@ -22,6 +22,7 @@ var map = undefined // Leaflet map object
 var polygonBounds = undefined
 var maxBounds = undefined
 var layerGroup = new L.LayerGroup()
+var shadowMask = undefined
 
 const resultMapFeature = ref(undefined)
 const selectedArea = computed(() => store.selectedArea)
@@ -37,8 +38,10 @@ const updateMap = () => {
   // Restore intersecting polygons from previous click operation
   if (!selectedArea.value) {
     layerGroup.addTo(map)
+    map.addLayer(shadowMask)
   } else {
     map.removeLayer(layerGroup)
+    map.removeLayer(shadowMask)
   }
 
   if (selectedArea.value) {
@@ -97,17 +100,27 @@ onMounted(() => {
       baseLayer: true,
     }
   )
+
+  shadowMask = new L.tileLayer.wms('https://gs.mapventure.org/geoserver/wms', {
+    transparent: true,
+    format: 'image/png',
+    version: '1.3.0',
+    layers: ['fish_and_fire:AOI_v2_shadowmask'],
+  })
+
   if (map == undefined) {
     map = L.map('map', {
       minZoom: 4,
       zoomSnap: 0.1,
+      doubleClickZoom: false,
       maxBounds: maxBounds,
       zoomControl: false,
       dragging: false,
       scrollWheelZoom: false,
-      layers: [baseLayer],
+      layers: [baseLayer, shadowMask],
     })
   }
+
   fitAllPolygons()
   addMapHandlers()
 })
