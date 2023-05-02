@@ -19,6 +19,7 @@ const { $turfArea } = useNuxtApp()
 const store = useStore()
 
 var map = undefined // Leaflet map object
+var polygonBounds = undefined
 var maxBounds = undefined
 var layerGroup = new L.LayerGroup()
 
@@ -54,7 +55,7 @@ const updateMap = () => {
 }
 
 const fitAllPolygons = () => {
-  map.fitBounds(maxBounds)
+  map.fitBounds(polygonBounds)
 }
 
 watch(selectedArea, async () => {
@@ -73,10 +74,19 @@ watch(reset, async () => {
 })
 
 onMounted(() => {
+  // polygonBounds is a bounding box around all available AOI polygons.
+  polygonBounds = L.latLngBounds([63.5, -149.5], [66, -143.5])
+
+  // Add some buffer space to polygonBounds for maxBounds. We need maxBounds to
+  // be slightly larger to add enough wiggle room for any selected AOI polygon
+  // to be centered properly on the map on the report view.
+  let latBuffer = 1
+  let lngBuffer = 2
   maxBounds = L.latLngBounds([
-    [63.5, -149.5],
-    [66, -143.5],
+    [polygonBounds.getSouth() - latBuffer, polygonBounds.getWest() - lngBuffer],
+    [polygonBounds.getNorth() + latBuffer, polygonBounds.getEast() + lngBuffer],
   ])
+
   var baseLayer = new L.tileLayer.wms(
     'https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer',
     {
