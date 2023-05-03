@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import { NSelect, NRadioGroup, NRadio, NSpace } from 'naive-ui'
 import chartUtils from '~/utils/chartUtils'
 const store = useStore()
 
