@@ -88,7 +88,7 @@ export const useStore = defineStore('store', () => {
       let geoserverUrl =
         runtimeConfig.public.geoserverUrl +
         "&cql_filter=AOI_Name_='" +
-        selected.value +
+        encodeURIComponent(selected.value) +
         "'"
       let response = await $fetch(geoserverUrl)
       if (response != undefined) {
