@@ -208,7 +208,7 @@ const renderPlot = () => {
         },
         title: {
           text:
-            'Riparian Fire Vulnerability<br />' +
+            '<b>Riparian fire vulnerability</b><br />' +
             store.selected +
             '<br />' +
             fmoLabels[fmoSelection.value] +

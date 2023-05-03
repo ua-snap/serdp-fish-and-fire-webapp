@@ -34,15 +34,10 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.metric-selector {
-  width: 300px;
-}
-</style>
-
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
 import { NSelect, NRadioGroup, NRadio, NSpace } from 'naive-ui'
+import chartUtils from '~/utils/chartUtils'
 const store = useStore()
 
 let metricSelection = ref('mean_annual_flow')
@@ -54,25 +49,60 @@ const modelLabels = {
 }
 
 const metricLabels = {
-  mean_annual_flow: 'Mean Annual Flow',
-  LCV: 'LCV',
-  LSkew: 'LSkew',
-  LKurt: 'LKurt',
-  AR1: 'AR1',
-  Amplitude: 'Amplitude',
-  phase: 'phase',
-  WinterMean: 'WinterMean',
-  Spring2yr: 'Spring2yr',
-  Spring1pt5yr: 'Spring1pt5yr',
-  Spring99: 'Spring99',
-  Spring95: 'Spring95',
-  Channelflow: 'Channelflow',
-  CtrFlowMass: 'CtrFlowMass',
-  Summer95: 'Summer95',
-  Summer20p: 'Summer20p',
-  MeanSummer: 'MeanSummer',
-  Highlow: 'Highlow',
-  flow7q10: 'flow7q10',
+  mean_annual_flow: 'Mean annual flow',
+  MeanSummer: 'Mean summer flow',
+  WinterMean: 'Mean winter flow',
+  LCV: 'Coefficient of variation for the distribution of flow values',
+  LSkew: 'Skewness for the distribution of flow values',
+  LKurt: 'Kurtosis for the distribution of flow values',
+  AR1: 'Magnitude of maximum flow relative to mean',
+  Amplitude: 'AR1 correlation for entire continuous time series of flow values',
+  phase: 'Average day of year of maximum flow',
+  Spring2yr: 'Frequency of spring 2 year high flows',
+  Spring1pt5yr: 'Frequency of spring 1.5 year high flows',
+  Spring99: 'Number of days spring flows were in the top 1% of annual flows',
+  Spring95: 'Number of days spring flows were in the top 5% of annual flows',
+  Channelflow: 'Probability 1.5 year flow event would occur during a year',
+  CtrFlowMass: 'Center of timing of the mass of flow for an annual water year',
+  Summer95: 'Number of days summer flows were in the top 5% of annual flows',
+  Summer20p:
+    'Number of days summer flows were less than 20% of the mean annual flow',
+  Highlow:
+    'Annual 1.5 year high flow probability divided by the mean summer flow',
+  flow7q10: '7 day low flow with a 10 year return interval',
+}
+
+const metricYAxisLabels = {
+  mean_annual_flow: 'Mean annual flow (m<sup>3</sup>/s)',
+  MeanSummer: 'Mean summer flow (m<sup>3</sup>/s)',
+  WinterMean: 'Mean winter flow (m<sup>3</sup>/s)',
+  LCV: 'Variation',
+  LSkew: 'Skewness',
+  LKurt: 'Kurtosis',
+  AR1: 'Magnitude',
+  Amplitude: 'Correlation',
+  phase: 'Average day of year',
+  Spring2yr: 'Frequency',
+  Spring1pt5yr: 'Frequency',
+  Spring99: 'Number of days',
+  Spring95: 'Number of days',
+  Channelflow: 'Probability',
+  CtrFlowMass: 'Day of year',
+  Summer95: 'Number of days',
+  Summer20p: 'Number of days',
+  Highlow: 'Probability / mean',
+  flow7q10: '7 day low flow (m<sup>3</sup>/s)',
+}
+
+const metricDateRange = {
+  MeanSummer: 'Jun. 1 – Sep. 30',
+  WinterMean: 'Dec. 1 – Feb. 28',
+  Spring2yr: 'Feb. 1 – Aug. 1',
+  Spring1pt5yr: 'Feb. 1 – Aug. 1',
+  Spring99: 'Feb. 1 – Aug. 1',
+  Spring95: 'Feb. 1 – Aug. 1',
+  Summer95: 'Jun. 1 – Sep. 30',
+  Summer20p: 'Jun. 1 – Sep. 30',
 }
 
 const periodLabels = {
@@ -212,6 +242,22 @@ const renderPlot = () => {
     if (store.selected) {
       const { $Plotly } = useNuxtApp()
 
+      let metricLabel = metricLabels[metricSelection.value]
+      metricLabel = chartUtils.wordwrapString(metricLabel)
+      metricLabel = '<b>' + metricLabel + '</b>'
+
+      let areaString = store.selected
+      areaString = chartUtils.wordwrapString(areaString)
+
+      let chartTitle = metricLabel + '<br />' + areaString + '<br />'
+
+      if (metricDateRange.hasOwnProperty(metricSelection.value)) {
+        chartTitle +=
+          'Date Range: ' + metricDateRange[metricSelection.value] + ', '
+      }
+
+      chartTitle += 'Stream Order: ' + streamOrder
+
       // Create and populate each hydro stat stream order chart with traces.
       $Plotly.newPlot(
         'hydro-stats-chart-' + streamOrder,
@@ -220,16 +266,13 @@ const renderPlot = () => {
           autosize: true,
           height: 475,
           margin: {
+            t: chartUtils.topPadding(chartTitle),
             l: 75,
             r: 75,
           },
           title: {
-            text:
-              metricLabels[metricSelection.value] +
-              '<br />' +
-              store.selected +
-              '<br />Stream Order: ' +
-              streamOrder,
+            text: chartTitle,
+            y: 0.95,
           },
           xaxis: {
             tickvals: [0, 1, 2, 3],
@@ -239,7 +282,7 @@ const renderPlot = () => {
           yaxis: {
             automargin: true,
             title: {
-              text: metricLabels[metricSelection.value],
+              text: metricYAxisLabels[metricSelection.value],
               standoff: 15,
             },
           },
@@ -266,6 +309,14 @@ const renderPlot = () => {
         }
       )
 
+      chartTitle =
+        '<b>Hydrograph</b><br />' +
+        areaString +
+        '<br />Period: ' +
+        periodLabels[periodSelection.value] +
+        ', Stream Order: ' +
+        streamOrder
+
       // Create and populate each hydrology stream order chart with traces.
       $Plotly.newPlot(
         'hydrograph-chart-' + streamOrder,
@@ -274,17 +325,13 @@ const renderPlot = () => {
           autosize: true,
           height: 475,
           margin: {
+            t: chartUtils.topPadding(chartTitle),
             l: 75,
             r: 75,
           },
           title: {
-            text:
-              'Hydrograph<br />' +
-              store.selected +
-              '<br />Period: ' +
-              periodLabels[periodSelection.value] +
-              ', Stream Order: ' +
-              streamOrder,
+            text: chartTitle,
+            y: 0.95,
           },
           xaxis: {
             tickvals: [1, 91, 182, 274],

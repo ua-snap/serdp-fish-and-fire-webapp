@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import chartUtils from '~/utils/chartUtils'
 import { NSelect } from 'naive-ui'
 const store = useStore()
 
@@ -47,17 +48,17 @@ const modelLabels = {
 }
 
 const metricLabels = {
-  mean_ann: 'Mean Annual Temperature',
-  min_ann: 'Minimum Annual Temperature',
-  max_ann: 'Maximum Annual Temperature',
-  gsdd: 'Growing Season Degree Days',
-  mean_apr: 'Mean April Temperature',
-  mean_may: 'Mean May Temperature',
-  mean_jun: 'Mean June Temperature',
-  mean_jul: 'Mean July Temperature',
-  mean_aug: 'Mean August Temperature',
-  mean_sep: 'Mean September Temperature',
-  mean_oct: 'Mean October Temperature',
+  mean_ann: 'Mean annual temperature',
+  min_ann: 'Minimum annual temperature',
+  max_ann: 'Maximum annual temperature',
+  gsdd: 'Growing season degree days',
+  mean_apr: 'Mean April temperature',
+  mean_may: 'Mean May temperature',
+  mean_jun: 'Mean June temperature',
+  mean_jul: 'Mean July temperature',
+  mean_aug: 'Mean August temperature',
+  mean_sep: 'Mean September temperature',
+  mean_oct: 'Mean October temperature',
 }
 
 const unitLabels = {
@@ -152,6 +153,18 @@ const renderPlot = () => {
     if (store.selected) {
       const { $Plotly } = useNuxtApp()
 
+      let areaString = store.selected
+      areaString = chartUtils.wordwrapString(areaString)
+
+      let chartTitle =
+        '<b>' +
+        metricLabels[metricSelection.value] +
+        '</b>' +
+        '<br />' +
+        areaString +
+        '<br />Stream Order: ' +
+        streamOrder
+
       // Create and populate chart with traces.
       $Plotly.newPlot(
         'stream-temp-chart-' + streamOrder,
@@ -160,16 +173,13 @@ const renderPlot = () => {
           autosize: true,
           height: 475,
           margin: {
+            t: chartUtils.topPadding(chartTitle),
             l: 75,
             r: 75,
           },
           title: {
-            text:
-              metricLabels[metricSelection.value] +
-              '<br />' +
-              store.selected +
-              '<br />Stream Order: ' +
-              streamOrder,
+            text: chartTitle,
+            y: 0.95,
           },
           xaxis: {
             tickvals: [0, 1, 2, 3],

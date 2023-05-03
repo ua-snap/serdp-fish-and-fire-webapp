@@ -37,6 +37,7 @@
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import chartUtils from '~/utils/chartUtils'
 import { NRadioGroup, NRadio, NSpace } from 'naive-ui'
 const store = useStore()
 
@@ -136,6 +137,17 @@ const renderPlot = () => {
     if (store.selected) {
       const { $Plotly } = useNuxtApp()
 
+      let areaString = store.selected
+      areaString = chartUtils.wordwrapString(areaString)
+
+      let chartTitle =
+        '<b>Fish growth</b><br />' +
+        areaString +
+        '<br />' +
+        fmoLabels[fmoSelection.value] +
+        ', Stream Order: ' +
+        streamOrder
+
       // Create and populate each stream order chart with traces.
       $Plotly.newPlot(
         'fish-growth-chart-' + streamOrder,
@@ -144,17 +156,13 @@ const renderPlot = () => {
           autosize: true,
           height: 475,
           margin: {
+            t: chartUtils.topPadding(chartTitle),
             l: 75,
             r: 75,
           },
           title: {
-            text:
-              'Fish Growth<br />' +
-              store.selected +
-              '<br />' +
-              fmoLabels[fmoSelection.value] +
-              ', Stream Order: ' +
-              streamOrder,
+            text: chartTitle,
+            y: 0.95,
           },
           xaxis: {
             tickvals: [0, 1, 2, 3],
