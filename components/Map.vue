@@ -92,6 +92,8 @@ onMounted(() => {
       minZoom: 4,
       zoomSnap: 0.1,
       maxBounds: maxBounds,
+      zoomControl: false,
+      dragging: false,
       scrollWheelZoom: false,
       layers: [baseLayer],
     })
