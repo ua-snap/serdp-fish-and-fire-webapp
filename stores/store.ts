@@ -34,7 +34,8 @@ export const useStore = defineStore('store', () => {
       }
 
       const runtimeConfig = useRuntimeConfig()
-      let geoserverUrl = runtimeConfig.public.geoserverUrl
+      let geoserverUrl =
+        runtimeConfig.public.geoserverUrl + '&PropertyName=(AOI_Name_,Category)'
       let response = await $fetch(geoserverUrl)
       if (response != undefined) {
         response.features.forEach(area => {
