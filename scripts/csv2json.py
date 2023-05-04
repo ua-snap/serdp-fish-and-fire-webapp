@@ -53,6 +53,12 @@ column_settings = {
     },
 }
 
+aoi_name_fixes = {
+    "Fire Managment Zone DAS": "Fire Management Zone DAS",
+    "Fire Managment Zone FAS": "Fire Management Zone FAS",
+    "Fire Managment Zone MID": "Fire Management Zone MID",
+}
+
 parser = argparse.ArgumentParser(description="Convert CSV file to JSON.")
 parser.add_argument("input_file", type=str, help="input CSV file")
 parser.add_argument("output_file", type=str, help="output JSON file")
@@ -124,7 +130,13 @@ for row in df.values.tolist():
         if row[index] == -9999:
             include_row = False
             break
-        value_dict = value_dict[row[index]]
+
+        # If the dictionary/JSON key is an AOI name, fix it if necessary.
+        key = row[index]
+        if group_headers[index] == "AOI" and key in aoi_name_fixes.keys():
+            key = aoi_name_fixes[key]
+
+        value_dict = value_dict[key]
 
     # Add leaves (values) to this branch of the nested dict.
     if include_row:
