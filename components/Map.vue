@@ -105,7 +105,7 @@ onMounted(() => {
     transparent: true,
     format: 'image/png',
     version: '1.3.0',
-    layers: ['fish_and_fire:AOI_v2_shadowmask'],
+    layers: ['fish_and_fire:AOIs_shadowmask'],
   })
 
   if (map == undefined) {
