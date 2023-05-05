@@ -89,7 +89,7 @@ Object.keys(metricLabels).forEach(key => {
 })
 
 const streamOrders = computed(() => {
-  return Object.keys(store.streamTempData)
+  return Object.keys(store.areaData['streamTemp'])
 })
 
 const renderPlot = () => {
@@ -115,7 +115,9 @@ const renderPlot = () => {
       name: 'ERA',
       x: [1, 2, 3],
       y: [
-        store.streamTempData[streamOrder]['ccsm']['0'][metricSelection.value],
+        store.areaData['streamTemp'][streamOrder]['ccsm']['0'][
+          metricSelection.value
+        ],
       ],
       marker: {
         symbol: symbols['era'],
@@ -123,15 +125,17 @@ const renderPlot = () => {
         color: colors['era'],
       },
     })
-    let models = Object.keys(store.streamTempData[streamOrder])
+    let models = Object.keys(store.areaData['streamTemp'][streamOrder])
 
     // Store projected traces.
     models.forEach(model => {
-      let periods = Object.keys(store.streamTempData[streamOrder][model])
+      let periods = Object.keys(
+        store.areaData['streamTemp'][streamOrder][model]
+      )
       let traceValues = [null]
       for (let period = 1; period < periods.length; period++) {
         traceValues.push(
-          store.streamTempData[streamOrder][model][period][
+          store.areaData['streamTemp'][streamOrder][model][period][
             metricSelection.value
           ]
         )
