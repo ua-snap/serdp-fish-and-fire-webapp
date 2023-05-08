@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/'],
+      routes: ['/', '/fmo'],
     },
   },
   head: {
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
         : [],
   },
   modules: ['@pinia/nuxt'],
-  css: ['~/assets/main.css', 'bulma/css/bulma.min.css'],
+  css: ['bulma/css/bulma.min.css', '~/assets/main.css'],
   vite: {
     define: {
       'process.env.DEBUG': false,
