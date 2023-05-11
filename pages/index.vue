@@ -17,6 +17,7 @@
       </div>
     </div>
     <div v-show="store.selectedArea" class="section">
+      <BackButton class="mb-6" />
       <FishGrowthCharts
         v-if="store.selectedArea && store.hasArea('fishGrowth')"
       />
