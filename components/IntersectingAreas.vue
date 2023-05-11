@@ -1,7 +1,9 @@
 <template>
   <div class="content">
-    <p class="mb-5">
-      Click the map within the highlighted region to find areas of interest.
+    <p class="is-size-5 mb-5">
+      Use the dropdown above to browse, or type a name to search from over 300
+      places. Alternatively, click the map within the highlighted region to find
+      areas of interest.
     </p>
     <ul class="list">
       <li v-for="areaName in store.matchedAreaNames" class="list-item">

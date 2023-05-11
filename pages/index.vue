@@ -5,14 +5,14 @@
         <h1 class="title mb-5">{{ store.selectedArea }}</h1>
       </div>
       <div class="columns">
-        <div class="column" :class="store.selectedArea ? 'is-full' : 'is-half'">
-          <Map />
-        </div>
         <div class="column is-half" v-show="!store.selectedArea">
           <div v-show="!store.selectedArea">
             <AreaDropdown />
             <IntersectingAreas />
           </div>
+        </div>
+        <div class="column" :class="store.selectedArea ? 'is-full' : 'is-half'">
+          <Map />
         </div>
       </div>
     </div>
