@@ -1,15 +1,19 @@
 <template>
-  <div class="content">
-    <p class="is-size-5 mb-5">
-      Use the dropdown above to browse, or type a name to search from over 300
-      places. Alternatively, click the map within the highlighted region to find
-      areas of interest.
-    </p>
-    <ul class="list">
-      <li v-for="areaName in store.matchedAreaNames" class="list-item">
-        <a @click="select(areaName)">{{ areaName }}</a>
-      </li>
+  <div class="content pr-4">
+    <p class="is-size-5 mb-5">Find a place of interest:</p>
+    <ul class="is-size-5">
+      <li>Click the map within the highlighted region OR</li>
+      <li>Start typing a name OR</li>
+      <li>Choose from the 300+ place names in the dropdown menu above</li>
     </ul>
+    <div v-if="store.matchedAreaNames.length" class="mb-5">
+      <p class="is-size-5 mb-5">Places found:</p>
+      <ul class="list is-size-5">
+        <li v-for="areaName in store.matchedAreaNames" class="list-item">
+          <a @click="select(areaName)">{{ areaName }}</a>
+        </li>
+      </ul>
+    </div>
     <NButton
       @click="reset()"
       class="mt-3"
