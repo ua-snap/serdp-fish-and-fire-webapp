@@ -35,7 +35,7 @@ pipenv install
 ./boundary.py
 ```
 
-The boundary GeoJSON file will appear in `assets/boundary.geojson`.
+The boundary GeoJSON file will appear in `assets/boundary.json`.
 
 #### Generate the boundary shadow mask shapefile
 
