@@ -11,7 +11,7 @@ Data for this project was provided in CSV format. This repo includes a preproces
 - Omit blank and infinite values
 - Optimize data by removing unused fields and rounding to sensible digits
 
-To generate the needed JSON files, download the five CSV data files from [Google Drive](https://drive.google.com/drive/folders/1hBjKEYzRPY7qQlbnqyMaYRMZSuMtIABB) and store them in `scripts/input`. Then run the following commands to convert them to JSON:
+To generate the needed JSON files, download the five CSV data files from [Google Drive](https://drive.google.com/drive/folders/1hBjKEYzRPY7qQlbnqyMaYRMZSuMtIABB?usp=sharing) and store them in `scripts/input`. Then run the following commands to convert them to JSON:
 
 ```
 cd scripts
@@ -25,7 +25,7 @@ The JSON files will appear in the `assets` subdirectory of this repo, where they
 
 The map component of this webapp uses a boundary GeoJSON file to determine the clickable area and adjust the mouse cursor accordingly. A shadow mask of the boundary is also loaded as a layer into the map make the unclickable areas darker.
 
-To generate both the boundary and shadowmask files, first download the AOI shapefile (ZIP) from [Google Drive](https://drive.google.com/drive/folders/1hBjKEYzRPY7qQlbnqyMaYRMZSuMtIABB) and extract it into the `scripts/input` directory.
+To generate both the boundary and shadowmask files, first download the AOI shapefile (ZIP) from [Google Drive](https://drive.google.com/drive/folders/1hBjKEYzRPY7qQlbnqyMaYRMZSuMtIABB?usp=sharing) and extract it into the `scripts/input` directory.
 
 #### Generate the boundary GeoJSON file
 
