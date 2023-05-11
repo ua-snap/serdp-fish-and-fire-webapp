@@ -37,7 +37,7 @@ pipenv install
 
 The boundary GeoJSON file will appear in `assets/boundary.geojson`.
 
-#### Generate the boundary shadow mask Shapefile
+#### Generate the boundary shadow mask shapefile
 
 Clone the [geospatial-vector-veracity](https://github.com/ua-snap/geospatial-vector-veracity) repo, then run:
 
