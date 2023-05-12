@@ -23,6 +23,7 @@ var polygonBounds = undefined
 var maxBounds = undefined
 var layerGroup = new L.LayerGroup()
 var shadowMask = undefined
+var marker = undefined
 
 const resultMapFeature = ref(undefined)
 const selectedArea = computed(() => store.selectedArea)
@@ -62,12 +63,14 @@ const fitAllPolygons = () => {
 }
 
 watch(selectedArea, async () => {
+  map.removeLayer(marker)
   updateMap()
 })
 
 watch(reset, async () => {
   if (reset.value == true) {
     layerGroup.clearLayers()
+    map.removeLayer(marker)
     store.$patch({
       reset: false,
       intersectingAreas: [],
@@ -129,7 +132,10 @@ const addMapHandlers = () => {
   map.on('click', e => {
     if (!selectedArea.value) {
       layerGroup.addTo(map)
-      store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
+      let lat = e.latlng.lat
+      let lng = e.latlng.lng
+      marker = L.marker([lat, lng]).addTo(map)
+      store.fetchIntersectingAreas(lat, lng).then(() => {
         if (store.matchedAreas.length > 0) {
           map.off('click')
           addMatchedAreas()
