@@ -71,6 +71,10 @@ watch(reset, async () => {
     store.$patch({
       reset: false,
       intersectingAreas: [],
+      point: {
+        lat: undefined,
+        lng: undefined,
+      },
     })
     addMapHandlers()
   }
@@ -128,6 +132,12 @@ onMounted(() => {
 const addMapHandlers = () => {
   map.on('click', e => {
     if (!selectedArea.value) {
+      store.$patch({
+        point: {
+          lat: e.latlng.lat.toFixed(2),
+          lng: e.latlng.lng.toFixed(2),
+        },
+      })
       layerGroup.addTo(map)
       store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
         if (store.matchedAreas.length > 0) {

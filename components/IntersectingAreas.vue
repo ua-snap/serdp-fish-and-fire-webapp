@@ -1,7 +1,12 @@
 <template>
   <div class="content">
-    <p class="mb-5">
+    <p v-if="store.matchedAreaNames.length == 0" class="mb-5">
       Click the map within the highlighted region to find areas of interest.
+    </p>
+    <p v-if="store.matchedAreaNames.length > 0">
+      Found {{ store.matchedAreaNames.length }} matching areas for [{{
+        store.point.lat
+      }}, {{ store.point.lng }}]:
     </p>
     <ul class="list">
       <li v-for="areaName in store.matchedAreaNames" class="list-item">
@@ -11,8 +16,9 @@
     <NButton
       @click="reset()"
       class="mt-3"
+      type="primary"
       v-if="store.matchedAreaNames.length > 0"
-      >Reset</NButton
+      >Go back, start over</NButton
     >
   </div>
 </template>
