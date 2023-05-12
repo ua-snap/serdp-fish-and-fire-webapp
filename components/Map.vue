@@ -11,10 +11,15 @@
 :deep(path.leaflet-interactive:focus) {
   outline: none;
 }
+.leaflet-container {
+  cursor: not-allowed !important;
+}
 </style>
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import boundaryJson from '~/assets/boundary.json'
+
 const { $turfArea } = useNuxtApp()
 const store = useStore()
 
@@ -22,6 +27,7 @@ var map = undefined // Leaflet map object
 var polygonBounds = undefined
 var maxBounds = undefined
 var layerGroup = new L.LayerGroup()
+var boundaryLayer = undefined
 var shadowMask = undefined
 
 const resultMapFeature = ref(undefined)
@@ -126,17 +132,25 @@ onMounted(() => {
 })
 
 const addMapHandlers = () => {
-  map.on('click', e => {
-    if (!selectedArea.value) {
-      layerGroup.addTo(map)
-      store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
-        if (store.matchedAreas.length > 0) {
-          map.off('click')
-          addMatchedAreas()
+  boundaryLayer = L.geoJSON(boundaryJson, {
+    onEachFeature: function (feature, layer) {
+      layer.on('click', e => {
+        if (!selectedArea.value) {
+          layerGroup.addTo(map)
+          store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
+            if (store.matchedAreas.length > 0) {
+              boundaryLayer.off('click')
+              addMatchedAreas()
+            }
+          })
         }
       })
-    }
-  })
+    },
+    style: {
+      opacity: 0.0,
+      fillOpacity: 0.0,
+    },
+  }).addTo(map)
 }
 
 const addMatchedAreas = () => {
