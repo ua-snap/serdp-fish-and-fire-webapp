@@ -11,10 +11,15 @@
 :deep(path.leaflet-interactive:focus) {
   outline: none;
 }
+.leaflet-container {
+  cursor: not-allowed !important;
+}
 </style>
 
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
+import boundaryJson from '~/assets/boundary.json'
+
 const { $turfArea } = useNuxtApp()
 const store = useStore()
 
@@ -22,6 +27,7 @@ var map = undefined // Leaflet map object
 var polygonBounds = undefined
 var maxBounds = undefined
 var layerGroup = new L.LayerGroup()
+var boundaryLayer = undefined
 var shadowMask = undefined
 var marker = undefined
 
@@ -74,6 +80,10 @@ watch(reset, async () => {
     store.$patch({
       reset: false,
       intersectingAreas: [],
+      point: {
+        lat: undefined,
+        lng: undefined,
+      },
     })
     addMapHandlers()
   }
@@ -129,20 +139,34 @@ onMounted(() => {
 })
 
 const addMapHandlers = () => {
-  map.on('click', e => {
-    if (!selectedArea.value) {
-      layerGroup.addTo(map)
-      let lat = e.latlng.lat
-      let lng = e.latlng.lng
-      marker = L.marker([lat, lng]).addTo(map)
-      store.fetchIntersectingAreas(lat, lng).then(() => {
-        if (store.matchedAreas.length > 0) {
-          map.off('click')
-          addMatchedAreas()
+  boundaryLayer = L.geoJSON(boundaryJson, {
+    onEachFeature: function (feature, layer) {
+      layer.on('click', e => {
+        if (!selectedArea.value) {
+          let lat = e.latlng.lat
+          let lng = e.latlng.lng
+          store.$patch({
+            point: {
+              lat: lat.toFixed(2),
+              lng: lng.toFixed(2),
+            },
+          })
+          layerGroup.addTo(map)
+          marker = L.marker([lat, lng]).addTo(map)
+          store.fetchIntersectingAreas(lat, lng).then(() => {
+            if (store.matchedAreas.length > 0) {
+              boundaryLayer.off('click')
+              addMatchedAreas()
+            }
+          })
         }
       })
-    }
-  })
+    },
+    style: {
+      opacity: 0.0,
+      fillOpacity: 0.0,
+    },
+  }).addTo(map)
 }
 
 const addMatchedAreas = () => {
