@@ -2,9 +2,9 @@
   <div class="content pr-4">
     <p class="is-size-5 mb-5">Find a place of interest:</p>
     <ul class="is-size-5">
-      <li>Click the map within the highlighted region OR</li>
-      <li>Start typing a name OR</li>
-      <li>Choose from the 300+ place names in the dropdown menu above</li>
+      <li>Click the map within the highlighted region, <em>or&hellip;</em></li>
+      <li>Start typing a name in the box above, <em>or&hellip;</em></li>
+      <li>Click to choose from the 300+ place names in the box above</li>
     </ul>
     <div v-if="store.matchedAreaNames.length" class="mb-5">
       <p class="is-size-5 mb-5">Places found:</p>

@@ -7,3 +7,8 @@
     padding: 1.5rem;
   }
 }
+
+.n-base-selection-overlay__wrapper {
+  font-weight: bold;
+  color: #333;
+}
