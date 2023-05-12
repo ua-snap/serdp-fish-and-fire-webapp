@@ -1,5 +1,33 @@
 <template>
-  <h1 class="title">Fish Growth</h1>
+  <section class="section content is-size-5">
+    <h1 class="title">Fish Growth</h1>
+    <p>
+      This section shows projections of juvenile Chinook salmon growth potential
+      under three
+      <a @click="router.push({ name: 'fmo' })">fire management options</a>.
+      Future projections are presented for two specific climate models
+      (NCAR-CCSM4 and GFDL-CM3), compared with a historical range
+      (2002&ndash;2018). Growth potential indicates how large a well-fed
+      juvenile Chinook salmon could potentially grow by the end of its first
+      summer, in terms of body wet weight (g). Simulations account for changes
+      in stream temperature influenced by climate and wildfire, assuming that
+      fish feeding rates and food quality remain similar to their current values
+      in the future.
+    </p>
+
+    <p>
+      Growth potential estimates are presented for multiple stream orders; the
+      projections for stream orders 3&ndash;5 are most closely tied to field
+      data, whereas growth estimates for larger mainstem rivers (stream orders
+      6&ndash;7) are more uncertain. Stream temperature and juvenile Chinook
+      salmon growth were simulated on an 8-day timestep. Wildfires were
+      simulated across the study area based on probabilistic flammability
+      metrics (<a
+        href="https://uaf-snap.org/wp-content/uploads/2020/06/ALFRESCO_overview.pdf"
+        >described here</a
+      >), influenced by vegetation type, climate, and fire management option.
+    </p>
+  </section>
   <div class="columns">
     <div class="column is-half">
       <NRadioGroup v-model:value="fmoSelection" name="fmo-group">
@@ -39,6 +67,7 @@
 import { useStore } from '~/stores/store'
 import chartUtils from '~/utils/chartUtils'
 import { NRadioGroup, NRadio, NSpace } from 'naive-ui'
+const router = useRouter()
 const store = useStore()
 
 let fmoSelection = ref('nofmo')
@@ -176,7 +205,7 @@ const renderPlot = () => {
           yaxis: {
             automargin: true,
             title: {
-              text: 'Fish Weight (Grams)',
+              text: 'Fish Weight (g)',
               standoff: 15,
             },
           },

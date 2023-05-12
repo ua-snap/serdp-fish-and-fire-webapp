@@ -1,5 +1,21 @@
 <template>
-  <h2 class="title">Stream Temperature</h2>
+  <section class="section content is-size-5">
+    <h2 class="title">Stream Temperature</h2>
+    <p>
+      This section summarizes future projections of ecologically relevant stream
+      temperature metrics. Future projections are presented for two specific
+      climate models (NCAR-CCSM4 and GFDL-CM3), compared with a historical time
+      period (2002&ndash;2018). Results are presented as means for different
+      stream orders within the selected area of interest. Only stream reaches
+      containing adequate habitat for juvenile Chinook salmon are included
+      (based on a model of underlying geomorphology,
+      <a
+        href="https://afspubs.onlinelibrary.wiley.com/doi/full/10.1002/nafm.10014"
+        >described here</a
+      >). These stream temperature projections take future climate into account,
+      but do not incorporate future wildfire.
+    </p>
+  </section>
   <div class="columns">
     <div class="column is-half">
       <p class="is-size-5 mb-2">Stream Temperature Statistics</p>

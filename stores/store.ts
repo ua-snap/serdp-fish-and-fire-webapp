@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useStore = defineStore('store', () => {
   const areas = ref([])
+  const point = ref({ lat: undefined, lng: undefined })
   const intersectingAreas = ref(undefined)
   const selected = ref(undefined)
   const resultGeom = ref(undefined)
@@ -154,6 +155,7 @@ export const useStore = defineStore('store', () => {
     fetchResultData,
     fetchResultGeom,
     areaOptions,
+    point,
     intersectingAreas,
     matchedAreaNames,
     matchedAreas,

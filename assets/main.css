@@ -7,3 +7,18 @@
     padding: 1.5rem;
   }
 }
+
+.n-base-selection-overlay__wrapper {
+  font-weight: bold;
+  color: #333;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-left: 15px;
+}
