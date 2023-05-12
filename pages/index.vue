@@ -24,6 +24,7 @@
       </div>
     </div>
     <section v-show="store.selectedArea" class="section content">
+      <BackButton class="mb-6" />
       <div class="is-size-5">
         <h1 class="title">Introduction</h1>
         <p>
@@ -90,26 +91,26 @@
           </li>
         </ul>
       </div>
+      <div class="charts">
+        <FishGrowthCharts
+          v-if="store.selectedArea && store.hasArea('fishGrowth')"
+        />
+        <FireImpactCharts
+          v-if="store.selectedArea && store.hasArea('fireImpact')"
+        />
+        <HydroCharts
+          v-if="
+            store.selectedArea &&
+            store.hasArea('hydroStats') &&
+            store.hasArea('hydrograph')
+          "
+        />
+        <StreamTempCharts
+          v-if="store.selectedArea && store.hasArea('streamTemp')"
+        />
+        <BackButton />
+      </div>
     </section>
-    <div v-show="store.selectedArea" class="charts">
-      <FishGrowthCharts
-        v-if="store.selectedArea && store.hasArea('fishGrowth')"
-      />
-      <FireImpactCharts
-        v-if="store.selectedArea && store.hasArea('fireImpact')"
-      />
-      <HydroCharts
-        v-if="
-          store.selectedArea &&
-          store.hasArea('hydroStats') &&
-          store.hasArea('hydrograph')
-        "
-      />
-      <StreamTempCharts
-        v-if="store.selectedArea && store.hasArea('streamTemp')"
-      />
-      <BackButton />
-    </div>
   </div>
 </template>
 
