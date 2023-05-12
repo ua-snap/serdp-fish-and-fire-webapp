@@ -29,6 +29,7 @@ var maxBounds = undefined
 var layerGroup = new L.LayerGroup()
 var boundaryLayer = undefined
 var shadowMask = undefined
+var marker = undefined
 
 const resultMapFeature = ref(undefined)
 const selectedArea = computed(() => store.selectedArea)
@@ -68,12 +69,14 @@ const fitAllPolygons = () => {
 }
 
 watch(selectedArea, async () => {
+  map.removeLayer(marker)
   updateMap()
 })
 
 watch(reset, async () => {
   if (reset.value == true) {
     layerGroup.clearLayers()
+    map.removeLayer(marker)
     store.$patch({
       reset: false,
       intersectingAreas: [],
@@ -149,6 +152,7 @@ const addMapHandlers = () => {
             },
           })
           layerGroup.addTo(map)
+          marker = L.marker([lat, lng]).addTo(map)
           store.fetchIntersectingAreas(lat, lng).then(() => {
             if (store.matchedAreas.length > 0) {
               boundaryLayer.off('click')
