@@ -141,7 +141,7 @@ Object.keys(periodLabels).forEach(key => {
 })
 
 const streamOrders = computed(() => {
-  return Object.keys(store.hydroStatsData)
+  return Object.keys(store.areaData['hydroStats'])
 })
 
 const renderPlot = () => {
@@ -168,7 +168,9 @@ const renderPlot = () => {
       name: 'ERA',
       x: [1, 2, 3],
       y: [
-        store.hydroStatsData[streamOrder]['ccsm']['0'][metricSelection.value],
+        store.areaData['hydroStats'][streamOrder]['ccsm']['0'][
+          metricSelection.value
+        ],
       ],
       marker: {
         symbol: symbols['era'],
@@ -178,11 +180,13 @@ const renderPlot = () => {
     })
 
     if (streamOrder != -9999) {
-      let daysOfYear = Object.keys(store.hydrographData[streamOrder]['era'][0])
+      let daysOfYear = Object.keys(
+        store.areaData['hydrograph'][streamOrder]['era'][0]
+      )
       let hydrographPoints = []
       daysOfYear.forEach(doy => {
         hydrographPoints.push(
-          store.hydrographData[streamOrder]['era'][0][doy]['streamflow']
+          store.areaData['hydrograph'][streamOrder]['era'][0][doy]['streamflow']
         )
       })
 
@@ -200,13 +204,15 @@ const renderPlot = () => {
       })
     }
 
-    let models = Object.keys(store.hydroStatsData[streamOrder])
+    let models = Object.keys(store.areaData['hydroStats'][streamOrder])
     models.forEach(model => {
-      let periods = Object.keys(store.hydroStatsData[streamOrder][model])
+      let periods = Object.keys(
+        store.areaData['hydroStats'][streamOrder][model]
+      )
       let hydroStatsPoints = [null]
       for (let period = 1; period < periods.length; period++) {
         hydroStatsPoints.push(
-          store.hydroStatsData[streamOrder][model][period][
+          store.areaData['hydroStats'][streamOrder][model][period][
             metricSelection.value
           ]
         )
@@ -227,14 +233,16 @@ const renderPlot = () => {
       })
       if (streamOrder != -9999) {
         let daysOfYear = Object.keys(
-          store.hydrographData[streamOrder][model][periodSelection.value]
+          store.areaData['hydrograph'][streamOrder][model][
+            periodSelection.value
+          ]
         )
         let hydrographPoints = []
         daysOfYear.forEach(doy => {
           hydrographPoints.push(
-            store.hydrographData[streamOrder][model][periodSelection.value][
-              doy
-            ]['streamflow']
+            store.areaData['hydrograph'][streamOrder][model][
+              periodSelection.value
+            ][doy]['streamflow']
           )
         })
 

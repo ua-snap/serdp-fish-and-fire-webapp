@@ -93,20 +93,20 @@
       </div>
       <div class="charts">
         <FishGrowthCharts
-          v-if="store.selectedArea && store.hasArea('fishGrowth')"
+          v-if="store.selectedArea && store.areaData['fishGrowth']"
         />
         <FireImpactCharts
-          v-if="store.selectedArea && store.hasArea('fireImpact')"
+          v-if="store.selectedArea && store.areaData['fireImpact']"
         />
         <HydroCharts
           v-if="
             store.selectedArea &&
-            store.hasArea('hydroStats') &&
-            store.hasArea('hydrograph')
+            store.areaData['hydroStats'] &&
+            store.areaData['hydrograph']
           "
         />
         <StreamTempCharts
-          v-if="store.selectedArea && store.hasArea('streamTemp')"
+          v-if="store.selectedArea && store.areaData['streamTemp']"
         />
         <BackButton />
       </div>
@@ -135,4 +135,16 @@ useHead({
 import { useStore } from '~/stores/store'
 const store = useStore()
 store.fetchAreaOptions()
+
+const selectedArea = computed(() => store.selectedArea)
+
+watch(selectedArea, async () => {
+  if (selectedArea.value != undefined) {
+    store.fetchResultData()
+  } else {
+    Object.assign(store, {
+      areaData: {},
+    })
+  }
+})
 </script>

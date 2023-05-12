@@ -100,7 +100,7 @@ const fmoOptions = [
 ]
 
 const streamOrders = computed(() => {
-  return Object.keys(store.fishGrowthData[fmoSelection.value])
+  return Object.keys(store.areaData['fishGrowth'][fmoSelection.value])
 })
 
 const renderPlot = () => {
@@ -125,7 +125,11 @@ const renderPlot = () => {
       mode: 'markers',
       name: 'ERA',
       x: [1, 2, 3],
-      y: [store.fishGrowthData['hist'][streamOrder]['ccsm']['0']['FishWeight']],
+      y: [
+        store.areaData['fishGrowth']['hist'][streamOrder]['ccsm']['0'][
+          'FishWeight'
+        ],
+      ],
       marker: {
         symbol: symbols['era'],
         size: 7,
@@ -133,20 +137,20 @@ const renderPlot = () => {
       },
     })
     let models = Object.keys(
-      store.fishGrowthData[fmoSelection.value][streamOrder]
+      store.areaData['fishGrowth'][fmoSelection.value][streamOrder]
     )
 
     // Store projected traces.
     models.forEach(model => {
       let periods = Object.keys(
-        store.fishGrowthData[fmoSelection.value][streamOrder][model]
+        store.areaData['fishGrowth'][fmoSelection.value][streamOrder][model]
       )
       let traceValues = [null]
       for (let period = 1; period <= periods.length; period++) {
         traceValues.push(
-          store.fishGrowthData[fmoSelection.value][streamOrder][model][period][
-            'FishWeight'
-          ]
+          store.areaData['fishGrowth'][fmoSelection.value][streamOrder][model][
+            period
+          ]['FishWeight']
         )
       }
       traces.push({

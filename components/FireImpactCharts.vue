@@ -116,7 +116,8 @@ const speciesOptions = [
 
 const renderPlot = () => {
   let traces = []
-  let fmoData = store.fireImpactData[fmoSelection.value][speciesSelection.value]
+  let fmoData =
+    store.areaData['fireImpact'][fmoSelection.value][speciesSelection.value]
   let keyPrefixes = ['Low', 'Neutral', 'High']
   const symbols = {
     era: 'circle',
@@ -168,7 +169,7 @@ const renderPlot = () => {
     traces.push(trace)
   }
   let models = Object.keys(
-    store.fireImpactData[fmoSelection.value][speciesSelection.value]
+    store.areaData['fireImpact'][fmoSelection.value][speciesSelection.value]
   )
 
   // Store projected traces.
@@ -179,7 +180,9 @@ const renderPlot = () => {
       let meanKey = prefix + '_Score_AOI_Mean'
       let sdKey = prefix + '_Score_AOI_SD'
       let periods = Object.keys(
-        store.fireImpactData[fmoSelection.value][speciesSelection.value][model]
+        store.areaData['fireImpact'][fmoSelection.value][
+          speciesSelection.value
+        ][model]
       )
       let traceValues = [null]
       let traceErrorBars = [null]

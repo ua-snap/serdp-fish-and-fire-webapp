@@ -2,6 +2,8 @@
 import argparse
 import csv
 import json
+import os
+import re
 import numpy as np
 import pandas as pd
 from collections import defaultdict
@@ -61,7 +63,7 @@ aoi_name_fixes = {
 
 parser = argparse.ArgumentParser(description="Convert CSV file to JSON.")
 parser.add_argument("input_file", type=str, help="input CSV file")
-parser.add_argument("output_file", type=str, help="output JSON file")
+parser.add_argument("output_dir", type=str, help="output directory for JSON files")
 args = parser.parse_args()
 
 
@@ -150,5 +152,20 @@ for row in df.values.tolist():
 # For each dict leaf, convert the list of values to its mean.
 recursive_mean(data_dict)
 
-with open(args.output_file, "w") as jsonfile:
-    json.dump(dict(data_dict), jsonfile, indent=4)
+if not os.path.exists(args.output_dir):
+    os.makedirs(args.output_dir)
+
+characters_to_replace = " :()"
+for key in data_dict.keys():
+    filename = key
+
+    # Remove repeated spaces.
+    filename = re.sub(" +", " ", filename)
+
+    for character in characters_to_replace:
+        filename = filename.replace(character, "_")
+    filename = filename + ".json"
+
+    path = args.output_dir + "/" + filename
+    with open(path, "w") as jsonfile:
+        json.dump(dict(data_dict[key]), jsonfile, indent=4)

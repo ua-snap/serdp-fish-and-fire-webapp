@@ -1,25 +1,12 @@
 import { defineStore } from 'pinia'
-import fishGrowthDict from '~/assets/fish_growth'
-import fireImpactDict from '~/assets/riparian_fire_impact'
-import hydrographDict from '~/assets/hydrograph_data.json'
-import hydroStatsDict from '~/assets/hydrology_stats'
-import streamTempDict from '~/assets/stream_temp_stats'
 
 export const useStore = defineStore('store', () => {
-  // Store imported JSONs into common data object for easier lookup later.
-  const data = {
-    fishGrowth: fishGrowthDict,
-    fireImpact: fireImpactDict,
-    hydrograph: hydrographDict,
-    hydroStats: hydroStatsDict,
-    streamTemp: streamTempDict,
-  }
-
   const areas = ref([])
   const point = ref({ lat: undefined, lng: undefined })
   const intersectingAreas = ref(undefined)
   const selected = ref(undefined)
   const resultGeom = ref(undefined)
+  const areaData = ref({})
   const reset = ref(false)
 
   const fetchAreaOptions = async () => {
@@ -84,6 +71,35 @@ export const useStore = defineStore('store', () => {
     }
   }
 
+  const fetchResultData = async () => {
+    let areaName = selected.value
+
+    // Combine repeated spaces and convert unsafe characters to underscores.
+    // These same string operations are performed when the JSON files are
+    // generated in csv2json.py.
+    let fileSafe = areaName.replace(/ +/g, ' ')
+    fileSafe = fileSafe.replace(/[ :()]/g, '_')
+
+    let datasets = [
+      { subdir: 'fish_growth', dictKey: 'fishGrowth' },
+      { subdir: 'riparian_fire_impact', dictKey: 'fireImpact' },
+      { subdir: 'hydrograph_data', dictKey: 'hydrograph' },
+      { subdir: 'hydrology_stats', dictKey: 'hydroStats' },
+      { subdir: 'stream_temp_stats', dictKey: 'streamTemp' },
+    ]
+
+    datasets.forEach(dataset => {
+      let subdir = dataset['subdir']
+      try {
+        import(`../assets/data/${subdir}/${fileSafe}.json`).then(module => {
+          areaData.value[dataset.dictKey] = module.default
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  }
+
   const fetchResultGeom = async () => {
     try {
       const runtimeConfig = useRuntimeConfig()
@@ -133,55 +149,10 @@ export const useStore = defineStore('store', () => {
     return resultGeom.value
   })
 
-  const hasArea = computed(() => {
-    return function (datasetKey) {
-      return data[datasetKey].hasOwnProperty(selected.value)
-    }
-  })
-
-  const fishGrowthData = computed(() => {
-    let chartData = {}
-    if (selected.value) {
-      chartData = data['fishGrowth'][selected.value]
-    }
-    return chartData
-  })
-
-  const fireImpactData = computed(() => {
-    let chartData = {}
-    if (selected.value) {
-      chartData = data['fireImpact'][selected.value]
-    }
-    return chartData
-  })
-
-  const hydrographData = computed(() => {
-    let chartData = {}
-    if (selected.value) {
-      chartData = data['hydrograph'][selected.value]
-    }
-    return chartData
-  })
-
-  const hydroStatsData = computed(() => {
-    let chartData = {}
-    if (selected.value) {
-      chartData = data['hydroStats'][selected.value]
-    }
-    return chartData
-  })
-
-  const streamTempData = computed(() => {
-    let chartData = {}
-    if (selected.value) {
-      chartData = data['streamTemp'][selected.value]
-    }
-    return chartData
-  })
-
   return {
     fetchAreaOptions,
     fetchIntersectingAreas,
+    fetchResultData,
     fetchResultGeom,
     areaOptions,
     point,
@@ -190,13 +161,8 @@ export const useStore = defineStore('store', () => {
     matchedAreas,
     selected,
     selectedArea,
+    areaData,
     reportGeom,
-    hasArea,
-    fishGrowthData,
-    fireImpactData,
-    hydrographData,
-    hydroStatsData,
-    streamTempData,
     reset,
   }
 })
