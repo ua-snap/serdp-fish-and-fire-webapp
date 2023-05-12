@@ -77,6 +77,10 @@ watch(reset, async () => {
     store.$patch({
       reset: false,
       intersectingAreas: [],
+      point: {
+        lat: undefined,
+        lng: undefined,
+      },
     })
     addMapHandlers()
   }
@@ -136,8 +140,16 @@ const addMapHandlers = () => {
     onEachFeature: function (feature, layer) {
       layer.on('click', e => {
         if (!selectedArea.value) {
+          let lat = e.latlng.lat
+          let lng = e.latlng.lng
+          store.$patch({
+            point: {
+              lat: lat.toFixed(2),
+              lng: lng.toFixed(2),
+            },
+          })
           layerGroup.addTo(map)
-          store.fetchIntersectingAreas(e.latlng.lat, e.latlng.lng).then(() => {
+          store.fetchIntersectingAreas(lat, lng).then(() => {
             if (store.matchedAreas.length > 0) {
               boundaryLayer.off('click')
               addMatchedAreas()
