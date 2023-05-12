@@ -1,24 +1,30 @@
 <template>
   <div class="content pr-4">
-    <p class="is-size-5 mb-5">Find a place of interest:</p>
-    <ul class="is-size-5">
-      <li>Click the map within the highlighted region, <em>or&hellip;</em></li>
-      <li>Start typing a name in the box above, <em>or&hellip;</em></li>
-      <li>Click to choose from the 300+ place names in the box above</li>
-    </ul>
-    <div v-if="store.matchedAreaNames.length" class="mb-5">
-      <p class="is-size-5 mb-5">Places found:</p>
-      <ul class="list is-size-5">
-        <li v-for="areaName in store.matchedAreaNames" class="list-item">
-          <a @click="select(areaName)">{{ areaName }}</a>
+    <div v-if="store.matchedAreaNames.length == 0">
+      <p class="is-size-5 mb-5">Find a place of interest:</p>
+      <ul class="is-size-5">
+        <li>
+          Click the map within the highlighted region, <em>or&hellip;</em>
         </li>
+        <li>Start typing a name in the box above, <em>or&hellip;</em></li>
+        <li>Click to choose from the 300+ place names in the box above</li>
       </ul>
     </div>
+    <h5 class="title is-5" v-if="store.matchedAreaNames.length > 0">
+      Found {{ store.matchedAreaNames.length }} matching areas for
+      {{ store.point.lat }}&deg;N, {{ store.point.lng }}&deg;W
+    </h5>
+    <ul class="list">
+      <li v-for="areaName in store.matchedAreaNames" class="list-item">
+        <a @click="select(areaName)">{{ areaName }}</a>
+      </li>
+    </ul>
     <NButton
       @click="reset()"
       class="mt-3"
+      type="primary"
       v-if="store.matchedAreaNames.length > 0"
-      >Reset</NButton
+      >Go back, start over</NButton
     >
   </div>
 </template>

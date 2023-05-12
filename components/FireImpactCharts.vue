@@ -1,5 +1,32 @@
 <template>
-  <h1 class="title">Riparian Fire Impact</h1>
+  <section class="section content is-size-5">
+    <h1 class="title">Riparian Fire Impact</h1>
+    <p>
+      This section shows projections for the mean riparian fire index, compared
+      with a historical range (2002&ndash;2018). Results are presented for low,
+      neutral, and high intensity wildfire scenarios for two specific climate
+      models (NCAR-CCSM4 and GFDL-CM3). The fire scenarios are a function of
+      fire size, intensity, and fire weather.
+    </p>
+
+    <p>
+      The riparian fire index is the normalized percentage of riparian valley
+      bottom area predicted to burn at high severity, as a function on wildfire
+      intensity and weather, pre-fire vegetation and fuels, stream
+      geomorphology, and catchment topography.
+    </p>
+
+    <p>
+      Results are presented for the base riparian fire index (species = none),
+      as a vulnerability index for two fish species, juvenile Chinook Salmon,
+      and Arctic Grayling, and for three
+      <a @click="router.push({ name: 'fmo' })">fire management options</a>. The
+      vulnerability index is a function of the mean riparian fire index, the
+      total length of high suitability fish habitat relative to total stream
+      length, and flammability. Flammability is defined as the mean percentage
+      of times pixels within this location burned in model simulations.
+    </p>
+  </section>
   <div class="columns">
     <div class="column is-half">
       <NRadioGroup v-model:value="fmoSelection" name="fmo-group">
@@ -34,6 +61,7 @@
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
 import { NRadioGroup, NRadio, NSpace } from 'naive-ui'
+const router = useRouter()
 const store = useStore()
 
 let fmoSelection = ref('nofmo')
@@ -208,7 +236,7 @@ const renderPlot = () => {
         },
         title: {
           text:
-            '<b>Riparian fire vulnerability</b><br />' +
+            '<b>Riparian fire impact</b><br />' +
             store.selected +
             '<br />' +
             fmoLabels[fmoSelection.value] +
