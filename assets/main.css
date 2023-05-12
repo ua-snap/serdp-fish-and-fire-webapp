@@ -8,6 +8,11 @@
   }
 }
 
+.n-base-selection-overlay__wrapper {
+  font-weight: bold;
+  color: #333;
+}
+
 p {
   margin-bottom: 1rem;
 }

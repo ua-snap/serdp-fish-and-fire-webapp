@@ -5,7 +5,7 @@
       v-if="!store.selectedArea"
       filterable
       :options="store.areaOptions"
-      placeholder="Select an area of interest"
+      placeholder="Click or type to select an area of interest&hellip;"
       class="mb-5"
     />
   </client-only>
