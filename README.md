@@ -16,7 +16,7 @@ To generate the needed JSON files, download the five CSV data files from [Google
 ```
 cd scripts
 pipenv install
-./convert.sh
+pipenv run ./csv2json.py
 ```
 
 The JSON files will appear in the `assets` subdirectory of this repo, where they will be imported by the Pinia store.

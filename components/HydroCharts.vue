@@ -52,6 +52,7 @@
 import { useStore } from '~/stores/store'
 import { NSelect, NRadioGroup, NRadio, NSpace } from 'naive-ui'
 import chartUtils from '~/utils/chartUtils'
+const route = useRoute()
 const store = useStore()
 
 let metricSelection = ref('mean_annual_flow')
@@ -158,6 +159,10 @@ const renderPlot = () => {
 
   // Add separate hydrology stat and hydrograph charts for each stream order.
   streamOrders.value.forEach(streamOrder => {
+    if (store.areaData['hydroStats'][streamOrder]['ccsm'] == undefined) {
+      return
+    }
+
     let statsTraces = []
     let hydrographTraces = []
 
@@ -180,6 +185,9 @@ const renderPlot = () => {
     })
 
     if (streamOrder != -9999) {
+      if (store.areaData['hydrograph'][streamOrder] == undefined) {
+        return
+      }
       let daysOfYear = Object.keys(
         store.areaData['hydrograph'][streamOrder]['era'][0]
       )
@@ -261,134 +269,132 @@ const renderPlot = () => {
       }
     })
 
-    if (store.selected) {
-      const { $Plotly } = useNuxtApp()
+    const { $Plotly } = useNuxtApp()
 
-      let metricLabel = metricLabels[metricSelection.value]
-      metricLabel = chartUtils.wordwrapString(metricLabel)
-      metricLabel = '<b>' + metricLabel + '</b>'
+    let metricLabel = metricLabels[metricSelection.value]
+    metricLabel = chartUtils.wordwrapString(metricLabel)
+    metricLabel = '<b>' + metricLabel + '</b>'
 
-      let areaString = store.selected
-      areaString = chartUtils.wordwrapString(areaString)
+    let areaString = store.aoiName
+    areaString = chartUtils.wordwrapString(areaString)
 
-      let chartTitle = metricLabel + '<br />' + areaString + '<br />'
+    let chartTitle = metricLabel + '<br />' + areaString + '<br />'
 
-      if (metricDateRange.hasOwnProperty(metricSelection.value)) {
-        chartTitle +=
-          'Date Range: ' + metricDateRange[metricSelection.value] + ', '
-      }
-
-      chartTitle += 'Stream Order: ' + streamOrder
-
-      // Create and populate each hydro stat stream order chart with traces.
-      $Plotly.newPlot(
-        'hydro-stats-chart-' + streamOrder,
-        statsTraces,
-        {
-          autosize: true,
-          height: 475,
-          margin: {
-            t: chartUtils.topPadding(chartTitle),
-            l: 75,
-            r: 75,
-          },
-          title: {
-            text: chartTitle,
-            y: 0.95,
-          },
-          xaxis: {
-            tickvals: [0, 1, 2, 3],
-            ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
-            dtick: 1,
-          },
-          yaxis: {
-            automargin: true,
-            title: {
-              text: metricYAxisLabels[metricSelection.value],
-              standoff: 15,
-            },
-          },
-        },
-        {
-          responsive: true,
-          displayModeBar: true,
-          displaylogo: false,
-          modeBarButtonsToRemove: [
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'resetScale2d',
-          ],
-          toImageButtonOptions: {
-            filename: metricLabels[metricSelection.value]
-              .toLowerCase()
-              .replace(/ /g, '_'),
-          },
-        }
-      )
-
-      chartTitle =
-        '<b>Hydrograph</b><br />' +
-        areaString +
-        '<br />Period: ' +
-        periodLabels[periodSelection.value] +
-        ', Stream Order: ' +
-        streamOrder
-
-      // Create and populate each hydrology stream order chart with traces.
-      $Plotly.newPlot(
-        'hydrograph-chart-' + streamOrder,
-        hydrographTraces,
-        {
-          autosize: true,
-          height: 475,
-          margin: {
-            t: chartUtils.topPadding(chartTitle),
-            l: 75,
-            r: 75,
-          },
-          title: {
-            text: chartTitle,
-            y: 0.95,
-          },
-          xaxis: {
-            tickvals: [1, 91, 182, 274],
-            ticktext: ['Jan', 'Apr', 'Jul', 'Oct'],
-            range: [1, 365],
-            dtick: 1,
-          },
-          yaxis: {
-            automargin: true,
-            title: {
-              text: 'Streamflow (m<sup>3</sup>/s)',
-              standoff: 15,
-            },
-          },
-        },
-        {
-          responsive: true,
-          displayModeBar: true,
-          displaylogo: false,
-          modeBarButtonsToRemove: [
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'resetScale2d',
-          ],
-          toImageButtonOptions: {
-            filename: 'hydrograph',
-          },
-        }
-      )
+    if (metricDateRange.hasOwnProperty(metricSelection.value)) {
+      chartTitle +=
+        'Date Range: ' + metricDateRange[metricSelection.value] + ', '
     }
+
+    chartTitle += 'Stream Order: ' + streamOrder
+
+    // Create and populate each hydro stat stream order chart with traces.
+    $Plotly.newPlot(
+      'hydro-stats-chart-' + streamOrder,
+      statsTraces,
+      {
+        autosize: true,
+        height: 475,
+        margin: {
+          t: chartUtils.topPadding(chartTitle),
+          l: 75,
+          r: 75,
+        },
+        title: {
+          text: chartTitle,
+          y: 0.95,
+        },
+        xaxis: {
+          tickvals: [0, 1, 2, 3],
+          ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
+          dtick: 1,
+        },
+        yaxis: {
+          automargin: true,
+          title: {
+            text: metricYAxisLabels[metricSelection.value],
+            standoff: 15,
+          },
+        },
+      },
+      {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+          'zoom2d',
+          'pan2d',
+          'select2d',
+          'lasso2d',
+          'zoomIn2d',
+          'zoomOut2d',
+          'autoScale2d',
+          'resetScale2d',
+        ],
+        toImageButtonOptions: {
+          filename: metricLabels[metricSelection.value]
+            .toLowerCase()
+            .replace(/ /g, '_'),
+        },
+      }
+    )
+
+    chartTitle =
+      '<b>Hydrograph</b><br />' +
+      areaString +
+      '<br />Period: ' +
+      periodLabels[periodSelection.value] +
+      ', Stream Order: ' +
+      streamOrder
+
+    // Create and populate each hydrology stream order chart with traces.
+    $Plotly.newPlot(
+      'hydrograph-chart-' + streamOrder,
+      hydrographTraces,
+      {
+        autosize: true,
+        height: 475,
+        margin: {
+          t: chartUtils.topPadding(chartTitle),
+          l: 75,
+          r: 75,
+        },
+        title: {
+          text: chartTitle,
+          y: 0.95,
+        },
+        xaxis: {
+          tickvals: [1, 91, 182, 274],
+          ticktext: ['Jan', 'Apr', 'Jul', 'Oct'],
+          range: [1, 365],
+          dtick: 1,
+        },
+        yaxis: {
+          automargin: true,
+          title: {
+            text: 'Streamflow (m<sup>3</sup>/s)',
+            standoff: 15,
+          },
+        },
+      },
+      {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+          'zoom2d',
+          'pan2d',
+          'select2d',
+          'lasso2d',
+          'zoomIn2d',
+          'zoomOut2d',
+          'autoScale2d',
+          'resetScale2d',
+        ],
+        toImageButtonOptions: {
+          filename: 'hydrograph',
+        },
+      }
+    )
   })
 }
 

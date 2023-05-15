@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/', '/fmo'],
+      routes: ['/', '/report', '/fmo'],
     },
   },
   head: {
@@ -39,6 +39,15 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       geoserverUrl: process.env.GEOSERVER_URL,
+    },
+  },
+  hooks: {
+    'pages:extend'(pages) {
+      pages.push({
+        name: 'report.hash',
+        path: '/report/:hash',
+        file: resolve('/pages/report.vue'),
+      })
     },
   },
 })
