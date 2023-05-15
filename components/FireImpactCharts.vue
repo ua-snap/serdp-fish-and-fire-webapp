@@ -30,7 +30,7 @@
   <div class="columns">
     <div class="column is-half">
       <NRadioGroup v-model:value="fmoSelection" name="fmo-group">
-        <p class="is-size-5 mb-2">Fire Management Options</p>
+        <FmoRadioLabel/>
         <NSpace>
           <NRadio
             v-for="fmoOption in fmoOptions"
