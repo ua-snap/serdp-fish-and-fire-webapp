@@ -1,13 +1,12 @@
 <template>
   <div class="container">
-    <section v-show="!store.selectedArea" class="is-size-5 mb-6">
-      Precipitation, warming air temperatures, and changing wildfire dynamics
-      are driving changes to riverscapes in interior Alaska. This tool uses
-      climate data and observed and modeled freshwater process and biological
-      data to construct a variety of possible futures for interior Alaska boreal
-      aquatic ecosystems.
+    <section v-show="!store.selectedArea" class="section introblurb">
+      Changing precipitation, air temperature, and wildfire dynamics are driving
+      changes in interior Alaska riverscapes. This tool uses climate data, plus
+      observed and modeled freshwater process and biological data, to construct
+      a variety of possible futures for interior Alaska aquatic ecosystems.
     </section>
-    <div>
+    <section class="section">
       <div>
         <h1 class="title mb-5">{{ store.selectedArea }}</h1>
       </div>
@@ -22,95 +21,84 @@
           <Map />
         </div>
       </div>
-    </div>
-    <section v-show="store.selectedArea" class="section content">
+    </section>
+    <section v-show="store.selectedArea" class="section">
       <BackButton class="mb-6" />
-      <div class="is-size-5">
-        <h1 class="title">Introduction</h1>
+      <div class="is-size-5 content">
+        <h3 class="is-3 title">About these model outputs</h3>
         <p>
           Data for the charts below have been averaged across the spatial extent
           of {{ store.selectedArea }}.
         </p>
-
         <p>
           Note: for large areas such as entire river basins, averaging future
           climate conditions and changes can mask important variation within the
           region.
         </p>
-
         <p>
-          The sections below show output from different scientific simulations
-          of possible future conditions for fish growth, stream temperature,
-          riparian fire effects, and hydrology. These simulations use different
-          Global Climate Models (GCMs) &mdash; climate models &mdash; such as
-          the National Center for Atmospheric Research Community Climate System
+          Here, we show show possible future conditions for fish growth, stream
+          temperature, riparian fire effects, and hydrology. These simulations
+          use different Global Circulation Models (GCMs)&mdash;such as the
+          National Center for Atmospheric Research Community Climate System
           Model 4.0 (NCAR CCSM4).
         </p>
-
         <p>
-          Our results are based on the Representative Concentration Pathway 8.5
-          which is a future greenhouse gas emission scenario. The RCP 8.5
-          represents a scenario similar to, or possibly higher than, current
-          global emissions trajectories.
+          Results are based on Representative Concentration Pathway (RCP) 8.5, a
+          future greenhouse gas emission scenario that represents a scenario
+          similar to, or possibly higher than, current global emissions
+          trajectories.
         </p>
-
         <p>
-          Some of these data have been averaged by
-          <strong>stream order</strong>. The stream order is a positive whole
-          number used in geomorphology and hydrology to indicate the level of
-          branching in a river system, where first order streams are headwaters,
-          second to third order are generally tributaries, and fourth order and
-          above are generally main stem rivers.
+          Some data have been averaged by <strong>stream order</strong>: a
+          positive whole number used in geomorphology and hydrology to indicate
+          the level of branching in a river system. First order streams are
+          headwaters, second to third order are generally tributaries, and
+          fourth order and above are generally main stem rivers.
         </p>
-
-        <p>Where available, results include:</p>
-
+        <p>
+          Results include multiple models and scenarios, grouped by historic and
+          two future periods (mid&ndash; and late&ndash;century). Where
+          available, results also include:
+        </p>
         <ul>
           <li>
-            Fish growth charts with multiple models and scenarios, grouped by
-            historic and two future periods (mid/late century) for each stream
-            order present in the area of interest
+            <strong>Fish growth charts</strong> for each stream order present in
+            the area of interest
           </li>
-
           <li>
-            Riparian fire impacts charts with multiple models and scenarios,
-            grouped by historic and two future periods (mid/late century), by
-            fire management option, and by fish species
+            <strong>Riparian fire impact charts</strong> by fire management
+            option and by fish species
           </li>
-
           <li>
-            Stream temperature charts with multiple models and scenarios,
-            grouped by historic and two future periods (mid/late century) for
-            each stream order present in the area of interest
+            <strong>Stream temperature charts</strong> for each stream order
+            present in the area of interest
           </li>
-
           <li>
-            Hydrology charts with multiple models and scenarios, grouped by
-            historic and two future periods (mid/late century) for each stream
-            order present in the area of interest
+            <strong>Hydrology charts</strong> for each stream order present in
+            the area of interest
           </li>
         </ul>
       </div>
-      <div class="charts">
-        <FishGrowthCharts
-          v-if="store.selectedArea && store.areaData['fishGrowth']"
-        />
-        <FireImpactCharts
-          v-if="store.selectedArea && store.areaData['fireImpact']"
-        />
-        <HydroCharts
-          v-if="
-            store.selectedArea &&
-            store.areaData['hydroStats'] &&
-            store.areaData['hydrograph']
-          "
-        />
-        <StreamTempCharts
-          v-if="store.selectedArea && store.areaData['streamTemp']"
-        />
-        <BackButton />
-      </div>
     </section>
+    <div class="charts">
+      <FishGrowthCharts
+        v-if="store.selectedArea && store.areaData['fishGrowth']"
+      />
+      <FireImpactCharts
+        v-if="store.selectedArea && store.areaData['fireImpact']"
+      />
+      <HydroCharts
+        v-if="
+          store.selectedArea &&
+          store.areaData['hydroStats'] &&
+          store.areaData['hydrograph']
+        "
+      />
+      <StreamTempCharts
+        v-if="store.selectedArea && store.areaData['streamTemp']"
+      />
+      <BackButton />
+    </div>
   </div>
 </template>
 
@@ -123,14 +111,17 @@
     }
   }
 }
-li {
-  margin-bottom: 1rem;
+
+.introblurb {
+  margin: 3rem;
+  font-size: 1.5rem;
 }
+
 </style>
 
 <script setup lang="ts">
 useHead({
-  title: 'SERDP Fish and Fire',
+  title: 'Fish and Fire in Interior Alaska',
 })
 import { useStore } from '~/stores/store'
 const store = useStore()
