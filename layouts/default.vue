@@ -1,10 +1,13 @@
 <template>
   <header>
-    <div class="container">
-      <h1 class="is-size-1 mt-5">SERDP Fish and Fire</h1>
+    <div class="headerbanner">
+      Alaska Cooperative Fish and Wildlife Research
+      Unit&nbsp;&nbsp;|&nbsp;&nbsp;Freshwater Fish Ecology Lab
+    </div>
+    <div class="headertext">
+      <h1>Fish and Fire<br />in Interior Alaska</h1>
     </div>
   </header>
-  <hr />
 
   <slot />
 
@@ -78,6 +81,38 @@ footer {
 }
 img {
   width: 17rem;
+}
+
+header {
+  background-image: url('~/assets/stream-fire-boreal_falke_cropped.jpg');
+  height: 300px;
+  .headertext {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: calc(300px - 2rem);
+    padding-left: 2rem;
+    h1 {
+
+      font-family: 'Roboto Slab';
+      color: white;
+      font-size: 4.45rem;
+      font-weight: 800;
+      line-height: 1;
+      text-shadow: 0.3rem 0.3rem 0.4rem rgba(0,0,0,0.8);
+    }
+  }
+
+  .headerbanner {
+    text-align: center;
+    background-color: #95A739;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    letter-spacing: 0.25rem;
+  }
 }
 </style>
 

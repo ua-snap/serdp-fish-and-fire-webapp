@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto+Slab:wght@700&display=swap');
+
+* {
+  font-family: "Open Sans";
+}
+
 .leaflet-container {
   cursor: pointer !important;
 }
 
-@media(max-width: 1024px) {
+@media (max-width: 1024px) {
   .container {
     padding: 1.5rem;
   }
