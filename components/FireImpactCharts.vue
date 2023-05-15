@@ -11,7 +11,7 @@
 
     <p>
       The riparian fire index is the normalized percentage of riparian valley
-      bottom area predicted to burn at high severity, as a function on wildfire
+      bottom area predicted to burn at high severity, as a function of wildfire
       intensity and weather, pre-fire vegetation and fuels, stream
       geomorphology, and catchment topography.
     </p>
