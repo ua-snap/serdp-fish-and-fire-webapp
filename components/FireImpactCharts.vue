@@ -223,62 +223,60 @@ const renderPlot = () => {
     }
   }
 
-  if (store.selected) {
-    const { $Plotly } = useNuxtApp()
+  const { $Plotly } = useNuxtApp()
 
-    // Create and populate chart with traces.
-    $Plotly.newPlot(
-      'chart',
-      traces,
-      {
-        autosize: true,
-        height: 475,
-        margin: {
-          l: 75,
-          r: 75,
-        },
+  // Create and populate chart with traces.
+  $Plotly.newPlot(
+    'chart',
+    traces,
+    {
+      autosize: true,
+      height: 475,
+      margin: {
+        l: 75,
+        r: 75,
+      },
+      title: {
+        text:
+          '<b>Riparian fire impact</b><br />' +
+          store.aoiName +
+          '<br />' +
+          fmoLabels[fmoSelection.value] +
+          ', Species: ' +
+          speciesLabels[speciesSelection.value],
+      },
+      xaxis: {
+        tickvals: [0, 1, 2, 3],
+        ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
+        dtick: 1,
+      },
+      yaxis: {
+        automargin: true,
         title: {
-          text:
-            '<b>Riparian fire impact</b><br />' +
-            store.selected +
-            '<br />' +
-            fmoLabels[fmoSelection.value] +
-            ', Species: ' +
-            speciesLabels[speciesSelection.value],
-        },
-        xaxis: {
-          tickvals: [0, 1, 2, 3],
-          ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
-          dtick: 1,
-        },
-        yaxis: {
-          automargin: true,
-          title: {
-            text: 'Riparian Fire Impact',
-            standoff: 15,
-          },
+          text: 'Riparian Fire Impact',
+          standoff: 15,
         },
       },
-      {
-        responsive: true,
-        displayModeBar: true,
-        displaylogo: false,
-        modeBarButtonsToRemove: [
-          'zoom2d',
-          'pan2d',
-          'select2d',
-          'lasso2d',
-          'zoomIn2d',
-          'zoomOut2d',
-          'autoScale2d',
-          'resetScale2d',
-        ],
-        toImageButtonOptions: {
-          filename: 'riparian_fire_impact',
-        },
-      }
-    )
-  }
+    },
+    {
+      responsive: true,
+      displayModeBar: true,
+      displaylogo: false,
+      modeBarButtonsToRemove: [
+        'zoom2d',
+        'pan2d',
+        'select2d',
+        'lasso2d',
+        'zoomIn2d',
+        'zoomOut2d',
+        'autoScale2d',
+        'resetScale2d',
+      ],
+      toImageButtonOptions: {
+        filename: 'riparian_fire_impact',
+      },
+    }
+  )
 }
 
 watch(fmoSelection, async () => {

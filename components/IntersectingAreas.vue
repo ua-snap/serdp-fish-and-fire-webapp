@@ -34,12 +34,15 @@
 </template>
 
 <script setup lang="ts">
+import hash_map from '~/assets/hash_map.json'
 import { useStore } from '~/stores/store'
+const router = useRouter()
 const store = useStore()
 
 const select = name => {
-  store.$patch({
-    selected: name,
+  let hash = store.hashFromName(name)
+  router.push({
+    path: 'report/' + hash,
   })
 }
 

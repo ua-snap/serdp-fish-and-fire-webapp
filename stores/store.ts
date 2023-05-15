@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
+import hash_map from '~/assets/hash_map.json'
 
 export const useStore = defineStore('store', () => {
   const areas = ref([])
   const point = ref({ lat: undefined, lng: undefined })
   const intersectingAreas = ref(undefined)
-  const selected = ref(undefined)
+  const hash = ref(undefined)
   const resultGeom = ref(undefined)
   const areaData = ref({})
   const reset = ref(false)
@@ -72,13 +73,8 @@ export const useStore = defineStore('store', () => {
   }
 
   const fetchResultData = async () => {
-    let areaName = selected.value
-
-    // Combine repeated spaces and convert unsafe characters to underscores.
-    // These same string operations are performed when the JSON files are
-    // generated in csv2json.py.
-    let fileSafe = areaName.replace(/ +/g, ' ')
-    fileSafe = fileSafe.replace(/[ :()]/g, '_')
+    const route = useRoute()
+    hash.value = route.params.hash
 
     let datasets = [
       { subdir: 'fish_growth', dictKey: 'fishGrowth' },
@@ -91,7 +87,7 @@ export const useStore = defineStore('store', () => {
     datasets.forEach(dataset => {
       let subdir = dataset['subdir']
       try {
-        import(`../assets/data/${subdir}/${fileSafe}.json`).then(module => {
+        import(`../assets/data/${subdir}/${hash.value}.json`).then(module => {
           areaData.value[dataset.dictKey] = module.default
         })
       } catch (error) {
@@ -101,12 +97,16 @@ export const useStore = defineStore('store', () => {
   }
 
   const fetchResultGeom = async () => {
+    const route = useRoute()
+    hash.value = route.params.hash
+    let aoi = hash_map[hash.value]
+
     try {
       const runtimeConfig = useRuntimeConfig()
       let geoserverUrl =
         runtimeConfig.public.geoserverUrl +
         "&cql_filter=AOI_Name_='" +
-        encodeURIComponent(selected.value) +
+        encodeURIComponent(aoi) +
         "'"
       let response = await $fetch(geoserverUrl)
       if (response != undefined) {
@@ -141,8 +141,18 @@ export const useStore = defineStore('store', () => {
     return geoms
   })
 
-  const selectedArea = computed(() => {
-    return selected.value
+  const aoiName = computed(() => {
+    return hash_map[hash.value]
+  })
+
+  const hashFromName = computed(() => {
+    return aoiName => {
+      for (const [hash, name] of Object.entries(hash_map)) {
+        if (name == aoiName) {
+          return hash
+        }
+      }
+    }
   })
 
   const reportGeom = computed(() => {
@@ -159,9 +169,9 @@ export const useStore = defineStore('store', () => {
     intersectingAreas,
     matchedAreaNames,
     matchedAreas,
-    selected,
-    selectedArea,
     areaData,
+    aoiName,
+    hashFromName,
     reportGeom,
     reset,
   }

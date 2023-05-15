@@ -117,6 +117,12 @@ const renderPlot = () => {
 
   // Add a separate chart for each available stream order.
   streamOrders.value.forEach(streamOrder => {
+    if (
+      store.areaData['fishGrowth']['hist'][streamOrder]['ccsm'] == undefined
+    ) {
+      return
+    }
+
     let traces = []
 
     // Store historical trace.
@@ -167,69 +173,67 @@ const renderPlot = () => {
       })
     })
 
-    if (store.selected) {
-      const { $Plotly } = useNuxtApp()
+    const { $Plotly } = useNuxtApp()
 
-      let areaString = store.selected
-      areaString = chartUtils.wordwrapString(areaString)
+    let areaString = store.aoiName
+    areaString = chartUtils.wordwrapString(areaString)
 
-      let chartTitle =
-        '<b>Fish growth</b><br />' +
-        areaString +
-        '<br />' +
-        fmoLabels[fmoSelection.value] +
-        ', Stream Order: ' +
-        streamOrder
+    let chartTitle =
+      '<b>Fish growth</b><br />' +
+      areaString +
+      '<br />' +
+      fmoLabels[fmoSelection.value] +
+      ', Stream Order: ' +
+      streamOrder
 
-      // Create and populate each stream order chart with traces.
-      $Plotly.newPlot(
-        'fish-growth-chart-' + streamOrder,
-        traces,
-        {
-          autosize: true,
-          height: 475,
-          margin: {
-            t: chartUtils.topPadding(chartTitle),
-            l: 75,
-            r: 75,
-          },
+    // Create and populate each stream order chart with traces.
+    $Plotly.newPlot(
+      'fish-growth-chart-' + streamOrder,
+      traces,
+      {
+        autosize: true,
+        height: 475,
+        margin: {
+          t: chartUtils.topPadding(chartTitle),
+          l: 75,
+          r: 75,
+        },
+        title: {
+          text: chartTitle,
+          y: 0.95,
+        },
+        xaxis: {
+          tickvals: [0, 1, 2, 3],
+          ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
+          dtick: 1,
+        },
+        yaxis: {
+          automargin: true,
           title: {
-            text: chartTitle,
-            y: 0.95,
-          },
-          xaxis: {
-            tickvals: [0, 1, 2, 3],
-            ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
-            dtick: 1,
-          },
-          yaxis: {
-            automargin: true,
-            title: {
-              text: 'Fish Weight (g)',
-              standoff: 15,
-            },
+            text: 'Fish Weight (g)',
+            standoff: 15,
           },
         },
-        {
-          responsive: true,
-          displayModeBar: true,
-          displaylogo: false,
-          modeBarButtonsToRemove: [
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'resetScale2d',
-          ],
-          toImageButtonOptions: {
-            filename: 'fish_growth',
-          },
-        }
-      )
-    }
+      },
+      {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+          'zoom2d',
+          'pan2d',
+          'select2d',
+          'lasso2d',
+          'zoomIn2d',
+          'zoomOut2d',
+          'autoScale2d',
+          'resetScale2d',
+        ],
+        toImageButtonOptions: {
+          filename: 'fish_growth',
+        },
+      }
+    )
   })
 }
 

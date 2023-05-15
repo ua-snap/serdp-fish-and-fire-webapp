@@ -14,28 +14,15 @@
 <script setup lang="ts">
 import { useStore } from '~/stores/store'
 import { NSelect } from 'naive-ui'
+const router = useRouter()
 const store = useStore()
 
 let selectedValue = ref(undefined)
 
-const selectedArea = computed(() => store.selectedArea)
-
-const select = name => {
-  store.$patch({
-    selected: name,
-  })
-}
-
 watch(selectedValue, async value => {
-  store.$patch({
-    selected: value,
+  let hash = store.hashFromName(value)
+  router.push({
+    path: 'report/' + hash,
   })
-  if (selectedArea.value) {
-    store.fetchResultGeom()
-  }
-})
-
-watch(selectedArea, async value => {
-  selectedValue.value = value
 })
 </script>

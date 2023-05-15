@@ -21,6 +21,8 @@ import { useStore } from '~/stores/store'
 import boundaryJson from '~/assets/boundary.json'
 
 const { $turfArea } = useNuxtApp()
+const route = useRoute()
+const router = useRouter()
 const store = useStore()
 
 var map = undefined // Leaflet map object
@@ -32,18 +34,11 @@ var shadowMask = undefined
 var marker = undefined
 
 const resultMapFeature = ref(undefined)
-const selectedArea = computed(() => store.selectedArea)
 const reset = computed(() => store.reset)
 
 const updateMap = () => {
-  // Clear selected polygon
-  if (!selectedArea.value && !resultMapFeature.value != undefined) {
-    resultMapFeature.value.clearLayers()
-    resultMapFeature.value = undefined
-  }
-
   // Restore intersecting polygons from previous click operation
-  if (!selectedArea.value) {
+  if (route.params.hash == undefined) {
     layerGroup.addTo(map)
     map.addLayer(shadowMask)
   } else {
@@ -51,16 +46,11 @@ const updateMap = () => {
     map.removeLayer(shadowMask)
   }
 
-  if (selectedArea.value) {
+  if (route.params.hash != undefined) {
     store.fetchResultGeom().then(() => {
       resultMapFeature.value = L.geoJSON(store.reportGeom).addTo(map)
       map.fitBounds(resultMapFeature.value.getBounds(), { padding: [50, 50] })
     })
-  }
-
-  if (selectedArea.value == undefined) {
-    fitAllPolygons()
-    map.invalidateSize()
   }
 }
 
@@ -68,15 +58,12 @@ const fitAllPolygons = () => {
   map.fitBounds(polygonBounds)
 }
 
-watch(selectedArea, async () => {
-  map.removeLayer(marker)
-  updateMap()
-})
-
 watch(reset, async () => {
   if (reset.value == true) {
     layerGroup.clearLayers()
-    map.removeLayer(marker)
+    if (marker != undefined) {
+      map.removeLayer(marker)
+    }
     store.$patch({
       reset: false,
       intersectingAreas: [],
@@ -134,6 +121,7 @@ onMounted(() => {
     })
   }
 
+  updateMap()
   fitAllPolygons()
   addMapHandlers()
 })
@@ -142,24 +130,22 @@ const addMapHandlers = () => {
   boundaryLayer = L.geoJSON(boundaryJson, {
     onEachFeature: function (feature, layer) {
       layer.on('click', e => {
-        if (!selectedArea.value) {
-          let lat = e.latlng.lat
-          let lng = e.latlng.lng
-          store.$patch({
-            point: {
-              lat: lat.toFixed(2),
-              lng: lng.toFixed(2),
-            },
-          })
-          layerGroup.addTo(map)
-          marker = L.marker([lat, lng]).addTo(map)
-          store.fetchIntersectingAreas(lat, lng).then(() => {
-            if (store.matchedAreas.length > 0) {
-              boundaryLayer.off('click')
-              addMatchedAreas()
-            }
-          })
-        }
+        let lat = e.latlng.lat
+        let lng = e.latlng.lng
+        store.$patch({
+          point: {
+            lat: lat.toFixed(2),
+            lng: lng.toFixed(2),
+          },
+        })
+        layerGroup.addTo(map)
+        marker = L.marker([lat, lng]).addTo(map)
+        store.fetchIntersectingAreas(lat, lng).then(() => {
+          if (store.matchedAreas.length > 0) {
+            boundaryLayer.off('click')
+            addMatchedAreas()
+          }
+        })
       })
     },
     style: {
@@ -227,9 +213,7 @@ const addArea = area => {
           },
           click: e => {
             layer.setStyle(defaultStyle)
-            store.$patch({
-              selected: feature.properties.name,
-            })
+            select(feature.properties.name)
           },
         })
       },
@@ -240,4 +224,11 @@ const addArea = area => {
 onUpdated(() => {
   fitAllPolygons()
 })
+
+const select = name => {
+  let hash = store.hashFromName(name)
+  router.push({
+    path: 'report/' + hash,
+  })
+}
 </script>

@@ -54,6 +54,7 @@
 import { useStore } from '~/stores/store'
 import chartUtils from '~/utils/chartUtils'
 import { NSelect } from 'naive-ui'
+const route = useRoute()
 const store = useStore()
 
 let metricSelection = ref('mean_ann')
@@ -122,6 +123,10 @@ const renderPlot = () => {
 
   // Add a separate chart for each available stream order.
   streamOrders.value.forEach(streamOrder => {
+    if (store.areaData['streamTemp'][streamOrder]['ccsm'] == undefined) {
+      return
+    }
+
     let traces = []
 
     // Store historical trace.
@@ -170,72 +175,70 @@ const renderPlot = () => {
       })
     })
 
-    if (store.selected) {
-      const { $Plotly } = useNuxtApp()
+    const { $Plotly } = useNuxtApp()
 
-      let areaString = store.selected
-      areaString = chartUtils.wordwrapString(areaString)
+    let areaString = store.aoiName
+    areaString = chartUtils.wordwrapString(areaString)
 
-      let chartTitle =
-        '<b>' +
-        metricLabels[metricSelection.value] +
-        '</b>' +
-        '<br />' +
-        areaString +
-        '<br />Stream Order: ' +
-        streamOrder
+    let chartTitle =
+      '<b>' +
+      metricLabels[metricSelection.value] +
+      '</b>' +
+      '<br />' +
+      areaString +
+      '<br />Stream Order: ' +
+      streamOrder
 
-      // Create and populate chart with traces.
-      $Plotly.newPlot(
-        'stream-temp-chart-' + streamOrder,
-        traces,
-        {
-          autosize: true,
-          height: 475,
-          margin: {
-            t: chartUtils.topPadding(chartTitle),
-            l: 75,
-            r: 75,
-          },
+    // Create and populate chart with traces.
+    $Plotly.newPlot(
+      'stream-temp-chart-' + streamOrder,
+      traces,
+      {
+        autosize: true,
+        height: 475,
+        margin: {
+          t: chartUtils.topPadding(chartTitle),
+          l: 75,
+          r: 75,
+        },
+        title: {
+          text: chartTitle,
+          y: 0.95,
+        },
+        xaxis: {
+          tickvals: [0, 1, 2, 3],
+          ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
+          dtick: 1,
+        },
+        yaxis: {
+          automargin: true,
           title: {
-            text: chartTitle,
-            y: 0.95,
-          },
-          xaxis: {
-            tickvals: [0, 1, 2, 3],
-            ticktext: ['', '2002-2018', '2038-2047', '2068-2077'],
-            dtick: 1,
-          },
-          yaxis: {
-            automargin: true,
-            title: {
-              text: yAxisLabels[metricSelection.value],
-              standoff: 15,
-            },
+            text: yAxisLabels[metricSelection.value],
+            standoff: 15,
           },
         },
-        {
-          responsive: true,
-          displayModeBar: true,
-          displaylogo: false,
-          modeBarButtonsToRemove: [
-            'zoom2d',
-            'pan2d',
-            'select2d',
-            'lasso2d',
-            'zoomIn2d',
-            'zoomOut2d',
-            'autoScale2d',
-            'resetScale2d',
-          ],
-          toImageButtonOptions: {
-            filename: metricLabels[metricSelection.value]
-              .toLowerCase()
-              .replace(/ /g, '_'),
-          },
-        }
-      )
-    }
+      },
+      {
+        responsive: true,
+        displayModeBar: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: [
+          'zoom2d',
+          'pan2d',
+          'select2d',
+          'lasso2d',
+          'zoomIn2d',
+          'zoomOut2d',
+          'autoScale2d',
+          'resetScale2d',
+        ],
+        toImageButtonOptions: {
+          filename: metricLabels[metricSelection.value]
+            .toLowerCase()
+            .replace(/ /g, '_'),
+        },
+      }
+    )
   })
 }
 
@@ -245,7 +248,6 @@ watch(metricSelection, async () => {
 
 onMounted(() => {
   renderPlot()
-
   // Fire resize event to trigger Plotly responsiveness.
   window.dispatchEvent(new Event('resize'))
 })
