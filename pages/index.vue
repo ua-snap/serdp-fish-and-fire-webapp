@@ -6,7 +6,7 @@
       observed and modeled freshwater process and biological data, to construct
       a variety of possible futures for interior Alaska aquatic ecosystems.
     </section>
-    <div>
+    <section class="section">
       <div class="columns">
         <div class="column is-half">
           <AreaDropdown />
@@ -16,7 +16,7 @@
           <Map />
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 useHead({
-  title: 'Fish and Fire in Interior Alaska',
+  title: 'Fish & Fire in Interior Alaska',
 })
 import { useStore } from '~/stores/store'
 const store = useStore()

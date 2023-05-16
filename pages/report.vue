@@ -4,82 +4,76 @@
     <Map />
     <section class="section content">
       <BackButton class="mb-6" />
-      <div class="is-size-5">
-        <h1 class="title">Introduction</h1>
+      <div class="is-size-5 content">
+        <h1>About these model outputs</h1>
         <p>
           Data for the charts below have been averaged across the spatial extent
           of {{ store.aoiName }}.
         </p>
 
         <p>
-          Note: for large areas such as entire river basins, averaging future
-          climate conditions and changes can mask important variation within the
-          region.
+          <em>
+            Note: for large areas such as entire river basins, averaging future
+            climate conditions and changes can mask important variation within
+            the region.</em
+          >
         </p>
 
         <p>
-          The sections below show output from different scientific simulations
-          of possible future conditions for fish growth, stream temperature,
-          riparian fire effects, and hydrology. These simulations use different
-          Global Climate Models (GCMs) &mdash; climate models &mdash; such as
-          the National Center for Atmospheric Research Community Climate System
+          Here, we show possible future conditions for fish growth, stream
+          temperature, riparian fire effects, and hydrology. These simulations
+          use different Global Circulation Models (GCMs)&mdash;such as the
+          National Center for Atmospheric Research Community Climate System
           Model 4.0 (NCAR CCSM4).
         </p>
-
         <p>
-          Our results are based on the Representative Concentration Pathway 8.5
-          which is a future greenhouse gas emission scenario. The RCP 8.5
-          represents a scenario similar to, or possibly higher than, current
-          global emissions trajectories.
+          Results are based on Representative Concentration Pathway (RCP) 8.5, a
+          future greenhouse gas emission scenario that represents a scenario
+          similar to, or possibly higher than, current global emissions
+          trajectories.
         </p>
-
         <p>
-          Some of these data have been averaged by
-          <strong>stream order</strong>. The stream order is a positive whole
-          number used in geomorphology and hydrology to indicate the level of
-          branching in a river system, where first order streams are headwaters,
-          second to third order are generally tributaries, and fourth order and
-          above are generally main stem rivers.
+          Some data have been averaged by stream order: a positive whole number
+          used in geomorphology and hydrology to indicate the level of branching
+          in a river system. First order streams are headwaters, second to third
+          order are generally tributaries, and fourth order and above are
+          generally main stem rivers.
         </p>
-
-        <p>Where available, results include:</p>
+        <p>
+          Results include multiple models and scenarios, grouped by historic and
+          two future periods (mid- and late century). Where available, results
+          also include:
+        </p>
 
         <ul>
           <li>
-            Fish growth charts with multiple models and scenarios, grouped by
-            historic and two future periods (mid/late century) for each stream
-            order present in the area of interest
+            <strong>Fish growth charts</strong> for each stream order present in
+            the area of interest
           </li>
-
           <li>
-            Riparian fire impacts charts with multiple models and scenarios,
-            grouped by historic and two future periods (mid/late century), by
-            fire management option, and by fish species
+            <strong>Riparian fire impact charts</strong> by fire management
+            option and by fish species
           </li>
-
           <li>
-            Stream temperature charts with multiple models and scenarios,
-            grouped by historic and two future periods (mid/late century) for
-            each stream order present in the area of interest
+            <strong>Stream temperature charts</strong> for each stream order
+            present in the area of interest
           </li>
-
           <li>
-            Hydrology charts with multiple models and scenarios, grouped by
-            historic and two future periods (mid/late century) for each stream
-            order present in the area of interest
+            <strong>Hydrology charts</strong> for each stream order present in
+            the area of interest
           </li>
         </ul>
       </div>
-      <div class="charts">
-        <FishGrowthCharts v-if="store.areaData['fishGrowth']" />
-        <FireImpactCharts v-if="store.areaData['fireImpact']" />
-        <HydroCharts
-          v-if="store.areaData['hydroStats'] && store.areaData['hydrograph']"
-        />
-        <StreamTempCharts v-if="store.areaData['streamTemp']" />
-        <BackButton />
-      </div>
     </section>
+    <div class="charts">
+      <FishGrowthCharts v-if="store.areaData['fishGrowth']" />
+      <FireImpactCharts v-if="store.areaData['fireImpact']" />
+      <HydroCharts
+        v-if="store.areaData['hydroStats'] && store.areaData['hydrograph']"
+      />
+      <StreamTempCharts v-if="store.areaData['streamTemp']" />
+      <BackButton />
+    </div>
   </div>
 </template>
 
@@ -92,14 +86,11 @@
     }
   }
 }
-li {
-  margin-bottom: 1rem;
-}
 </style>
 
 <script setup lang="ts">
 useHead({
-  title: 'SERDP Fish and Fire',
+  title: 'Fish & Fire in Interior Alaska',
 })
 import { useStore } from '~/stores/store'
 const store = useStore()

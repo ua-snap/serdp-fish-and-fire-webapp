@@ -58,7 +58,7 @@ li {
 
 <script setup lang="ts">
 useHead({
-  title: 'Fire Management Options — Fish and Fire in Interior Alaska',
+  title: 'Fire Management Options — Fish & Fire in Interior Alaska',
 })
 import { NButton } from 'naive-ui'
 import { useStore } from '~/stores/store'
