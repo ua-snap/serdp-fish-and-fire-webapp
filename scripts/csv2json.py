@@ -176,13 +176,12 @@ for run in runs:
 
     for key in data_dict.keys():
         data_dict[key]["aoi"] = key
-
         # Generate 6-digit hash for each AOI to be used in permalinks.
         sha_1 = hashlib.sha1()
-        sha_1.update(filename.encode("utf-8"))
-        hash = sha_1.hexdigest()[:6]
-        hash_map[hash] = key
-        filename = hash + ".json"
+        sha_1.update(key.encode("utf-8"))
+        hashed_placename = sha_1.hexdigest()[:6]
+        hash_map[hashed_placename] = key
+        filename = hashed_placename + ".json"
         path = run["output_dir"] + "/" + filename
 
         with open(path, "w") as jsonfile:
