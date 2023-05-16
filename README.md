@@ -23,7 +23,7 @@ The JSON files will appear in the `assets` subdirectory of this repo, where they
 
 ### Generate AOI boundary and shadowmask
 
-The map component of this webapp uses a boundary GeoJSON file to determine the clickable area and adjust the mouse cursor accordingly. A shadow mask of the boundary is also loaded as a layer into the map make the unclickable areas darker.
+The map component of this webapp uses a boundary GeoJSON file to determine the clickable area and adjust the mouse cursor accordingly. A shadow mask of the boundary is also loaded as a layer into the map to make the unclickable areas darker.
 
 To generate both the boundary and shadowmask files, first download the AOI shapefile (ZIP) from [Google Drive](https://drive.google.com/drive/folders/1hBjKEYzRPY7qQlbnqyMaYRMZSuMtIABB?usp=sharing) and extract it into the `scripts/input` directory.
 
