@@ -51,7 +51,7 @@
             the area of interest
           </li>
           <li>
-            <strong>Riparian fire impact charts</strong> by fire management
+            <strong>Riparian fire index charts</strong> by fire management
             option and by fish species
           </li>
           <li>

@@ -1,6 +1,6 @@
 <template>
   <section class="section content is-size-5">
-    <h1 class="title">Riparian Fire Impact</h1>
+    <h1 class="title">Riparian Fire Index</h1>
     <p>
       This section shows projections for the mean riparian fire index, compared
       with a historical range (2002&ndash;2018). Results are presented for low,
@@ -30,7 +30,7 @@
   <div class="columns">
     <div class="column is-half">
       <NRadioGroup v-model:value="fmoSelection" name="fmo-group">
-        <FmoRadioLabel/>
+        <FmoRadioLabel />
         <NSpace>
           <NRadio
             v-for="fmoOption in fmoOptions"
@@ -238,7 +238,7 @@ const renderPlot = () => {
       },
       title: {
         text:
-          '<b>Riparian fire impact</b><br />' +
+          '<b>Riparian fire index</b><br />' +
           store.aoiName +
           '<br />' +
           fmoLabels[fmoSelection.value] +
@@ -253,7 +253,7 @@ const renderPlot = () => {
       yaxis: {
         automargin: true,
         title: {
-          text: 'Riparian Fire Impact',
+          text: 'Riparian Fire Index',
           standoff: 15,
         },
       },
@@ -273,7 +273,7 @@ const renderPlot = () => {
         'resetScale2d',
       ],
       toImageButtonOptions: {
-        filename: 'riparian_fire_impact',
+        filename: 'riparian_fire_index',
       },
     }
   )
