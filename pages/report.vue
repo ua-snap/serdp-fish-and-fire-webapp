@@ -20,11 +20,11 @@
         </p>
 
         <p>
-          Here, we show possible future conditions for fish growth, stream
-          temperature, riparian fire effects, and hydrology. These simulations
-          use different Global Circulation Models (GCMs)&mdash;such as the
-          National Center for Atmospheric Research Community Climate System
-          Model 4.0 (NCAR CCSM4).
+          Here, we show possible future conditions for riparian fire effects,
+          hydrology, stream temperature, and fish growth. These simulations use
+          different Global Circulation Models (GCMs)&mdash;such as the National
+          Center for Atmospheric Research Community Climate System Model 4.0
+          (NCAR CCSM4).
         </p>
         <p>
           Results are based on Representative Concentration Pathway (RCP) 8.5, a
@@ -47,31 +47,31 @@
 
         <ul>
           <li>
-            <strong>Fish growth charts</strong> for each stream order present in
-            the area of interest
-          </li>
-          <li>
             <strong>Riparian fire impact charts</strong> by fire management
             option and by fish species
+          </li>
+          <li>
+            <strong>Hydrology charts</strong> for each stream order present in
+            the area of interest
           </li>
           <li>
             <strong>Stream temperature charts</strong> for each stream order
             present in the area of interest
           </li>
           <li>
-            <strong>Hydrology charts</strong> for each stream order present in
+            <strong>Fish growth charts</strong> for each stream order present in
             the area of interest
           </li>
         </ul>
       </div>
     </section>
     <div class="charts">
-      <FishGrowthCharts v-if="store.areaData['fishGrowth']" />
       <FireImpactCharts v-if="store.areaData['fireImpact']" />
       <HydroCharts
         v-if="store.areaData['hydroStats'] && store.areaData['hydrograph']"
       />
       <StreamTempCharts v-if="store.areaData['streamTemp']" />
+      <FishGrowthCharts v-if="store.areaData['fishGrowth']" />
       <BackButton />
     </div>
   </div>
