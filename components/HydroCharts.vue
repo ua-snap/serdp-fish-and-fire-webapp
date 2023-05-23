@@ -65,14 +65,14 @@ const modelLabels = {
 
 const metricLabels = {
   mean_annual_flow: 'Mean annual flow',
-  MeanSummer: 'Mean summer flow',
-  WinterMean: 'Mean winter flow',
   LCV: 'Coefficient of variation for the distribution of flow values',
   LSkew: 'Skewness for the distribution of flow values',
   LKurt: 'Kurtosis for the distribution of flow values',
   AR1: 'AR1 correlation for entire continuous time series of flow values',
   Amplitude: 'Magnitude of maximum flow relative to mean',
   phase: 'Average day of year of maximum flow',
+  MeanSummer: 'Mean summer flow',
+  WinterMean: 'Mean winter flow',
   Spring2yr: 'Frequency of spring 2 year high flows',
   Spring1pt5yr: 'Frequency of spring 1.5 year high flows',
   Spring99: 'Number of days spring flows were in the top 1% of annual flows',
