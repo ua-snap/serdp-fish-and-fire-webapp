@@ -66,6 +66,7 @@ column_settings = {
         "omit": [
             "RCA",
             "ReachID",
+            "Channelflow",
         ],
     },
     "Riparian_Fire_Impact_by_AOI.csv": {

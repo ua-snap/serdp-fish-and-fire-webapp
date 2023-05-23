@@ -78,7 +78,6 @@ const metricLabels = {
   Spring1pt5yr: 'Frequency of spring 1.5 year high flows',
   Spring99: 'Number of days spring flows were in the top 1% of annual flows',
   Spring95: 'Number of days spring flows were in the top 5% of annual flows',
-  Channelflow: 'Probability 1.5 year flow event would occur during a year',
   CtrFlowMass: 'Center of timing of the mass of flow for an annual water year',
   Summer95: 'Number of days summer flows were in the top 5% of annual flows',
   Summer20p:
@@ -195,7 +194,6 @@ const metricYAxisLabels = {
   Spring1pt5yr: 'Frequency',
   Spring99: 'Number of days',
   Spring95: 'Number of days',
-  Channelflow: 'Probability',
   CtrFlowMass: 'Day of year',
   Summer95: 'Number of days',
   Summer20p: 'Number of days',
