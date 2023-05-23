@@ -103,6 +103,56 @@ const streamOrders = computed(() => {
   return Object.keys(store.areaData['fishGrowth'][fmoSelection.value])
 })
 
+const yAxisRange = computed(() => {
+  // Collect all values in this array to be used to determine shared min/max
+  // values for y-axis range across all fish growth charts.
+  let allValues = []
+
+  let fmos = fmoOptions.map(fmoOption => {
+    return fmoOption.value
+  })
+
+  streamOrders.value.forEach(streamOrder => {
+    if (
+      store.areaData['fishGrowth']['hist'][streamOrder]['ccsm'] == undefined ||
+      store.areaData['fishGrowth']['hist'][streamOrder]['ccsm']['0'] ==
+        undefined
+    ) {
+      return
+    }
+    let historicalValue =
+      store.areaData['fishGrowth']['hist'][streamOrder]['ccsm']['0'][
+        'FishWeight'
+      ]
+    allValues.push(historicalValue)
+
+    fmos.forEach(fmo => {
+      let models = Object.keys(store.areaData['fishGrowth'][fmo][streamOrder])
+      models.forEach(model => {
+        let periods = Object.keys(
+          store.areaData['fishGrowth'][fmo][streamOrder][model]
+        )
+        for (let period = 1; period <= periods.length; period++) {
+          let projectedValue =
+            store.areaData['fishGrowth'][fmo][streamOrder][model][period][
+              'FishWeight'
+            ]
+          allValues.push(projectedValue)
+        }
+      })
+    })
+  })
+
+  let minValue = Math.min.apply(Math, allValues)
+  let maxValue = Math.max.apply(Math, allValues)
+
+  // Add some padding above/below min/max so plot markers don't get cropped.
+  minValue -= minValue > 0 ? minValue * 0.03 : maxValue * 0.03
+  maxValue += maxValue * 0.03
+
+  return [minValue, maxValue]
+})
+
 const renderPlot = () => {
   const symbols = {
     era: 'circle',
@@ -213,6 +263,7 @@ const renderPlot = () => {
             text: 'Fish Weight (g)',
             standoff: 15,
           },
+          range: yAxisRange.value,
         },
       },
       {
