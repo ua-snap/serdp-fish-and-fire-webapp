@@ -264,7 +264,10 @@ const renderPlot = () => {
 
   // Add separate hydrology stat and hydrograph charts for each stream order.
   streamOrders.value.forEach(streamOrder => {
-    if (store.areaData['hydroStats'][streamOrder]['ccsm'] == undefined) {
+    if (
+      store.areaData['hydroStats'][streamOrder]['ccsm'] == undefined ||
+      store.areaData['hydroStats'][streamOrder]['ccsm']['0'] == undefined
+    ) {
       return
     }
 

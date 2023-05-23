@@ -176,7 +176,6 @@ for run in runs:
         os.makedirs(run["output_dir"])
 
     for key in data_dict.keys():
-        data_dict[key]["aoi"] = key
         # Generate 6-digit hash for each AOI to be used in permalinks.
         sha_1 = hashlib.sha1()
         sha_1.update(key.encode("utf-8"))
