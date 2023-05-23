@@ -111,6 +111,43 @@ const streamOrders = computed(() => {
   return Object.keys(store.areaData['streamTemp'])
 })
 
+const yAxisRange = computed(() => {
+  // Collect all values in this array to be used to determine shared min/max
+  // values for y-axis range across all fish growth charts.
+  let allValues = []
+
+  streamOrders.value.forEach(streamOrder => {
+    let historicalValue =
+      store.areaData['streamTemp'][streamOrder]['ccsm']['0'][
+        metricSelection.value
+      ]
+    allValues.push(historicalValue)
+
+    let models = Object.keys(store.areaData['streamTemp'][streamOrder])
+    models.forEach(model => {
+      let periods = Object.keys(
+        store.areaData['streamTemp'][streamOrder][model]
+      )
+      for (let period = 1; period < periods.length; period++) {
+        let projectedValue =
+          store.areaData['streamTemp'][streamOrder][model][period][
+            metricSelection.value
+          ]
+        allValues.push(projectedValue)
+      }
+    })
+  })
+
+  let minValue = Math.min.apply(Math, allValues)
+  let maxValue = Math.max.apply(Math, allValues)
+
+  // Add some padding above/below min/max so plot markers don't get cropped.
+  minValue -= minValue > 0 ? minValue * 0.03 : maxValue * 0.03
+  maxValue += maxValue * 0.03
+
+  return [minValue, maxValue]
+})
+
 const renderPlot = () => {
   const symbols = {
     era: 'circle',
@@ -125,7 +162,10 @@ const renderPlot = () => {
 
   // Add a separate chart for each available stream order.
   streamOrders.value.forEach(streamOrder => {
-    if (store.areaData['streamTemp'][streamOrder]['ccsm'] == undefined) {
+    if (
+      store.areaData['streamTemp'][streamOrder]['ccsm'] == undefined ||
+      store.areaData['streamTemp'][streamOrder]['ccsm']['0'] == undefined
+    ) {
       return
     }
 
@@ -218,6 +258,7 @@ const renderPlot = () => {
             text: yAxisLabels[metricSelection.value],
             standoff: 15,
           },
+          range: yAxisRange.value,
         },
       },
       {
