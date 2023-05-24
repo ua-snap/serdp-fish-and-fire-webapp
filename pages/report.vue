@@ -52,15 +52,15 @@
             <a href="#fire-impact">Riparian fire impact charts</a> by fire
             management option and by fish species
           </li>
-          <li v-if="store.areaData['streamTemp']">
-            <a href="#stream-temp">Stream temperature charts</a> for each stream
-            order present in the area of interest
-          </li>
           <li
             v-if="store.areaData['hydroStats'] && store.areaData['hydrograph']"
           >
             <a href="#hydro-stats">Hydrology charts</a> for each stream order
             present in the area of interest
+          </li>
+          <li v-if="store.areaData['streamTemp']">
+            <a href="#stream-temp">Stream temperature charts</a> for each stream
+            order present in the area of interest
           </li>
         </ul>
       </div>
