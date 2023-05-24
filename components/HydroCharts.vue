@@ -3,9 +3,9 @@
     <h1 class="title">Hydrology</h1>
     <p>
       This section shows streamflow metrics and mean daily streamflow
-      (m<sup>3</sup>/s) projections compared with a historical range
-      (2002&ndash;2018) for two climate models (NCAR-CCSM4; GFDL-CM3). Historic
-      and future streamflow projections were calculated using the
+      (m<sup>3</sup>/s) projections compared with a historical dataset (ERA) for
+      two climate models (NCAR-CCSM4; GFDL-CM3). Historic and future streamflow
+      projections were calculated using the
       <a
         href="https://ral.ucar.edu/sites/default/files/public/projects/wrf_hydro/technical-description-user-guide/wrf-hydro-v5.1.1-technical-description.pdf"
         >WRF-Hydro Modeling System</a

@@ -24,6 +24,11 @@
           {{ availableDataString }}. These simulations use different Global
           Circulation Models (GCMs)&mdash;such as the National Center for
           Atmospheric Research Community Climate System Model 4.0 (NCAR CCSM4).
+          Possible future conditions are compared with a historical dataset
+          (ERA), which uses reanalysis to combine historical observations with
+          short-range weather forecasts to create consistent and comprehensive
+          datasets of past weather and climate, filling gaps in the
+          observational record.
         </p>
         <p>
           Results are based on Representative Concentration Pathway (RCP) 8.5, a
