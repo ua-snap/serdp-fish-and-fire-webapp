@@ -13,6 +13,7 @@
       the selected management units. These calculations were based on the annual
       water year, which runs from October 1 to September 30.
     </p>
+    <p>In the charts below, MAF stands for mean annual flow.</p>
   </section>
   <div class="columns is-desktop">
     <div class="column is-half-desktop">
@@ -218,6 +219,13 @@ const periodLabels = {
   '2': '2068-2077',
 }
 
+const streamStrings = {
+  '1': 'Headwater Streams (MAF ≤ 1m<sup>3</sup>/s)',
+  '2': 'Small Tributaries (1 < MAF ≤ 5m<sup>3</sup>/s)',
+  '3': 'Large Tributaries (5 < MAF ≤ 25m<sup>3</sup>/s)',
+  '4': 'Main Stem Rivers (MAF > 25m<sup>3</sup>/s)',
+}
+
 const periodOptions = []
 Object.keys(periodLabels).forEach(key => {
   periodOptions.push({
@@ -367,10 +375,10 @@ const renderPlot = () => {
 
     if (metricDateRange.hasOwnProperty(metricSelection.value)) {
       chartTitle +=
-        'Date Range: ' + metricDateRange[metricSelection.value] + ', '
+        'Date Range: ' + metricDateRange[metricSelection.value] + '<br />'
     }
 
-    chartTitle += 'Stream Order: ' + streamOrder
+    chartTitle += streamStrings[streamOrder]
 
     // Create and populate each hydro stat stream order chart with traces.
     $Plotly.newPlot(
@@ -428,8 +436,8 @@ const renderPlot = () => {
       areaString +
       '<br />Period: ' +
       periodLabels[periodSelection.value] +
-      ', Stream Order: ' +
-      streamOrder
+      '<br />' +
+      streamStrings[streamOrder]
 
     // Create and populate each hydrology stream order chart with traces.
     $Plotly.newPlot(

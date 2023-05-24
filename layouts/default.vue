@@ -70,6 +70,8 @@
           >Privacy Statement</a
         >.
       </p>
+
+      <p>Photo credit: Jeff Falke, used with permission.</p>
     </div>
   </footer>
 </template>
@@ -93,19 +95,18 @@ header {
     height: calc(300px - 2rem);
     padding-left: 2rem;
     h1 {
-
       font-family: 'Roboto Slab';
       color: white;
       font-size: 4.45rem;
       font-weight: 800;
       line-height: 1;
-      text-shadow: 0.3rem 0.3rem 0.4rem rgba(0,0,0,0.8);
+      text-shadow: 0.3rem 0.3rem 0.4rem rgba(0, 0, 0, 0.8);
     }
   }
 
   .headerbanner {
     text-align: center;
-    background-color: #95A739;
+    background-color: #95a739;
     color: white;
     font-weight: 600;
     text-transform: uppercase;
