@@ -71,6 +71,16 @@
         >.
       </p>
 
+      <p>
+        UA is committed to providing accessible websites.
+        <a href="https://www.alaska.edu/webaccessibility/"
+          >Learn more about UA’s notice of web accessibility</a
+        >. If we can help you access this website’s content, email us at
+        <a href="mailto:uaf-snap-data-tools@alaska.edu"
+          >uaf-snap-data-tools@alaska.edu</a
+        >!
+      </p>
+
       <p>Photo credit: Jeff Falke, used with permission.</p>
     </div>
   </footer>
