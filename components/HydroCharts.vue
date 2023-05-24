@@ -334,6 +334,7 @@ const renderPlot = () => {
           filename: metricLabels[metricSelection.value]
             .toLowerCase()
             .replace(/ /g, '_'),
+          scale: 2,
         },
       }
     )
@@ -392,6 +393,7 @@ const renderPlot = () => {
         ],
         toImageButtonOptions: {
           filename: 'hydrograph',
+          scale: 2,
         },
       }
     )
