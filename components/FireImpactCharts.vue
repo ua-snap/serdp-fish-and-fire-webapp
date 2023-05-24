@@ -30,7 +30,7 @@
   <div class="columns">
     <div class="column is-half">
       <NRadioGroup v-model:value="fmoSelection" name="fmo-group">
-        <FmoRadioLabel/>
+        <FmoRadioLabel />
         <NSpace>
           <NRadio
             v-for="fmoOption in fmoOptions"

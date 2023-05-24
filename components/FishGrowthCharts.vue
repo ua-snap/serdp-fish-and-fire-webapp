@@ -14,7 +14,6 @@
       fish feeding rates and food quality remain similar to their current values
       in the future.
     </p>
-
     <p>
       Growth potential estimates are presented for multiple stream orders; the
       projections for stream orders 3&ndash;5 are most closely tied to field
@@ -23,7 +22,7 @@
       salmon growth were simulated on an 8-day timestep. Wildfires were
       simulated across the study area based on probabilistic flammability
       metrics (<a
-        href="https://github.com/ua-snap/alfresco/blob/main/docs/ALFRESCO_Guide.pdf"
+        href="https://uaf-snap.org/wp-content/uploads/2020/06/ALFRESCO_overview.pdf"
         >described here</a
       >), influenced by vegetation type, climate, and fire management option.
     </p>

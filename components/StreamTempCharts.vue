@@ -10,7 +10,7 @@
       containing adequate habitat for juvenile Chinook salmon are included
       (based on a model of underlying geomorphology,
       <a
-        href="https://afspubs.onlinelibrary.wiley.com/doi/full/10.1002/nafm.10014"
+        href="https://www.fs.usda.gov/pnw/pubs/journals/pnw_2007_burnett001.pdf"
         >described here</a
       >). These stream temperature projections take future climate into account,
       but do not incorporate future wildfire.
