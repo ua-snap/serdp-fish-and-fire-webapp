@@ -236,6 +236,7 @@ const renderPlot = () => {
           filename: metricLabels[metricSelection.value]
             .toLowerCase()
             .replace(/ /g, '_'),
+          scale: 2,
         },
       }
     )

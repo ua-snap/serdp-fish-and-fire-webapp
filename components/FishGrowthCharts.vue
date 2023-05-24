@@ -231,6 +231,7 @@ const renderPlot = () => {
         ],
         toImageButtonOptions: {
           filename: 'fish_growth',
+          scale: 2,
         },
       }
     )
