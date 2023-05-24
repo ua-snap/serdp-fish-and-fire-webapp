@@ -17,6 +17,20 @@ export default defineNuxtConfig({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
   },
+  app: {
+    head: {
+      script: [
+        {
+          src: 'https://umami.snap.uaf.edu/umami.js',
+          'data-website-id': '0d96da3f-f9c7-4f69-946d-848d38c0b5d3',
+          'data-do-not-track': 'true',
+          'data-domains': 'snap.uaf.edu',
+          async: 'true',
+          defer: 'true',
+        },
+      ],
+    },
+  },
   build: {
     transpile:
       process.env.NODE_ENV === 'production'
