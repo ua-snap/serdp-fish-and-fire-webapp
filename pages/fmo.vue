@@ -4,7 +4,7 @@
       <h1 class="title">Fire Management Options (FMO)</h1>
       <p>
         Flammability simulations from the ALFRESCO model were used as inputs for
-        the fish growth and riparian fire impact projections displayed in this
+        the fish growth and riparian fire index projections displayed in this
         tool. These ALFRESCO simulations were run using three different fire
         suppression scenarios, incorporating data from the
         <a href="https://fire.ak.blm.gov/"
@@ -35,7 +35,7 @@
         <a href="https://github.com/ua-snap/alfresco">ALFRESCO model</a> and
         <a href="https://github.com/ua-snap/alfresco_fmo">ALFRESCO FMO inputs</a
         >. The ALFRESCO data used as inputs for fish growth and riparian fire
-        impacts are
+        index are
         <a
           href="https://catalog.snap.uaf.edu/geonetwork/srv/eng/catalog.search#/metadata/3be7e974-df96-4eef-bb41-ee16f625124f"
           >available for download here</a

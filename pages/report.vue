@@ -49,7 +49,7 @@
             present in the area of interest
           </li>
           <li v-if="store.areaData['fireImpact']">
-            <a href="#fire-impact">Riparian fire impact charts</a> by fire
+            <a href="#fire-impact">Riparian fire index charts</a> by fire
             management option and by fish species
           </li>
           <li
