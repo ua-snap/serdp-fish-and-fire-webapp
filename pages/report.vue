@@ -20,11 +20,10 @@
         </p>
 
         <p>
-          Here, we show possible future conditions for fish growth, stream
-          temperature, riparian fire effects, and hydrology. These simulations
-          use different Global Circulation Models (GCMs)&mdash;such as the
-          National Center for Atmospheric Research Community Climate System
-          Model 4.0 (NCAR CCSM4).
+          Here, we show possible future conditions for
+          {{ availableDataString }}. These simulations use different Global
+          Circulation Models (GCMs)&mdash;such as the National Center for
+          Atmospheric Research Community Climate System Model 4.0 (NCAR CCSM4).
         </p>
         <p>
           Results are based on Representative Concentration Pathway (RCP) 8.5, a
@@ -41,37 +40,47 @@
         </p>
         <p>
           Results include multiple models and scenarios, grouped by historic and
-          two future periods (mid- and late century). Where available, results
-          also include:
+          two future periods (mid- and late century). Results also include:
         </p>
 
         <ul>
-          <li>
-            <strong>Fish growth charts</strong> for each stream order present in
-            the area of interest
-          </li>
-          <li>
-            <strong>Riparian fire index charts</strong> by fire management
-            option and by fish species
-          </li>
-          <li>
-            <strong>Stream temperature charts</strong> for each stream order
+          <li v-if="store.areaData['fishGrowth']">
+            <a href="#fish-growth">Fish growth charts</a> for each stream order
             present in the area of interest
           </li>
-          <li>
-            <strong>Hydrology charts</strong> for each stream order present in
-            the area of interest
+          <li v-if="store.areaData['fireImpact']">
+            <a href="#fire-impact">Riparian fire index charts</a> by fire
+            management option and by fish species
+          </li>
+          <li
+            v-if="store.areaData['hydroStats'] && store.areaData['hydrograph']"
+          >
+            <a href="#hydro-stats">Hydrology charts</a> for each stream order
+            present in the area of interest
+          </li>
+          <li v-if="store.areaData['streamTemp']">
+            <a href="#stream-temp">Stream temperature charts</a> for each stream
+            order present in the area of interest
           </li>
         </ul>
       </div>
     </section>
     <div class="charts">
-      <FishGrowthCharts v-if="store.areaData['fishGrowth']" />
-      <FireImpactCharts v-if="store.areaData['fireImpact']" />
-      <HydroCharts
+      <div id="fish-growth" v-if="store.areaData['fishGrowth']">
+        <FishGrowthCharts />
+      </div>
+      <div id="fire-impact" v-if="store.areaData['fireImpact']">
+        <FireImpactCharts />
+      </div>
+      <div
+        id="hydro-stats"
         v-if="store.areaData['hydroStats'] && store.areaData['hydrograph']"
-      />
-      <StreamTempCharts v-if="store.areaData['streamTemp']" />
+      >
+        <HydroCharts />
+      </div>
+      <div id="stream-temp" v-if="store.areaData['streamTemp']">
+        <StreamTempCharts />
+      </div>
       <BackButton />
     </div>
   </div>
@@ -95,4 +104,28 @@ useHead({
 import { useStore } from '~/stores/store'
 const store = useStore()
 store.fetchResultData()
+
+const availableDataString = computed(() => {
+  let availableData = []
+  if (store.areaData['fishGrowth']) {
+    availableData.push('fish growth')
+  }
+  if (store.areaData['fireImpact']) {
+    availableData.push('riparian fire effects')
+  }
+  if (store.areaData['streamTemp']) {
+    availableData.push('stream temperature')
+  }
+  if (store.areaData['hydroStats'] && store.areaData['hydrograph']) {
+    availableData.push('hydrology')
+  }
+  if (availableData.length > 2) {
+    let allButLast = availableData.slice(0, availableData.length - 1).join(', ')
+    return allButLast + ', and ' + availableData.at(-1)
+  } else if (availableData.length == 2) {
+    return availableData[0] + ' and ' + availableData[1]
+  } else {
+    return availableData[0]
+  }
+})
 </script>

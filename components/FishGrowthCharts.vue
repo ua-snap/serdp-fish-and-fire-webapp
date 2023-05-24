@@ -23,7 +23,7 @@
       salmon growth were simulated on an 8-day timestep. Wildfires were
       simulated across the study area based on probabilistic flammability
       metrics (<a
-        href="https://uaf-snap.org/wp-content/uploads/2020/06/ALFRESCO_overview.pdf"
+        href="https://github.com/ua-snap/alfresco/blob/main/docs/ALFRESCO_Guide.pdf"
         >described here</a
       >), influenced by vegetation type, climate, and fire management option.
     </p>
