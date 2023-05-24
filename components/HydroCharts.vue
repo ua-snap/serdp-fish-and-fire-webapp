@@ -65,12 +65,12 @@ const modelLabels = {
 
 const metricLabels = {
   mean_annual_flow: 'Mean annual flow',
-  LCV: 'Coefficient of variation for the distribution of flow values',
-  LSkew: 'Skewness for the distribution of flow values',
-  LKurt: 'Kurtosis for the distribution of flow values',
-  AR1: 'AR1 correlation for entire continuous time series of flow values',
-  Amplitude: 'Magnitude of maximum flow relative to mean',
-  phase: 'Average day of year of maximum flow',
+  LCV: 'Coefficient of variation',
+  LSkew: 'Skewness',
+  LKurt: 'Kurtosis',
+  AR1: 'AR1',
+  Amplitude: 'Amplitude',
+  phase: 'Phase',
   MeanSummer: 'Mean summer flow',
   WinterMean: 'Mean winter flow',
   Spring2yr: 'Frequency of spring 2 year high flows',
@@ -90,8 +90,8 @@ const metricLabels = {
 const metricOptions = [
   {
     type: 'group',
-    label: 'Magnificent Seven',
-    key: 'Magnificent Seven',
+    label: 'Seven fundamental daily streamflow statistics (FDSS)',
+    key: 'Seven fundamental daily streamflow statistics (FDSS)',
     children: [
       {
         label: metricLabels['mean_annual_flow'],
@@ -125,8 +125,8 @@ const metricOptions = [
   },
   {
     type: 'group',
-    label: 'Other Statistics',
-    key: 'Other Statistics',
+    label: 'Ecologically relevant (ER)',
+    key: 'Ecologically relevant (ER)',
     children: [
       {
         label: metricLabels['MeanSummer'],
