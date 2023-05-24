@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "nuxi dev",
-    "build": "nuxi build"
+    "build": "cp node_modules/leaflet/dist/images/* public/ && nuxi build"
   },
   "devDependencies": {
     "eslint": "^8.39.0",
