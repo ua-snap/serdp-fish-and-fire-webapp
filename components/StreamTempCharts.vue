@@ -13,7 +13,9 @@
         href="https://www.fs.usda.gov/pnw/pubs/journals/pnw_2007_burnett001.pdf"
         >described here</a
       >). These stream temperature projections take future climate into account,
-      but do not incorporate future wildfire.
+      but do not incorporate future wildfire. Although models projected a range
+      of probabilistic future temperatures, only the mean values are shown in
+      this visualization for simplicity.
     </p>
   </section>
   <div class="columns">

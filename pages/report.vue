@@ -20,11 +20,11 @@
         </p>
 
         <p>
-          Here, we show possible future conditions for riparian fire effects,
-          hydrology, stream temperature, and fish growth. These simulations use
-          different Global Circulation Models (GCMs)&mdash;such as the National
-          Center for Atmospheric Research Community Climate System Model 4.0
-          (NCAR CCSM4).
+          Here, we show possible future conditions for fish growth, stream
+          temperature, riparian fire effects, and hydrology. These simulations
+          use different Global Circulation Models (GCMs)&mdash;such as the
+          National Center for Atmospheric Research Community Climate System
+          Model 4.0 (NCAR CCSM4).
         </p>
         <p>
           Results are based on Representative Concentration Pathway (RCP) 8.5, a
@@ -33,11 +33,16 @@
           trajectories.
         </p>
         <p>
-          Some data have been averaged by stream order: a positive whole number
-          used in geomorphology and hydrology to indicate the level of branching
-          in a river system. First order streams are headwaters, second to third
-          order are generally tributaries, and fourth order and above are
-          generally main stem rivers.
+          Hydrology results are averaged by stream size class. Headwaters are
+          streams with mean annual flows (MAF) &le; 1 m<sup>3</sup>/s, small
+          tributaries MAF &le; 5m<sup>3</sup>/s, large tributaries MAF &le;
+          25m<sup>3</sup>/s, and mainstem rivers MAF &gt; 25m<sup>3</sup>/s.
+          Stream temperature and fish growth data have been averaged by stream
+          order: a positive whole number used in geomorphology and hydrology to
+          indicate the level of branching in a river system. First order streams
+          are headwaters, second to third order are generally small and large
+          tributaries, and fourth order and above are generally main stem
+          rivers.
         </p>
         <p>
           Results include multiple models and scenarios, grouped by historic and
@@ -51,8 +56,8 @@
             option and by fish species
           </li>
           <li>
-            <strong>Hydrology charts</strong> for each stream order present in
-            the area of interest
+            <strong>Hydrology charts</strong> for each stream size class present
+            in the area of interest
           </li>
           <li>
             <strong>Stream temperature charts</strong> for each stream order
