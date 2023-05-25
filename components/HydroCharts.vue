@@ -167,10 +167,6 @@ const metricOptions = [
         value: 'Spring95',
       },
       {
-        label: metricLabels['Channelflow'],
-        value: 'Channelflow',
-      },
-      {
         label: metricLabels['CtrFlowMass'],
         value: 'CtrFlowMass',
       },
