@@ -1,12 +1,12 @@
 <template>
   <section class="section content is-size-5">
-    <h1 class="title">Riparian Fire Impact</h1>
+    <h1 class="title">Riparian Fire Index</h1>
     <p>
       This section shows projections for the mean riparian fire index, compared
-      with a historical range (2002&ndash;2018). Results are presented for low,
-      neutral, and high intensity wildfire scenarios for two specific climate
-      models (NCAR-CCSM4 and GFDL-CM3). The fire scenarios are a function of
-      fire size, intensity, and fire weather.
+      with a historical dataset (ERA). Results are presented for low, neutral,
+      and high intensity wildfire scenarios for two specific climate models
+      (NCAR-CCSM4 and GFDL-CM3). The fire scenarios are a function of fire size,
+      intensity, and fire weather.
     </p>
 
     <p>
@@ -238,7 +238,7 @@ const renderPlot = () => {
       },
       title: {
         text:
-          '<b>Riparian fire impact</b><br />' +
+          '<b>Riparian fire index</b><br />' +
           store.aoiName +
           '<br />' +
           fmoLabels[fmoSelection.value] +
@@ -253,7 +253,7 @@ const renderPlot = () => {
       yaxis: {
         automargin: true,
         title: {
-          text: 'Riparian Fire Impact',
+          text: 'Riparian Fire Index',
           standoff: 15,
         },
       },
@@ -273,7 +273,7 @@ const renderPlot = () => {
         'resetScale2d',
       ],
       toImageButtonOptions: {
-        filename: 'riparian_fire_impact',
+        filename: 'riparian_fire_index',
       },
     }
   )

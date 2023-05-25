@@ -3,9 +3,9 @@
     <h1 class="title">Hydrology</h1>
     <p>
       This section shows streamflow metrics and mean daily streamflow
-      (m<sup>3</sup>/s) projections compared with a historical range
-      (2002&ndash;2018) for two climate models (NCAR-CCSM4; GFDL-CM3). Historic
-      and future streamflow projections were calculated using the
+      (m<sup>3</sup>/s) projections compared with a historical dataset (ERA) for
+      two climate models (NCAR-CCSM4; GFDL-CM3). Historic and future streamflow
+      projections were calculated using the
       <a
         href="https://ral.ucar.edu/sites/default/files/public/projects/wrf_hydro/technical-description-user-guide/wrf-hydro-v5.1.1-technical-description.pdf"
         >WRF-Hydro Modeling System</a
@@ -27,6 +27,7 @@
       calculations were based on the annual water year, which runs from October
       1 to September 30.
     </p>
+    <p>In the charts below, MAF stands for mean annual flow.</p>
   </section>
   <div class="columns is-desktop">
     <div class="column is-half-desktop">
@@ -79,19 +80,18 @@ const modelLabels = {
 
 const metricLabels = {
   mean_annual_flow: 'Mean annual flow',
+  LCV: 'Coefficient of variation',
+  LSkew: 'Skewness',
+  LKurt: 'Kurtosis',
+  AR1: 'AR1',
+  Amplitude: 'Amplitude',
+  phase: 'Phase',
   MeanSummer: 'Mean summer flow',
   WinterMean: 'Mean winter flow',
-  LCV: 'Coefficient of variation for the distribution of flow values',
-  LSkew: 'Skewness for the distribution of flow values',
-  LKurt: 'Kurtosis for the distribution of flow values',
-  AR1: 'Magnitude of maximum flow relative to mean',
-  Amplitude: 'AR1 correlation for entire continuous time series of flow values',
-  phase: 'Average day of year of maximum flow',
   Spring2yr: 'Frequency of spring 2 year high flows',
   Spring1pt5yr: 'Frequency of spring 1.5 year high flows',
   Spring99: 'Number of days spring flows were in the top 1% of annual flows',
   Spring95: 'Number of days spring flows were in the top 5% of annual flows',
-  Channelflow: 'Probability 1.5 year flow event would occur during a year',
   CtrFlowMass: 'Center of timing of the mass of flow for an annual water year',
   Summer95: 'Number of days summer flows were in the top 5% of annual flows',
   Summer20p:
@@ -101,6 +101,99 @@ const metricLabels = {
   flow7q10: '7 day low flow with a 10 year return interval',
 }
 
+const metricOptions = [
+  {
+    type: 'group',
+    label: 'Seven fundamental daily streamflow statistics (FDSS)',
+    key: 'Seven fundamental daily streamflow statistics (FDSS)',
+    children: [
+      {
+        label: metricLabels['mean_annual_flow'],
+        value: 'mean_annual_flow',
+      },
+      {
+        label: metricLabels['LCV'],
+        value: 'LCV',
+      },
+      {
+        label: metricLabels['LSkew'],
+        value: 'LSkew',
+      },
+      {
+        label: metricLabels['LKurt'],
+        value: 'LKurt',
+      },
+      {
+        label: metricLabels['AR1'],
+        value: 'AR1',
+      },
+      {
+        label: metricLabels['Amplitude'],
+        value: 'Amplitude',
+      },
+      {
+        label: metricLabels['phase'],
+        value: 'phase',
+      },
+    ],
+  },
+  {
+    type: 'group',
+    label: 'Ecologically relevant (ER)',
+    key: 'Ecologically relevant (ER)',
+    children: [
+      {
+        label: metricLabels['MeanSummer'],
+        value: 'MeanSummer',
+      },
+      {
+        label: metricLabels['WinterMean'],
+        value: 'WinterMean',
+      },
+      {
+        label: metricLabels['Spring2yr'],
+        value: 'Spring2yr',
+      },
+      {
+        label: metricLabels['Spring1pt5yr'],
+        value: 'Spring1pt5yr',
+      },
+      {
+        label: metricLabels['Spring99'],
+        value: 'Spring99',
+      },
+      {
+        label: metricLabels['Spring95'],
+        value: 'Spring95',
+      },
+      {
+        label: metricLabels['Channelflow'],
+        value: 'Channelflow',
+      },
+      {
+        label: metricLabels['CtrFlowMass'],
+        value: 'CtrFlowMass',
+      },
+      {
+        label: metricLabels['Summer95'],
+        value: 'Summer95',
+      },
+      {
+        label: metricLabels['Summer20p'],
+        value: 'Summer20p',
+      },
+      {
+        label: metricLabels['Highlow'],
+        value: 'Highlow',
+      },
+      {
+        label: metricLabels['flow7q10'],
+        value: 'flow7q10',
+      },
+    ],
+  },
+]
+
 const metricYAxisLabels = {
   mean_annual_flow: 'Mean annual flow (m<sup>3</sup>/s)',
   MeanSummer: 'Mean summer flow (m<sup>3</sup>/s)',
@@ -108,14 +201,13 @@ const metricYAxisLabels = {
   LCV: 'Variation',
   LSkew: 'Skewness',
   LKurt: 'Kurtosis',
-  AR1: 'Magnitude',
-  Amplitude: 'Correlation',
+  AR1: 'Correlation',
+  Amplitude: 'Magnitude',
   phase: 'Average day of year',
   Spring2yr: 'Frequency',
   Spring1pt5yr: 'Frequency',
   Spring99: 'Number of days',
   Spring95: 'Number of days',
-  Channelflow: 'Probability',
   CtrFlowMass: 'Day of year',
   Summer95: 'Number of days',
   Summer20p: 'Number of days',
@@ -139,13 +231,12 @@ const periodLabels = {
   '2': '2068-2077',
 }
 
-const metricOptions = []
-Object.keys(metricLabels).forEach(key => {
-  metricOptions.push({
-    label: metricLabels[key],
-    value: key,
-  })
-})
+const streamStrings = {
+  '1': 'Headwater Streams (MAF ≤ 1m<sup>3</sup>/s)',
+  '2': 'Small Tributaries (1 < MAF ≤ 5m<sup>3</sup>/s)',
+  '3': 'Large Tributaries (5 < MAF ≤ 25m<sup>3</sup>/s)',
+  '4': 'Main Stem Rivers (MAF > 25m<sup>3</sup>/s)',
+}
 
 const periodOptions = []
 Object.keys(periodLabels).forEach(key => {
@@ -296,10 +387,10 @@ const renderPlot = () => {
 
     if (metricDateRange.hasOwnProperty(metricSelection.value)) {
       chartTitle +=
-        'Date Range: ' + metricDateRange[metricSelection.value] + ', '
+        'Date Range: ' + metricDateRange[metricSelection.value] + '<br />'
     }
 
-    chartTitle += 'Stream Order: ' + streamOrder
+    chartTitle += streamStrings[streamOrder]
 
     // Create and populate each hydro stat stream order chart with traces.
     $Plotly.newPlot(
@@ -348,6 +439,7 @@ const renderPlot = () => {
           filename: metricLabels[metricSelection.value]
             .toLowerCase()
             .replace(/ /g, '_'),
+          scale: 2,
         },
       }
     )
@@ -357,8 +449,8 @@ const renderPlot = () => {
       areaString +
       '<br />Period: ' +
       periodLabels[periodSelection.value] +
-      ', Stream Order: ' +
-      streamOrder
+      '<br />' +
+      streamStrings[streamOrder]
 
     // Create and populate each hydrology stream order chart with traces.
     $Plotly.newPlot(
@@ -406,6 +498,7 @@ const renderPlot = () => {
         ],
         toImageButtonOptions: {
           filename: 'hydrograph',
+          scale: 2,
         },
       }
     )
