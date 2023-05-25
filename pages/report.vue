@@ -37,11 +37,16 @@
           trajectories.
         </p>
         <p>
-          Some data have been averaged by stream order: a positive whole number
-          used in geomorphology and hydrology to indicate the level of branching
-          in a river system. First order streams are headwaters, second to third
-          order are generally tributaries, and fourth order and above are
-          generally main stem rivers.
+          Hydrology results are averaged by stream size class. Headwaters are
+          streams with mean annual flows (MAF) &le; 1 m<sup>3</sup>/s, small
+          tributaries MAF &le; 5m<sup>3</sup>/s, large tributaries MAF &le;
+          25m<sup>3</sup>/s, and mainstem rivers MAF &gt; 25m<sup>3</sup>/s.
+          Stream temperature and fish growth data have been averaged by stream
+          order: a positive whole number used in geomorphology and hydrology to
+          indicate the level of branching in a river system. First order streams
+          are headwaters, second to third order are generally small and large
+          tributaries, and fourth order and above are generally main stem
+          rivers.
         </p>
         <p>
           Results include multiple models and scenarios, grouped by historic and

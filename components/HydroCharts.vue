@@ -9,9 +9,23 @@
       <a
         href="https://ral.ucar.edu/sites/default/files/public/projects/wrf_hydro/technical-description-user-guide/wrf-hydro-v5.1.1-technical-description.pdf"
         >WRF-Hydro Modeling System</a
-      >. Results are presented as multi-year means for each stream order within
-      the selected management units. These calculations were based on the annual
-      water year, which runs from October 1 to September 30.
+      >. The
+      <a
+        href="https://www.researchgate.net/publication/259542586_An_Objective_and_Parsimonious_Approach_for_Classifying_Natural_Flow_Regimes_at_a_Continental_Scale"
+        >seven fundamental daily streamflow statistics</a
+      >
+      (FDSS) describe properties of the flow regime (e.g.; timing, magnitude,
+      duration, rate of change) and can be used to classify streams and detect
+      hydrologic alteration. The
+      <a
+        href="https://www.researchgate.net/profile/Seth-Wenger/publication/228975973_Macroscale_hydrologic_modeling_of_ecologically_relevant_flow_metrics/links/00b495241a477d175b000000/Macroscale-hydrologic-modeling-of-ecologically-relevant-flow-metrics.pdf"
+        >ecologically relevant</a
+      >
+      (ER) streamflow metrics are hypothesized to influence the distribution and
+      recruitment of salmonid fishes. Results are presented as multi-year means
+      for each stream order within the selected management units. These
+      calculations were based on the annual water year, which runs from October
+      1 to September 30.
     </p>
     <p>In the charts below, MAF stands for mean annual flow.</p>
   </section>

@@ -6,22 +6,31 @@
       under three
       <a @click="router.push({ name: 'fmo' })">fire management options</a>.
       Future projections are presented for two specific climate models
-      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA).
-      Growth potential indicates how large a well-fed juvenile Chinook salmon
-      could potentially grow by the end of its first summer, in terms of body
-      wet weight (g). Simulations account for changes in stream temperature
-      influenced by climate and wildfire, assuming that fish feeding rates and
-      food quality remain similar to their current values in the future.
+      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA). 
+      Growth potential indicates how large a well-fed
+      juvenile Chinook salmon could potentially grow by the end of its first
+      summer, in terms of body wet weight (g). Simulations account for changes
+      in stream temperature influenced by climate and wildfire, assuming that
+      fish feeding rates and food quality remain similar to their current values
+      in the future. Only stream reaches containing adequate habitat for
+      juvenile Chinook salmon are included (based on a model of underlying
+      geomorphology,
+      <a
+        href="https://www.fs.usda.gov/pnw/pubs/journals/pnw_2007_burnett001.pdf"
+        >described here</a
+      >). Although models projected a range of probabilistic future
+      temperatures, only the mean values are shown in this visualization for
+      simplicity.
     </p>
-
     <p>
       Growth potential estimates are presented for multiple stream orders; the
       projections for stream orders 3&ndash;5 are most closely tied to field
       data, whereas growth estimates for larger mainstem rivers (stream orders
-      6&ndash;7) are more uncertain. Stream temperature and juvenile Chinook
-      salmon growth were simulated on an 8-day timestep. Wildfires were
-      simulated across the study area based on probabilistic flammability
-      metrics (<a
+      6&ndash;7) are more uncertain. For example, juvenile fish may be more
+      food-limited in larger mainstem rivers, which tend to be warmer than their
+      tributaries upstream. Stream temperature and juvenile Chinook salmon
+      growth were simulated on an 8-day timestep. Wildfires were simulated
+      across the study area based on probabilistic flammability metrics (<a
         href="https://github.com/ua-snap/alfresco/blob/main/docs/ALFRESCO_Guide.pdf"
         >described here</a
       >), influenced by vegetation type, climate, and fire management option.
