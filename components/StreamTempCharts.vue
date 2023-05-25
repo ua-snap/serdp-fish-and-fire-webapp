@@ -17,6 +17,13 @@
       of probabilistic future temperatures, only the mean values are shown in
       this visualization for simplicity.
     </p>
+    <p>
+      Stream temperature data for this and all other areas is available as a
+      <a
+        href="https://raw.githubusercontent.com/ua-snap/serdp-fish-and-fire-webapp/main/scripts/input/Stream_Temp_Stats_by_AOI.csv"
+        >downloadable CSV</a
+      >.
+    </p>
   </section>
   <div class="columns">
     <div class="column is-half">

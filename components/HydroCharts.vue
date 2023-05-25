@@ -28,6 +28,23 @@
       1 to September 30.
     </p>
     <p>In the charts below, MAF stands for mean annual flow.</p>
+    <p>
+      Hydrology data for this and all other areas is available as downloadable CSVs:
+      <ul>
+        <li>
+          <a
+            href="https://raw.githubusercontent.com/ua-snap/serdp-fish-and-fire-webapp/main/scripts/input/Hydrology_Stats_by_AOI.csv"
+            >Hydrology statistics CSV</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://raw.githubusercontent.com/ua-snap/serdp-fish-and-fire-webapp/main/scripts/input/Hydrograph_Data_by_AOI.csv"
+            >Hydrograph data CSV</a
+          >
+        </li>
+      </ul>
+    </p>
   </section>
   <div class="columns is-desktop">
     <div class="column is-half-desktop">
