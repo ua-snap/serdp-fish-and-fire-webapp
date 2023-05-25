@@ -32,7 +32,7 @@ To generate both the boundary and shadowmask files, first download the AOI shape
 ```
 cd scripts
 pipenv install
-./boundary.py
+pipenv run ./boundary.py
 ```
 
 The boundary GeoJSON file will appear in `assets/boundary.json`.
