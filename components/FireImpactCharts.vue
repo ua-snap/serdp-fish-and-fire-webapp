@@ -26,6 +26,14 @@
       length, and flammability. Flammability is defined as the mean percentage
       of times pixels within this location burned in model simulations.
     </p>
+
+    <p>
+      Riparian fire index data for this and all other areas is available as a
+      <a
+        href="https://raw.githubusercontent.com/ua-snap/serdp-fish-and-fire-webapp/main/scripts/input/Riparian_Fire_Impact_by_AOI.csv"
+        >downloadable CSV</a
+      >.
+    </p>
   </section>
   <div class="columns">
     <div class="column is-half">

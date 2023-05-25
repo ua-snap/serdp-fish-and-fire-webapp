@@ -6,15 +6,14 @@
       under three
       <a @click="router.push({ name: 'fmo' })">fire management options</a>.
       Future projections are presented for two specific climate models
-      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA). 
-      Growth potential indicates how large a well-fed
-      juvenile Chinook salmon could potentially grow by the end of its first
-      summer, in terms of body wet weight (g). Simulations account for changes
-      in stream temperature influenced by climate and wildfire, assuming that
-      fish feeding rates and food quality remain similar to their current values
-      in the future. Only stream reaches containing adequate habitat for
-      juvenile Chinook salmon are included (based on a model of underlying
-      geomorphology,
+      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA).
+      Growth potential indicates how large a well-fed juvenile Chinook salmon
+      could potentially grow by the end of its first summer, in terms of body
+      wet weight (g). Simulations account for changes in stream temperature
+      influenced by climate and wildfire, assuming that fish feeding rates and
+      food quality remain similar to their current values in the future. Only
+      stream reaches containing adequate habitat for juvenile Chinook salmon are
+      included (based on a model of underlying geomorphology,
       <a
         href="https://www.fs.usda.gov/pnw/pubs/journals/pnw_2007_burnett001.pdf"
         >described here</a
@@ -34,6 +33,14 @@
         href="https://github.com/ua-snap/alfresco/blob/main/docs/ALFRESCO_Guide.pdf"
         >described here</a
       >), influenced by vegetation type, climate, and fire management option.
+    </p>
+
+    <p>
+      Fish growth data for this and all other areas is available as a
+      <a
+        href="https://raw.githubusercontent.com/ua-snap/serdp-fish-and-fire-webapp/main/scripts/input/Fish_Growth_by_AOI.csv"
+        >downloadable CSV</a
+      >.
     </p>
   </section>
   <div class="columns">
