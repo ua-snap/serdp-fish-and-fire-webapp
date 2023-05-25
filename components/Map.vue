@@ -63,6 +63,7 @@ watch(reset, async () => {
     layerGroup.clearLayers()
     if (marker != undefined) {
       map.removeLayer(marker)
+      marker = undefined
     }
     store.$patch({
       reset: false,
@@ -130,22 +131,24 @@ const addMapHandlers = () => {
   boundaryLayer = L.geoJSON(boundaryJson, {
     onEachFeature: function (feature, layer) {
       layer.on('click', e => {
-        let lat = e.latlng.lat
-        let lng = e.latlng.lng
-        store.$patch({
-          point: {
-            lat: lat.toFixed(2),
-            lng: lng.toFixed(2),
-          },
-        })
-        layerGroup.addTo(map)
-        marker = L.marker([lat, lng]).addTo(map)
-        store.fetchIntersectingAreas(lat, lng).then(() => {
-          if (store.matchedAreas.length > 0) {
-            boundaryLayer.off('click')
-            addMatchedAreas()
-          }
-        })
+        if (marker == undefined && store.matchedAreaNames.length == 0) {
+          let lat = e.latlng.lat
+          let lng = e.latlng.lng
+          store.$patch({
+            point: {
+              lat: lat.toFixed(2),
+              lng: lng.toFixed(2),
+            },
+          })
+          layerGroup.addTo(map)
+          marker = L.marker([lat, lng]).addTo(map)
+          store.fetchIntersectingAreas(lat, lng).then(() => {
+            if (store.matchedAreas.length > 0) {
+              boundaryLayer.off('click')
+              addMatchedAreas()
+            }
+          })
+        }
       })
     },
     style: {
