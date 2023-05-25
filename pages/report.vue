@@ -54,10 +54,6 @@
         </p>
 
         <ul>
-          <li v-if="store.areaData['fishGrowth']">
-            <a href="#fish-growth">Fish growth charts</a> for each stream order
-            present in the area of interest
-          </li>
           <li v-if="store.areaData['fireImpact']">
             <a href="#fire-impact">Riparian fire index charts</a> by fire
             management option and by fish species
@@ -72,13 +68,14 @@
             <a href="#stream-temp">Stream temperature charts</a> for each stream
             order present in the area of interest
           </li>
+          <li v-if="store.areaData['fishGrowth']">
+            <a href="#fish-growth">Fish growth charts</a> for each stream order
+            present in the area of interest
+          </li>
         </ul>
       </div>
     </section>
     <div class="charts">
-      <div id="fish-growth" v-if="store.areaData['fishGrowth']">
-        <FishGrowthCharts />
-      </div>
       <div id="fire-impact" v-if="store.areaData['fireImpact']">
         <FireImpactCharts />
       </div>
@@ -90,6 +87,9 @@
       </div>
       <div id="stream-temp" v-if="store.areaData['streamTemp']">
         <StreamTempCharts />
+      </div>
+      <div id="fish-growth" v-if="store.areaData['fishGrowth']">
+        <FishGrowthCharts />
       </div>
       <BackButton />
     </div>
@@ -117,17 +117,17 @@ store.fetchResultData()
 
 const availableDataString = computed(() => {
   let availableData = []
-  if (store.areaData['fishGrowth']) {
-    availableData.push('fish growth')
-  }
   if (store.areaData['fireImpact']) {
     availableData.push('riparian fire effects')
+  }
+  if (store.areaData['hydroStats'] && store.areaData['hydrograph']) {
+    availableData.push('hydrology')
   }
   if (store.areaData['streamTemp']) {
     availableData.push('stream temperature')
   }
-  if (store.areaData['hydroStats'] && store.areaData['hydrograph']) {
-    availableData.push('hydrology')
+  if (store.areaData['fishGrowth']) {
+    availableData.push('fish growth')
   }
   if (availableData.length > 2) {
     let allButLast = availableData.slice(0, availableData.length - 1).join(', ')
