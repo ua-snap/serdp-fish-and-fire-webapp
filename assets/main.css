@@ -4,6 +4,14 @@
   font-family: "Open Sans";
 }
 
+a {
+  color: #03c;
+  &:hover {
+    color: #363636;
+    text-decoration: underline;
+  }
+}
+
 .leaflet-container {
   cursor: pointer !important;
 }
