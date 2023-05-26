@@ -3,7 +3,7 @@
     <h1 class="title">Hydrology</h1>
     <p>
       This section shows streamflow metrics and mean daily streamflow
-      (m<sup>3</sup>/s) projections compared with a historical dataset (ERA) for
+      (m<sup>3</sup>/s) projections compared with a historical dataset (ERA5 Reanalysis) for
       two climate models (NCAR-CCSM4; GFDL-CM3). Historic and future streamflow
       projections were calculated using the
       <a
@@ -211,7 +211,7 @@ const metricYAxisLabels = {
   mean_annual_flow: 'Mean annual flow (m<sup>3</sup>/s)',
   MeanSummer: 'Mean summer flow (m<sup>3</sup>/s)',
   WinterMean: 'Mean winter flow (m<sup>3</sup>/s)',
-  LCV: 'Variation',
+  LCV: 'Coefficient of variation',
   LSkew: 'Skewness',
   LKurt: 'Kurtosis',
   AR1: 'Correlation',
@@ -245,10 +245,10 @@ const periodLabels = {
 }
 
 const streamStrings = {
-  '1': 'Headwater Streams (MAF ≤ 1m<sup>3</sup>/s)',
-  '2': 'Small Tributaries (1 < MAF ≤ 5m<sup>3</sup>/s)',
-  '3': 'Large Tributaries (5 < MAF ≤ 25m<sup>3</sup>/s)',
-  '4': 'Main Stem Rivers (MAF > 25m<sup>3</sup>/s)',
+  '1': 'Headwater Streams (MAF ≤ 1 m<sup>3</sup>/s)',
+  '2': 'Small Tributaries (1 < MAF ≤ 5 m<sup>3</sup>/s)',
+  '3': 'Large Tributaries (5 < MAF ≤ 25 m<sup>3</sup>/s)',
+  '4': 'Mainstem Rivers (MAF > 25 m<sup>3</sup>/s)',
 }
 
 const periodOptions = []
@@ -291,7 +291,7 @@ const renderPlot = () => {
     statsTraces.push({
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA',
+      name: 'ERA5',
       x: [1, 2, 3],
       y: [
         store.areaData['hydroStats'][streamOrder]['ccsm']['0'][
@@ -322,7 +322,7 @@ const renderPlot = () => {
       // Store a historical trace for each hydrograph stream order chart.
       hydrographTraces.push({
         mode: 'lines',
-        name: 'ERA',
+        name: 'ERA5',
         x: daysOfYear,
         y: hydrographPoints,
         marker: {

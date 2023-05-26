@@ -3,10 +3,10 @@
     <h1 class="title">Riparian Fire Index</h1>
     <p>
       This section shows projections for the mean riparian fire index, compared
-      with a historical dataset (ERA). Results are presented for low, neutral,
-      and high intensity wildfire scenarios for two specific climate models
-      (NCAR-CCSM4 and GFDL-CM3). The fire scenarios are a function of fire size,
-      intensity, and fire weather.
+      with a historical dataset (ERA5 Reanalysis). Results are presented for
+      low, neutral, and high intensity wildfire scenarios for two specific
+      climate models (NCAR-CCSM4 and GFDL-CM3). The fire scenarios are a
+      function of fire size, intensity, and fire weather.
     </p>
 
     <p>
@@ -18,8 +18,8 @@
 
     <p>
       Results are presented for the base riparian fire index (species = none),
-      as a vulnerability index for two fish species, juvenile Chinook Salmon,
-      and Arctic Grayling, and for three
+      as a vulnerability index for two fish species, juvenile Chinook salmon,
+      and Arctic grayling, and for three
       <a @click="router.push({ name: 'fmo' })">fire management options</a>. The
       vulnerability index is a function of the mean riparian fire index, the
       total length of high suitability fish habitat relative to total stream
@@ -83,8 +83,8 @@ const fmoLabels = {
 
 const speciesLabels = {
   NONE: 'None',
-  CHK: 'Chinook',
-  GRA: 'Grayling',
+  CHK: 'Chinook salmon',
+  GRA: 'Arctic grayling',
 }
 
 const modelLabels = {
@@ -159,7 +159,7 @@ const renderPlot = () => {
     let trace = {
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA (' + prefix + ' Intensity)',
+      name: 'ERA5 (' + prefix + ' Intensity)',
       x: [1 + xOffset, 2 + xOffset, 3 + xOffset],
       y: [fmoData['ccsm'][0][meanKey]],
       marker: {

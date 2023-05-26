@@ -22,13 +22,14 @@
         <p>
           Here, we show possible future conditions for
           {{ availableDataString }}. These simulations use different Global
-          Circulation Models (GCMs)&mdash;such as the National Center for
-          Atmospheric Research Community Climate System Model 4.0 (NCAR CCSM4).
+          Circulation Models (GCMs) including the National Center for
+          Atmospheric Research Community Climate System Model 4.0 (NCAR-CCSM4)
+          and Geophysical Fluid Dynamics Laboratory Coupled Model 3 (GFDL-CM3).
           Possible future conditions are compared with a historical dataset
-          (ERA), which uses reanalysis to combine historical observations with
-          short-range weather forecasts to create consistent and comprehensive
-          datasets of past weather and climate, filling gaps in the
-          observational record.
+          (ERA5 Reanalysis), which uses reanalysis to combine historical
+          observations with short-range weather forecasts to create consistent
+          and comprehensive datasets of past weather and climate, filling gaps
+          in the observational record.
         </p>
         <p>
           Results are based on Representative Concentration Pathway (RCP) 8.5, a
@@ -39,14 +40,13 @@
         <p>
           Hydrology results are averaged by stream size class. Headwaters are
           streams with mean annual flows (MAF) &le; 1 m<sup>3</sup>/s, small
-          tributaries MAF &le; 5m<sup>3</sup>/s, large tributaries MAF &le;
-          25m<sup>3</sup>/s, and mainstem rivers MAF &gt; 25m<sup>3</sup>/s.
+          tributaries MAF &le; 5 m<sup>3</sup>/s, large tributaries MAF &le; 25
+          m<sup>3</sup>/s, and mainstem rivers MAF &gt; 25 m<sup>3</sup>/s.
           Stream temperature and fish growth data have been averaged by stream
           order: a positive whole number used in geomorphology and hydrology to
           indicate the level of branching in a river system. First order streams
           are headwaters, second to third order are generally small and large
-          tributaries, and fourth order and above are generally main stem
-          rivers.
+          tributaries, and fourth order and above are generally mainstem rivers.
         </p>
         <p>
           Results include multiple models and scenarios, grouped by historic and

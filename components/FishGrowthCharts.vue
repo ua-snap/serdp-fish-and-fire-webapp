@@ -6,14 +6,14 @@
       under three
       <a @click="router.push({ name: 'fmo' })">fire management options</a>.
       Future projections are presented for two specific climate models
-      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA).
-      Growth potential indicates how large a well-fed juvenile Chinook salmon
-      could potentially grow by the end of its first summer, in terms of body
-      wet weight (g). Simulations account for changes in stream temperature
-      influenced by climate and wildfire, assuming that fish feeding rates and
-      food quality remain similar to their current values in the future. Only
-      stream reaches containing adequate habitat for juvenile Chinook salmon are
-      included (based on a model of underlying geomorphology,
+      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA5
+      Reanalysis). Growth potential indicates how large a well-fed juvenile
+      Chinook salmon could potentially grow by the end of its first summer, in
+      terms of body wet weight (g). Simulations account for changes in stream
+      temperature influenced by climate and wildfire, assuming that fish feeding
+      rates and food quality remain similar to their current values in the
+      future. Only stream reaches containing adequate habitat for juvenile
+      Chinook salmon are included (based on a model of underlying geomorphology,
       <a
         href="https://www.fs.usda.gov/pnw/pubs/journals/pnw_2007_burnett001.pdf"
         >described here</a
@@ -194,7 +194,7 @@ const renderPlot = () => {
     traces.push({
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA',
+      name: 'ERA5',
       x: [1, 2, 3],
       y: [
         store.areaData['fishGrowth']['hist'][streamOrder]['ccsm']['0'][

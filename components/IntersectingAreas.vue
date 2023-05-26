@@ -21,9 +21,9 @@
         <li class="list-item">
           Alaska Fire Service (AFS) Fire Management Units
         </li>
-        <li class="list-item">Park and Conservation Units</li>
         <li class="list-item">Department of Defense (DOD) Lands</li>
-        <li class="list-item">Hydrologic Units Codes (HUCs)</li>
+        <li class="list-item">Hydrologic Unit Codes (HUCs)</li>
+        <li class="list-item">Park and Conservation Units</li>
       </ul>
     </div>
     <h5 class="title is-5" v-if="store.matchedAreaNames.length > 0">
