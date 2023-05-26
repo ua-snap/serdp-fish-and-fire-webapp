@@ -1,6 +1,6 @@
 <template>
   <NButton type="info" @click="router.push({ name: 'index' })"
-    >Go back, pick another place&hellip;</NButton
+    >Go back, pick another place</NButton
   >
 </template>
 
