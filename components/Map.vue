@@ -131,7 +131,11 @@ const addMapHandlers = () => {
   boundaryLayer = L.geoJSON(boundaryJson, {
     onEachFeature: function (feature, layer) {
       layer.on('click', e => {
-        if (marker == undefined && store.matchedAreaNames.length == 0) {
+        if (
+          marker == undefined &&
+          store.matchedAreaNames.length == 0 &&
+          route.params.hash == undefined
+        ) {
           let lat = e.latlng.lat
           let lng = e.latlng.lng
           store.$patch({
