@@ -23,7 +23,7 @@
           Here, we show possible future conditions for
           {{ availableDataString }}. These simulations use different Global
           Circulation Models (GCMs) including the National Center for
-          Atmospheric Research Community Climate System Model 4.0 (NCAR CCSM4)
+          Atmospheric Research Community Climate System Model 4.0 (NCAR-CCSM4)
           and Geophysical Fluid Dynamics Laboratory Coupled Model 3 (GFDL-CM3).
           Possible future conditions are compared with a historical dataset
           (ERA5 Reanalysis), which uses reanalysis to combine historical
@@ -40,8 +40,8 @@
         <p>
           Hydrology results are averaged by stream size class. Headwaters are
           streams with mean annual flows (MAF) &le; 1 m<sup>3</sup>/s, small
-          tributaries MAF &le; 5m<sup>3</sup>/s, large tributaries MAF &le;
-          25m<sup>3</sup>/s, and mainstem rivers MAF &gt; 25m<sup>3</sup>/s.
+          tributaries MAF &le; 5 m<sup>3</sup>/s, large tributaries MAF &le; 25
+          m<sup>3</sup>/s, and mainstem rivers MAF &gt; 25 m<sup>3</sup>/s.
           Stream temperature and fish growth data have been averaged by stream
           order: a positive whole number used in geomorphology and hydrology to
           indicate the level of branching in a river system. First order streams

@@ -211,7 +211,7 @@ const metricYAxisLabels = {
   mean_annual_flow: 'Mean annual flow (m<sup>3</sup>/s)',
   MeanSummer: 'Mean summer flow (m<sup>3</sup>/s)',
   WinterMean: 'Mean winter flow (m<sup>3</sup>/s)',
-  LCV: 'Variation',
+  LCV: 'Coefficient of variation',
   LSkew: 'Skewness',
   LKurt: 'Kurtosis',
   AR1: 'Correlation',
@@ -245,10 +245,10 @@ const periodLabels = {
 }
 
 const streamStrings = {
-  '1': 'Headwater Streams (MAF ≤ 1m<sup>3</sup>/s)',
-  '2': 'Small Tributaries (1 < MAF ≤ 5m<sup>3</sup>/s)',
-  '3': 'Large Tributaries (5 < MAF ≤ 25m<sup>3</sup>/s)',
-  '4': 'Mainstem Rivers (MAF > 25m<sup>3</sup>/s)',
+  '1': 'Headwater Streams (MAF ≤ 1 m<sup>3</sup>/s)',
+  '2': 'Small Tributaries (1 < MAF ≤ 5 m<sup>3</sup>/s)',
+  '3': 'Large Tributaries (5 < MAF ≤ 25 m<sup>3</sup>/s)',
+  '4': 'Mainstem Rivers (MAF > 25 m<sup>3</sup>/s)',
 }
 
 const periodOptions = []
