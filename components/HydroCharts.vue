@@ -3,7 +3,7 @@
     <h1 class="title">Hydrology</h1>
     <p>
       This section shows streamflow metrics and mean daily streamflow
-      (m<sup>3</sup>/s) projections compared with a historical dataset (ERA5 Reanalysis) for
+      (m<sup>3</sup>/s) projections compared with a historical dataset (ERA-Interim Reanalysis) for
       two climate models (NCAR-CCSM4; GFDL-CM3). Historic and future streamflow
       projections were calculated using the
       <a
@@ -291,7 +291,7 @@ const renderPlot = () => {
     statsTraces.push({
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA5',
+      name: 'ERA-Interim',
       x: [1, 2, 3],
       y: [
         store.areaData['hydroStats'][streamOrder]['ccsm']['0'][
@@ -322,7 +322,7 @@ const renderPlot = () => {
       // Store a historical trace for each hydrograph stream order chart.
       hydrographTraces.push({
         mode: 'lines',
-        name: 'ERA5',
+        name: 'ERA-Interim',
         x: daysOfYear,
         y: hydrographPoints,
         marker: {
