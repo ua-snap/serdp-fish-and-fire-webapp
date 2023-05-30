@@ -34,7 +34,7 @@
           Funding was provided by the U.S. Department of Defense
           <a href="https://www.serdp-estcp.org/"
             >Strategic Environmental Research and Development Program</a
-          >
+          >.
         </p>
 
         <p>
@@ -63,7 +63,7 @@
           If we can help you access this website&rsquo;s content,
           <a href="mailto:uaf-snap-data-tools@alaska.edu"
             >please email us at uaf-snap-data-tools@alaska.edu</a
-          >
+          >.
         </p>
 
         <p>
