@@ -64,5 +64,5 @@ npm run dev
 ```
 nvm use lts/hydrogen
 npm run build
-aws s3 cp .output/public s3://fish-and-fire-test/ --acl public-read --recursive
+aws s3 cp .output/public s3://fish-and-fire/ --acl public-read --recursive
 ```
