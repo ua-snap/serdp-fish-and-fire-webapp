@@ -62,6 +62,7 @@ npm run dev
 ### Build and upload the app to S3
 
 ```
+export NUXT_APP_BASE_URL=/tools/fish-and-fire
 nvm use lts/hydrogen
 npm run build
 aws s3 cp .output/public s3://fish-and-fire/ --acl public-read --recursive
