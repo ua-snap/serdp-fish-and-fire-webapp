@@ -83,7 +83,7 @@
           >
         </p>
 
-        <p class="mb-0">Photo credit: Jeff Falke.</p>
+        <p class="mb-0">Photo credit: Jeff Falke</p>
       </div>
     </footer>
     <div class="footerbar">&nbsp;</div>
