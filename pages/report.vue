@@ -26,7 +26,7 @@
           Atmospheric Research Community Climate System Model 4.0 (NCAR-CCSM4)
           and Geophysical Fluid Dynamics Laboratory Coupled Model 3 (GFDL-CM3).
           Possible future conditions are compared with a historical dataset
-          (ERA5 Reanalysis), which uses reanalysis to combine historical
+          (ERA-Interim Reanalysis), which uses reanalysis to combine historical
           observations with short-range weather forecasts to create consistent
           and comprehensive datasets of past weather and climate, filling gaps
           in the observational record.

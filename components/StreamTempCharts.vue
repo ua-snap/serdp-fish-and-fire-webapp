@@ -5,10 +5,10 @@
       This section summarizes future projections of ecologically relevant stream
       temperature metrics. Future projections are presented for two specific
       climate models (NCAR-CCSM4 and GFDL-CM3), compared with a historical
-      dataset (ERA5 Reanalysis). Results are presented as means for different
-      stream orders within the selected area of interest. Only stream reaches
-      containing adequate habitat for juvenile Chinook salmon are included
-      (based on a model of underlying geomorphology,
+      dataset (ERA-Interim Reanalysis). Results are presented as means for
+      different stream orders within the selected area of interest. Only stream
+      reaches containing adequate habitat for juvenile Chinook salmon are
+      included (based on a model of underlying geomorphology,
       <a
         href="https://www.fs.usda.gov/pnw/pubs/journals/pnw_2007_burnett001.pdf"
         >described here</a
@@ -182,7 +182,7 @@ const renderPlot = () => {
     traces.push({
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA5',
+      name: 'ERA-Interim',
       x: [1, 2, 3],
       y: [
         store.areaData['streamTemp'][streamOrder]['ccsm']['0'][

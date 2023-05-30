@@ -6,7 +6,7 @@
       under three
       <a @click="router.push({ name: 'fmo' })">fire management options</a>.
       Future projections are presented for two specific climate models
-      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA5
+      (NCAR-CCSM4 and GFDL-CM3), compared with a historical dataset (ERA-Interim
       Reanalysis). Growth potential indicates how large a well-fed juvenile
       Chinook salmon could potentially grow by the end of its first summer, in
       terms of body wet weight (g). Simulations account for changes in stream
@@ -194,7 +194,7 @@ const renderPlot = () => {
     traces.push({
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA5',
+      name: 'ERA-Interim',
       x: [1, 2, 3],
       y: [
         store.areaData['fishGrowth']['hist'][streamOrder]['ccsm']['0'][

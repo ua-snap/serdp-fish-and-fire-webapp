@@ -3,8 +3,8 @@
     <h1 class="title">Riparian Fire Index</h1>
     <p>
       This section shows projections for the mean riparian fire index, compared
-      with a historical dataset (ERA5 Reanalysis). Results are presented for
-      low, neutral, and high intensity wildfire scenarios for two specific
+      with a historical dataset (ERA-Interim Reanalysis). Results are presented
+      for low, neutral, and high intensity wildfire scenarios for two specific
       climate models (NCAR-CCSM4 and GFDL-CM3). The fire scenarios are a
       function of fire size, intensity, and fire weather.
     </p>
@@ -159,7 +159,7 @@ const renderPlot = () => {
     let trace = {
       type: 'scatter',
       mode: 'markers',
-      name: 'ERA5 (' + prefix + ' Intensity)',
+      name: 'ERA-Interim (' + prefix + ' Intensity)',
       x: [1 + xOffset, 2 + xOffset, 3 + xOffset],
       y: [fmoData['ccsm'][0][meanKey]],
       marker: {
