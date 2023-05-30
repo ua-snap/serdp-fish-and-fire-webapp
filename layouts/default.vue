@@ -11,79 +11,83 @@
 
   <slot />
 
-  <hr class="mt-6" />
+  <hr class="mt-6 mb-0" />
 
-  <footer>
-    <div class="container mb-6 is-size-5">
-      <img src="~/assets/UAFLogo_A_black_horiz.svg" alt="UAF Logo" />
-      <p>
-        This tool was developed by the
-        <a href="https://www.snap.uaf.edu/"
-          >Scenarios Network for Alaska + Arctic Planning</a
-        >
-        at the
-        <a href="https://uaf-iarc.org/">International Arctic Research Center</a
-        >.
-      </p>
+  <div class="footer-wrapper">
+    <footer>
+      <div class="container mb-6 is-size-6">
+        <img
+          src="~/assets/UAFLogo_A_black_horiz.svg"
+          alt="UAF Logo"
+          class="mt-5 mb-3"
+        />
+        <p>
+          Developed by the
+          <a href="https://www.snap.uaf.edu/"
+            >Scenarios Network for Alaska + Arctic Planning</a
+          >
+          at the University of Alaska Fairbanks
+          <a href="https://uaf-iarc.org/"
+            >International Arctic Research Center</a
+          >.
+          <br />
+          Funding was provided by the U.S. Department of Defense
+          <a href="https://www.serdp-estcp.org/"
+            >Strategic Environmental Research and Development Program</a
+          >
+        </p>
 
-      <p>
-        Funding was provided by the U.S. Department of Defense
-        <a href="https://www.serdp-estcp.org/"
-          >Strategic Environmental Research and Development Program</a
-        >.
-      </p>
+        <p>
+          Data available through this tool are subject to the
+          <a href="https://creativecommons.org/licenses/by/4.0/"
+            >Creative Commons Attribution 4.0</a
+          >
+          license.
+          <br />
+          Please contact
+          <a href="uaf-snap-data-tools@alaska.edu"
+            >uaf-snap-data-tools@alaska.edu</a
+          >
+          with questions or comments.
+          <br />
+          <a href="https://uaf-snap.org/web-tools/">Visit the SNAP website</a>
+          to see all of our climate tools.
+        </p>
 
-      <p>
-        Please contact
-        <a href="uaf-snap-data-tools@alaska.edu"
-          >uaf-snap-data-tools@alaska.edu</a
-        >
-        if you have questions or would like to provide feedback for this tool.
-        <a href="https://uaf-snap.org/web-tools/"
-          >Visit the SNAP Climate + Weather Tools page</a
-        >
-        to see our full suite of interactive web tools.
-      </p>
+        <p>
+          UA is committed to providing accessible websites.
+          <a href="https://www.alaska.edu/webaccessibility/"
+            >Learn more about UA&rsquo;s notice of web accessibility</a
+          >.
+          <br />
+          If we can help you access this website&rsquo;s content,
+          <a href="mailto:uaf-snap-data-tools@alaska.edu"
+            >please email us at uaf-snap-data-tools@alaska.edu</a
+          >
+        </p>
 
-      <p>
-        Data available through this tool are subject to the
-        <a href="https://creativecommons.org/licenses/by/4.0/"
-          >Creative Commons Attribution 4.0</a
-        >
-        license.
-      </p>
+        <p>
+          Copyright &copy; {{ year }} University of Alaska Fairbanks. All rights
+          reserved.
+          <br />
+          UA is an AA/EO employer and educational institution and prohibits
+          illegal discrimination against any individual.
+          <br />
+          <a href="https://www.alaska.edu/nondiscrimination/"
+            >Statement of Nondiscrimination</a
+          >
+          and
+          <a
+            href="https://www.alaska.edu/records/records/compliance/gdpr/ua-privacy-statement/"
+            >Privacy Statement</a
+          >
+        </p>
 
-      <p>
-        Copyright &copy; {{ year }} University of Alaska Fairbanks. All rights
-        reserved.
-      </p>
-
-      <p>
-        UA is an AA/EO employer and educational institution and prohibits
-        illegal discrimination against any individual.
-        <a href="https://www.alaska.edu/nondiscrimination/"
-          >Statement of Nondiscrimination</a
-        >
-        and
-        <a
-          href="https://www.alaska.edu/records/records/compliance/gdpr/ua-privacy-statement/"
-          >Privacy Statement</a
-        >.
-      </p>
-
-      <p>
-        UA is committed to providing accessible websites.
-        <a href="https://www.alaska.edu/webaccessibility/"
-          >Learn more about UA&rsquo;s notice of web accessibility</a
-        >. If we can help you access this website&rsquo;s content, email us at
-        <a href="mailto:uaf-snap-data-tools@alaska.edu"
-          >uaf-snap-data-tools@alaska.edu</a
-        >!
-      </p>
-
-      <p>Photo credit: Jeff Falke, used with permission.</p>
-    </div>
-  </footer>
+        <p class="mb-0">Photo credit: Jeff Falke.</p>
+      </div>
+    </footer>
+    <div class="footerbar">&nbsp;</div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -124,6 +128,15 @@ header {
     padding: 0.5rem;
     letter-spacing: 0.25rem;
   }
+}
+.footer-wrapper {
+  background-color: #f9faf9;
+  a {
+    color: #1863ff;
+  }
+}
+.footerbar {
+  background-color: #95a739;
 }
 </style>
 
