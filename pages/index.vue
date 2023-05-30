@@ -3,8 +3,9 @@
     <section class="section introblurb">
       Changing precipitation, air temperature, and wildfire dynamics are driving
       changes in interior Alaska riverscapes. This tool uses climate data, plus
-      observed and modeled freshwater process and biological data, to construct
-      a variety of possible futures for interior Alaska aquatic ecosystems.
+      observed and modeled freshwater processes and biological data, to
+      construct a variety of possible futures for interior Alaska aquatic
+      ecosystems.
     </section>
     <section class="section">
       <div class="columns">
