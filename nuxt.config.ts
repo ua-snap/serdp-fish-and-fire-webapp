@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     head: {
       script: [
         {
-          src: 'https://umami.snap.uaf.edu/umami.js',
+          src: 'https://umami.snap.uaf.edu/script.js',
           'data-website-id': '0d96da3f-f9c7-4f69-946d-848d38c0b5d3',
           'data-do-not-track': 'true',
           'data-domains': 'snap.uaf.edu',
