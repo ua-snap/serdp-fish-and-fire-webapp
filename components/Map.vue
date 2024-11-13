@@ -92,12 +92,11 @@ onMounted(() => {
   ])
 
   var baseLayer = new L.tileLayer.wms(
-    'https://basemap.nationalmap.gov/arcgis/services/USGSTopo/MapServer/WMSServer',
+    'https://gs.mapventure.org/geoserver/atlas_mapproxy/wms',
     {
-      layers: '0',
+      layers: 'atlas_mapproxy:alaska_osm_retina',
       format: 'image/png',
       transparent: true,
-      attribution: 'USGS',
       baseLayer: true,
     }
   )
