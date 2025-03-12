@@ -102,7 +102,9 @@ onMounted(() => {
     }
   )
 
-  shadowMask = new L.tileLayer.wms('https://gs.mapventure.org/geoserver/wms', {
+  const runtimeConfig = useRuntimeConfig()
+  let geoserverUrl = runtimeConfig.public.geoserverUrl
+  shadowMask = new L.tileLayer.wms(geoserverUrl + '/wms', {
     transparent: true,
     format: 'image/png',
     version: '1.3.0',
