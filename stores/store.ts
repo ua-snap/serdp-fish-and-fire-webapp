@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
 import hash_map from '~/assets/hash_map.json'
+const runtimeConfig = useRuntimeConfig()
+const geoserverWfsUrl =
+  runtimeConfig.public.geoserverUrl +
+  '/fish_and_fire/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=fish_and_fire%3AAOIs&outputFormat=application%2Fjson'
 
 export const useStore = defineStore('store', () => {
   const areas = ref([])
@@ -22,10 +26,9 @@ export const useStore = defineStore('store', () => {
         PARK: 'Park and Conservation Units',
       }
 
-      const runtimeConfig = useRuntimeConfig()
-      let geoserverUrl =
-        runtimeConfig.public.geoserverUrl + '&PropertyName=(AOI_Name_,Category)'
-      let response = await $fetch(geoserverUrl)
+      let geoserverPropertyUrl =
+        geoserverWfsUrl + '&PropertyName=(AOI_Name_,Category)'
+      let response = await $fetch(geoserverPropertyUrl)
       if (response != undefined) {
         response.features.forEach(area => {
           let category = area.properties['Category']
@@ -55,15 +58,14 @@ export const useStore = defineStore('store', () => {
   const fetchIntersectingAreas = async (lat, lon) => {
     try {
       let areas = []
-      const runtimeConfig = useRuntimeConfig()
-      let geoserverUrl =
-        runtimeConfig.public.geoserverUrl +
+      let geoserverIntersectsUrl =
+        geoserverWfsUrl +
         '&cql_filter=INTERSECTS(the_geom,POINT(' +
         lon +
         ' ' +
         lat +
         '))'
-      let response = await $fetch(geoserverUrl)
+      let response = await $fetch(geoserverIntersectsUrl)
       if (response != undefined) {
         intersectingAreas.value = response.features
       }
@@ -102,13 +104,12 @@ export const useStore = defineStore('store', () => {
     let aoi = hash_map[hash.value]
 
     try {
-      const runtimeConfig = useRuntimeConfig()
-      let geoserverUrl =
-        runtimeConfig.public.geoserverUrl +
+      let geoserverFilterUrl =
+        geoserverWfsUrl +
         "&cql_filter=AOI_Name_='" +
         encodeURIComponent(aoi) +
         "'"
-      let response = await $fetch(geoserverUrl)
+      let response = await $fetch(geoserverFilterUrl)
       if (response != undefined) {
         resultGeom.value = response.features[0].geometry
       }
